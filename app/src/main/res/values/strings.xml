@@ -1,3 +1,11 @@
 <resources>
   <string name="app_name">ToDo-App-GettingThingsDone</string>
+  <string name="welcome">Welcome, %1$s !</string>
+  <string name="task_name">Task Name</string>
+  <string name="task_description">Task Description</string>
+  <string name="add_task">Add Task</string>
+  <string name="save">save</string>
+  <string name="username">Username</string>
+  <string name="full_name">Full Name</string>
+  <string name="log_in">Log in</string>
 </resources>
