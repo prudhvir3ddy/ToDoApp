@@ -1,15 +1,18 @@
 package com.prudhvir3ddy.todo_app_gettingthingsdone
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.prudhvir3ddy.todo_app_gettingthingsdone.BottomSheetDialog.BottomSheetListener
 import kotlinx.android.synthetic.main.activity_tasks.add_task_fab
+import kotlinx.android.synthetic.main.activity_tasks.tasks_rv
 import kotlinx.android.synthetic.main.activity_tasks.welcome_tv
 
 class TasksActivity : AppCompatActivity(), BottomSheetListener {
 
   lateinit var sharedPrefs: SharedPrefs
+  private val tasksList = arrayListOf<ToDo>()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -22,6 +25,20 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
       setUpBottomDialog()
     }
 
+    setUpRecyclerView()
+
+  }
+
+  private fun setUpRecyclerView() {
+    val click = object : ItemClickListener {
+      override fun onClick() {
+      }
+    }
+
+    val adapter = ToDoListAdapter(click)
+    tasks_rv.adapter = adapter
+    adapter.submitList(tasksList)
+    tasks_rv.addItemDecoration(DividerItemDecoration(tasks_rv.context, VERTICAL))
   }
 
   private fun setUpBottomDialog() {
@@ -34,6 +51,6 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
   }
 
   override fun onSave(taskName: String, taskDesc: String) {
-    Toast.makeText(this, "$taskName $taskDesc", Toast.LENGTH_SHORT).show()
+    tasksList.add(ToDo(taskName, taskDesc))
   }
 }
