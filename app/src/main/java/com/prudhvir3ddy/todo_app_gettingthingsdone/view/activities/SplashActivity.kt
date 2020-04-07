@@ -1,8 +1,10 @@
-package com.prudhvir3ddy.todo_app_gettingthingsdone
+package com.prudhvir3ddy.todo_app_gettingthingsdone.view.activities
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
+import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
 
 class SplashActivity : AppCompatActivity() {
 
@@ -10,9 +12,10 @@ class SplashActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_splash)
+    setContentView(layout.activity_splash)
 
-    sharedPrefs = SharedPrefs(this)
+    sharedPrefs =
+      SharedPrefs(this)
 
     if (sharedPrefs.getLogin()) {
       startActivity(Intent(this, TasksActivity::class.java))

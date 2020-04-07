@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
   compileSdkVersion 29
@@ -35,4 +36,7 @@ dependencies {
   androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
   implementation "com.google.android.material:material:1.1.0"
+
+  implementation "androidx.room:room-runtime:$roomVersion"
+  kapt "androidx.room:room-compiler:$roomVersion"
 }

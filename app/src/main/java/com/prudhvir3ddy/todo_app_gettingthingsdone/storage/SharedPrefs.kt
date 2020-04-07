@@ -1,10 +1,10 @@
-package com.prudhvir3ddy.todo_app_gettingthingsdone
+package com.prudhvir3ddy.todo_app_gettingthingsdone.storage
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.prudhvir3ddy.todo_app_gettingthingsdone.SharedPrefs.PREFS_CONSTANTS.FULL_NAME
-import com.prudhvir3ddy.todo_app_gettingthingsdone.SharedPrefs.PREFS_CONSTANTS.IS_LOGGED_IN
-import com.prudhvir3ddy.todo_app_gettingthingsdone.SharedPrefs.PREFS_CONSTANTS.TODO_APP_PREFS
+import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs.PREFS_CONSTANTS.FULL_NAME
+import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs.PREFS_CONSTANTS.IS_LOGGED_IN
+import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs.PREFS_CONSTANTS.TODO_APP_PREFS
 
 class SharedPrefs(context: Context) {
 

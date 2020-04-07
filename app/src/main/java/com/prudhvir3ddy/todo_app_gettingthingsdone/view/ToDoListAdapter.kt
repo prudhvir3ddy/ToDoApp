@@ -1,4 +1,4 @@
-package com.prudhvir3ddy.todo_app_gettingthingsdone
+package com.prudhvir3ddy.todo_app_gettingthingsdone.view
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.prudhvir3ddy.todo_app_gettingthingsdone.ToDoListAdapter.ToDoListViewHolder
+import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
+import com.prudhvir3ddy.todo_app_gettingthingsdone.model.ToDo
+import com.prudhvir3ddy.todo_app_gettingthingsdone.view.ToDoListAdapter.ToDoListViewHolder
 import kotlinx.android.synthetic.main.item_todo.view.todo_description
 import kotlinx.android.synthetic.main.item_todo.view.todo_name
 
@@ -31,7 +33,7 @@ class ToDoListAdapter(private val itemClickListener: ItemClickListener) :
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoListViewHolder {
     return ToDoListViewHolder(
       LayoutInflater.from(parent.context).inflate(
-        R.layout.item_todo,
+        layout.item_todo,
         parent,
         false
       )
