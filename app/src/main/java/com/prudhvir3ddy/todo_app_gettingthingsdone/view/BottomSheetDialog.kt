@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.dialog.view.save_tv
 
 class BottomSheetDialog : BottomSheetDialogFragment() {
 
-  lateinit var mListener: BottomSheetListener
+  private lateinit var mListener: BottomSheetListener
 
   override fun onCreateView(
     inflater: LayoutInflater,

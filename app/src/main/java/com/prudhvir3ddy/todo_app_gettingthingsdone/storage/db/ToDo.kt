@@ -4,11 +4,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "todo")
-data class ToDoTask(
+data class ToDo(
   @PrimaryKey(autoGenerate = true)
-  val id: Int,
-  val title: String,
-  val description: String,
-  val imagePath: String,
-  val isCompleted: Boolean = false
+  val id: Int? = null,
+  val title: String = "",
+  val description: String = "",
+  val imagePath: String = "",
+  var isCompleted: Boolean = false
 )

@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_login.username_til
 
 class LoginActivity : AppCompatActivity() {
 
-  lateinit var sharedPrefs: SharedPrefs
+  private lateinit var sharedPrefs: SharedPrefs
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

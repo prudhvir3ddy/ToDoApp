@@ -8,7 +8,7 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
 
 class SplashActivity : AppCompatActivity() {
 
-  lateinit var sharedPrefs: SharedPrefs
+  private lateinit var sharedPrefs: SharedPrefs
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

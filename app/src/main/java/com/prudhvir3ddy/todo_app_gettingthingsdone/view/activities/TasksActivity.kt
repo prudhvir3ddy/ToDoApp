@@ -1,13 +1,15 @@
 package com.prudhvir3ddy.todo_app_gettingthingsdone.view.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
-import com.prudhvir3ddy.todo_app_gettingthingsdone.model.ToDo
+import com.prudhvir3ddy.todo_app_gettingthingsdone.ToDoApp
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
+import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.BottomSheetDialog
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.BottomSheetDialog.BottomSheetListener
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.ItemClickListener
@@ -18,8 +20,9 @@ import kotlinx.android.synthetic.main.activity_tasks.welcome_tv
 
 class TasksActivity : AppCompatActivity(), BottomSheetListener {
 
-  lateinit var sharedPrefs: SharedPrefs
+  private lateinit var sharedPrefs: SharedPrefs
   private val tasksList = arrayListOf<ToDo>()
+  private lateinit var adapter: ToDoListAdapter
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -33,18 +36,39 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
       setUpBottomDialog()
     }
 
+    getDataFromDb()
     setUpRecyclerView()
 
+  }
+
+  private fun getDataFromDb() {
+    Thread {
+      val todoApp = applicationContext as ToDoApp
+      val toDoDao = todoApp.getToDoDb().todoDao()
+      tasksList.addAll(toDoDao.getAll())
+    }.start()
   }
 
   private fun setUpRecyclerView() {
     val click = object :
       ItemClickListener {
-      override fun onClick() {
+      override fun onClick(todo: ToDo) {
+        val intent = Intent(this@TasksActivity, DetailActivity::class.java)
+        intent.putExtra("title", todo.title)
+        intent.putExtra("title", todo.description)
+        startActivity(intent)
+      }
+
+      override fun onUpdate(todo: ToDo) {
+        val todoApp = applicationContext as ToDoApp
+        val toDoDao = todoApp.getToDoDb().todoDao()
+        Thread {
+          toDoDao.updateToDo(todo)
+        }.start()
       }
     }
 
-    val adapter =
+    adapter =
       ToDoListAdapter(click)
     tasks_rv.adapter = adapter
     adapter.submitList(tasksList)
@@ -62,11 +86,25 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
   }
 
   override fun onSave(taskName: String, taskDesc: String) {
+    //add tasks to db
+    val todoApp = applicationContext as ToDoApp
+    val toDoDao = todoApp.getToDoDb().todoDao()
+
+    Thread {
+      toDoDao.insertToDo(
+        ToDo(
+          title = taskName,
+          description = taskDesc
+        )
+      )
+    }.start()
+
     tasksList.add(
       ToDo(
-        taskName,
-        taskDesc
+        title = taskName,
+        description = taskDesc
       )
     )
+
   }
 }

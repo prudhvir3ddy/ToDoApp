@@ -2,13 +2,13 @@ package com.prudhvir3ddy.todo_app_gettingthingsdone.storage
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs.PREFS_CONSTANTS.FULL_NAME
-import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs.PREFS_CONSTANTS.IS_LOGGED_IN
-import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs.PREFS_CONSTANTS.TODO_APP_PREFS
+import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs.PrefConstants.FULL_NAME
+import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs.PrefConstants.IS_LOGGED_IN
+import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs.PrefConstants.TODO_APP_PREFS
 
 class SharedPrefs(context: Context) {
 
-  object PREFS_CONSTANTS {
+  object PrefConstants {
     const val TODO_APP_PREFS = "todoAppPrefs"
     const val IS_LOGGED_IN = "isLoggedIn"
     const val FULL_NAME = "fullName"

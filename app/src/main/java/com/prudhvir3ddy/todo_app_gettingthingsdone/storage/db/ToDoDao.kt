@@ -11,14 +11,14 @@ import androidx.room.Update
 interface ToDoDao {
 
   @Query("SELECT * FROM todo")
-  fun getAll(): List<ToDoTask>
+  fun getAll(): List<ToDo>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  fun insertToDo(toDoTask: ToDoTask)
+  fun insertToDo(toDo: ToDo)
 
   @Update
-  fun updateToDo(toDoTask: ToDoTask)
+  fun updateToDo(toDo: ToDo)
 
   @Delete
-  fun delete(toDoTask: ToDoTask)
+  fun delete(toDo: ToDo)
 }
