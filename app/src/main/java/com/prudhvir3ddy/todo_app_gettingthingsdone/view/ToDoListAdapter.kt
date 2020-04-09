@@ -49,7 +49,7 @@ class ToDoListAdapter(private val itemClickListener: ItemClickListener) :
     holder.itemView.setOnClickListener {
       itemClickListener.onClick(getItem(position))
     }
-    holder.itemView.checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
+    holder.itemView.checkbox.setOnCheckedChangeListener { _, isChecked ->
       getItem(position).isCompleted = isChecked
       itemClickListener.onUpdate(getItem(position))
     }
