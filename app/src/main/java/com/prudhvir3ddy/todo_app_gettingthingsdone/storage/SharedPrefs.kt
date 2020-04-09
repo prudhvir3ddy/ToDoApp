@@ -26,6 +26,7 @@ class SharedPrefs(context: Context) {
 
   fun setFullName(fullName: String) {
     editor.putString(FULL_NAME, fullName)
+    editor.commit()
   }
 
   fun getFullName(): String {

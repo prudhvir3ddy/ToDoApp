@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
-import com.prudhvir3ddy.todo_app_gettingthingsdone.ToDoApp
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
+import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDoDao
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.BottomSheetDialog
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.BottomSheetDialog.BottomSheetListener
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.ItemClickListener
@@ -17,12 +17,15 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.view.ToDoListAdapter
 import kotlinx.android.synthetic.main.activity_tasks.add_task_fab
 import kotlinx.android.synthetic.main.activity_tasks.tasks_rv
 import kotlinx.android.synthetic.main.activity_tasks.welcome_tv
+import org.koin.android.ext.android.inject
 
 class TasksActivity : AppCompatActivity(), BottomSheetListener {
 
   private lateinit var sharedPrefs: SharedPrefs
   private val tasksList = arrayListOf<ToDo>()
   private lateinit var adapter: ToDoListAdapter
+
+  private val todoDao: ToDoDao by inject()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -43,9 +46,7 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
 
   private fun getDataFromDb() {
     Thread {
-      val todoApp = applicationContext as ToDoApp
-      val toDoDao = todoApp.getToDoDb().todoDao()
-      tasksList.addAll(toDoDao.getAll())
+      tasksList.addAll(todoDao.getAll())
     }.start()
   }
 
@@ -60,11 +61,10 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
       }
 
       override fun onUpdate(todo: ToDo) {
-        val todoApp = applicationContext as ToDoApp
-        val toDoDao = todoApp.getToDoDb().todoDao()
         Thread {
-          toDoDao.updateToDo(todo)
+          todoDao.updateToDo(todo)
         }.start()
+
       }
     }
 
@@ -86,12 +86,9 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
   }
 
   override fun onSave(taskName: String, taskDesc: String) {
-    //add tasks to db
-    val todoApp = applicationContext as ToDoApp
-    val toDoDao = todoApp.getToDoDb().todoDao()
 
     Thread {
-      toDoDao.insertToDo(
+      todoDao.insertToDo(
         ToDo(
           title = taskName,
           description = taskDesc
@@ -105,6 +102,8 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
         description = taskDesc
       )
     )
+
+    adapter.notifyDataSetChanged()
 
   }
 }

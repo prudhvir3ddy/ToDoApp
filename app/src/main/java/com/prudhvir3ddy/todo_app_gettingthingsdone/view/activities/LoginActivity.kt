@@ -9,17 +9,15 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
 import kotlinx.android.synthetic.main.activity_login.fullname_til
 import kotlinx.android.synthetic.main.activity_login.login_btn
 import kotlinx.android.synthetic.main.activity_login.username_til
+import org.koin.android.ext.android.inject
 
 class LoginActivity : AppCompatActivity() {
 
-  private lateinit var sharedPrefs: SharedPrefs
+  private val sharedPrefs: SharedPrefs by inject()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(layout.activity_login)
-
-    sharedPrefs =
-      SharedPrefs(this)
 
     login_btn.setOnClickListener {
       val fullname = fullname_til.editText?.text.toString()
