@@ -5,6 +5,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
+import androidx.work.ExistingPeriodicWorkPolicy.KEEP
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
@@ -14,10 +17,12 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.view.BottomSheetDialog
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.BottomSheetDialog.BottomSheetListener
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.ItemClickListener
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.ToDoListAdapter
+import com.prudhvir3ddy.todo_app_gettingthingsdone.workmanager.MyWorker
 import kotlinx.android.synthetic.main.activity_tasks.add_task_fab
 import kotlinx.android.synthetic.main.activity_tasks.tasks_rv
 import kotlinx.android.synthetic.main.activity_tasks.welcome_tv
 import org.koin.android.ext.android.inject
+import java.util.concurrent.TimeUnit.MINUTES
 
 class TasksActivity : AppCompatActivity(), BottomSheetListener {
 
@@ -41,7 +46,14 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
 
     getDataFromDb()
     setUpRecyclerView()
+    setUpWorkManager()
 
+  }
+
+  private fun setUpWorkManager() {
+    val request = PeriodicWorkRequest.Builder(MyWorker::class.java, 15, MINUTES)
+      .build()
+    WorkManager.getInstance(this).enqueueUniquePeriodicWork("boo", KEEP, request)
   }
 
   private fun getDataFromDb() {

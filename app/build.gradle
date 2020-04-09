@@ -41,4 +41,8 @@ dependencies {
   kapt "androidx.room:room-compiler:$roomVersion"
 
   implementation "org.koin:koin-android:$koinVersion"
+
+  // Kotlin + coroutines
+  implementation "androidx.work:work-runtime-ktx:$workVersion"
+
 }

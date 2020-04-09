@@ -21,4 +21,7 @@ interface ToDoDao {
 
   @Delete
   fun delete(toDo: ToDo)
+
+  @Query("DELETE FROM todo WHERE isCompleted =:status")
+  fun deleteCompleted(status: Boolean)
 }
