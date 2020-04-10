@@ -65,7 +65,7 @@ captures/
 .cxx/
 
 # Google Services (e.g. APIs or Firebase)
-# google-services.json
+google-services.json
 
 # Freeline
 freeline.py
@@ -87,7 +87,3 @@ lint/intermediates/
 lint/generated/
 lint/outputs/
 lint/tmp/
-# lint/reports
-/.idea/runConfigurations.xml
-/app/google-services.json
-/app/build

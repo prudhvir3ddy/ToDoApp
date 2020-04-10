@@ -40,4 +40,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     notificationManager.notify(0, notificationBuilder.build())
   }
 
+  override fun onNewToken(p0: String?) {
+    super.onNewToken(p0)
+    Log.d(TAG, p0 ?: "No New Token Found")
+  }
 }
