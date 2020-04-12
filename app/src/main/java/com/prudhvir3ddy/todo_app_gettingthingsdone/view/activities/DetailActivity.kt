@@ -65,6 +65,7 @@ class DetailActivity : AppCompatActivity() {
 
     val dialog = AlertDialog.Builder(this)
       .setCancelable(true)
+      .setTitle("Choose an action")
       .setView(view)
       .create()
 

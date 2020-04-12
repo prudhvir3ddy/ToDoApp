@@ -2,13 +2,13 @@ package com.prudhvir3ddy.todo_app_gettingthingsdone.view.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
+import com.prudhvir3ddy.todo_app_gettingthingsdone.R
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
 import kotlinx.android.synthetic.main.activity_login.fullname_til
 import kotlinx.android.synthetic.main.activity_login.login_btn
-import kotlinx.android.synthetic.main.activity_login.username_til
 import org.koin.android.ext.android.inject
 
 class LoginActivity : AppCompatActivity() {
@@ -19,17 +19,30 @@ class LoginActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(layout.activity_login)
 
+    addTextWatcher()
+
     login_btn.setOnClickListener {
       val fullname = fullname_til.editText?.text.toString()
-      val username = username_til.editText?.text.toString()
-      if (!fullname.isBlank() && !username.isBlank()) {
-        startActivity(Intent(this, TasksActivity::class.java))
-        sharedPrefs.setLogin(true)
-        sharedPrefs.setFullName(fullname)
-        finish()
-      } else {
-        Toast.makeText(this, "please enter details", Toast.LENGTH_SHORT).show()
-      }
+      getStarted(fullname)
+    }
+  }
+
+  private fun getStarted(fullname: String) {
+    if (!fullname.isBlank()) {
+      startActivity(Intent(this, TasksActivity::class.java))
+      sharedPrefs.setLogin(true)
+      sharedPrefs.setFullName(fullname)
+      finish()
+    } else {
+      fullname_til.error = getString(R.string.please_enter_your_name)
+    }
+  }
+
+  private fun addTextWatcher() {
+    fullname_til.editText?.addTextChangedListener {
+      fullname_til.error = ""
+      if (it.isNullOrBlank())
+        fullname_til.error = getString(R.string.please_enter_your_name)
     }
   }
 }

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.prudhvir3ddy.todo_app_gettingthingsdone">
+
   <application
       android:name=".ToDoApp"
       android:allowBackup="false"
@@ -11,7 +13,9 @@
       android:theme="@style/AppTheme">
     <activity
         android:name=".view.activities.DetailActivity"
-        android:parentActivityName=".view.activities.TasksActivity" />
+        android:parentActivityName=".view.activities.TasksActivity"
+        android:screenOrientation="portrait"
+        tools:ignore="LockedOrientationActivity" />
     <activity android:name=".view.activities.SplashActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -21,8 +25,14 @@
     </activity>
     <activity
         android:name=".view.activities.TasksActivity"
-        android:theme="@style/AppTheme.NoActionBar" />
-    <activity android:name=".view.activities.LoginActivity" />
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme.NoActionBar"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name=".view.activities.LoginActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme.NoActionBar"
+        tools:ignore="LockedOrientationActivity" />
 
     <service
         android:name=".fcm.MyFirebaseMessagingService"

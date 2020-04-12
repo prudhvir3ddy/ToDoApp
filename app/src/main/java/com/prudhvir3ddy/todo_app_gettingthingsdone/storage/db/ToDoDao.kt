@@ -1,5 +1,6 @@
 package com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -11,7 +12,7 @@ import androidx.room.Update
 interface ToDoDao {
 
   @Query("SELECT * FROM todo")
-  fun getAll(): List<ToDo>
+  fun getAll(): LiveData<List<ToDo>>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun insertToDo(toDo: ToDo)

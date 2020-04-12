@@ -24,6 +24,13 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
     }
   }
+  compileOptions {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+  }
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
 }
 
 dependencies {
@@ -42,6 +49,8 @@ dependencies {
   kapt "androidx.room:room-compiler:$roomVersion"
 
   implementation "org.koin:koin-android:$koinVersion"
+  implementation "org.koin:koin-androidx-viewmodel:$koinVersion"
+
 
   // Kotlin + coroutines
   implementation "androidx.work:work-runtime-ktx:$workVersion"

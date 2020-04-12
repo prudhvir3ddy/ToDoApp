@@ -10,20 +10,20 @@
       android:id="@+id/camera_tv"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
       android:layout_marginTop="16dp"
-      android:gravity="center"
       android:text="@string/camera"
-      android:textAppearance="@style/TextAppearance.AppCompat.Large"
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
       />
   <TextView
       android:id="@+id/gallery_tv"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
       android:layout_marginTop="16dp"
       android:layout_marginBottom="16dp"
-      android:gravity="center"
       android:text="@string/gallery"
-      android:textAppearance="@style/TextAppearance.AppCompat.Large"
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
       />
 
 </LinearLayout>

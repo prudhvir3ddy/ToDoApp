@@ -23,22 +23,38 @@
   <TextView
       android:id="@+id/welcome_tv"
       style="@style/TextAppearance.MaterialComponents.Headline5"
-      android:layout_width="wrap_content"
+      android:layout_width="0dp"
       android:layout_height="wrap_content"
+      app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      tools:text="Welcome, Prudhvi"
+      tools:text="Welcome, Prudhvi🙏 "
       />
   <androidx.recyclerview.widget.RecyclerView
-      android:id="@+id/tasks_rv"
+      android:id="@+id/tasksRv"
       android:layout_width="0dp"
       android:layout_height="0dp"
       android:layout_marginTop="16dp"
+      android:layout_marginBottom="8dp"
+      android:visibility="gone"
       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/welcome_tv"
+      />
+  <ImageView
+      android:id="@+id/noWorkIv"
+      android:layout_width="wrap_content"
+      android:layout_height="300dp"
+      android:layout_marginTop="32dp"
+      android:layout_marginEnd="16dp"
+      android:layout_marginBottom="32dp"
+      app:layout_constraintBottom_toTopOf="@+id/add_task_fab"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/welcome_tv"
+      app:srcCompat="@drawable/walk"
       />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
