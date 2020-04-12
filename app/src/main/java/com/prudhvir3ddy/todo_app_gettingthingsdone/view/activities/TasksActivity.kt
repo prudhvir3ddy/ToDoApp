@@ -12,7 +12,7 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
-import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDoDao
+import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDoDatabase
 import com.prudhvir3ddy.todo_app_gettingthingsdone.utils.IntentConstants
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.BottomSheetDialog
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.BottomSheetDialog.BottomSheetListener
@@ -31,7 +31,7 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
   private val tasksList = arrayListOf<ToDo>()
   private lateinit var adapter: ToDoListAdapter
 
-  private val todoDao: ToDoDao by inject()
+  private val toDoDatabase: ToDoDatabase by inject()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -58,9 +58,9 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
   }
 
   private fun getDataFromDb() {
-    Thread {
-      tasksList.addAll(todoDao.getAll())
-    }.start()
+    toDoDatabase.databaseWriteExecutor.execute {
+      tasksList.addAll(toDoDatabase.todoDao().getAll())
+    }
   }
 
   private fun setUpRecyclerView() {
@@ -76,10 +76,9 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
       }
 
       override fun onUpdate(todo: ToDo) {
-        Thread {
-          todoDao.updateToDo(todo)
-        }.start()
-
+        toDoDatabase.databaseWriteExecutor.execute {
+          toDoDatabase.todoDao().updateToDo(todo)
+        }
       }
     }
 
@@ -102,14 +101,14 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
 
   override fun onSave(taskName: String, taskDesc: String) {
 
-    Thread {
-      todoDao.insertToDo(
+    toDoDatabase.databaseWriteExecutor.execute {
+      toDoDatabase.todoDao().insertToDo(
         ToDo(
           title = taskName,
           description = taskDesc
         )
       )
-    }.start()
+    }
 
     tasksList.add(
       ToDo(

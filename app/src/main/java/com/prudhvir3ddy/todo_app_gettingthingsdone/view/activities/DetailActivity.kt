@@ -15,11 +15,10 @@ import com.bumptech.glide.Glide
 import com.prudhvir3ddy.todo_app_gettingthingsdone.BuildConfig
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
-import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDoDao
+import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDoDatabase
 import com.prudhvir3ddy.todo_app_gettingthingsdone.utils.IntentConstants
 import kotlinx.android.synthetic.main.activity_detail.description_tv
 import kotlinx.android.synthetic.main.activity_detail.image_path_iv
-import kotlinx.android.synthetic.main.activity_detail.root_detail
 import kotlinx.android.synthetic.main.activity_detail.title_tv
 import kotlinx.android.synthetic.main.dialog_image_source_selector.view.camera_tv
 import kotlinx.android.synthetic.main.dialog_image_source_selector.view.gallery_tv
@@ -37,7 +36,7 @@ class DetailActivity : AppCompatActivity() {
 
   lateinit var currentPhotoPath: String
 
-  private val todoDao: ToDoDao by inject()
+  private val toDoDatabase: ToDoDatabase by inject()
 
   var id: Int? = null
 
@@ -60,7 +59,7 @@ class DetailActivity : AppCompatActivity() {
   }
 
   private fun setupDialog() {
-    val view = LayoutInflater.from(this).inflate(R.layout.dialog_image_source_selector, root_detail)
+    val view = LayoutInflater.from(this).inflate(R.layout.dialog_image_source_selector, null)
     val cameraTv = view.camera_tv
     val galleryTv = view.gallery_tv
 
@@ -139,30 +138,20 @@ class DetailActivity : AppCompatActivity() {
           val selectedImage = data?.data
           currentPhotoPath = selectedImage.toString()
           Glide.with(this).load(selectedImage).into(image_path_iv)
-          Thread {
-            todoDao.updateToDo(
-              ToDo(
-                id = id,
-                title = title_tv.text.toString(),
-                description = description_tv.text.toString(),
-                imagePath = currentPhotoPath
-              )
-            )
-          }.start()
         }
         CAMERA_CAPTURE_RC -> {
           Glide.with(this).load(currentPhotoPath).into(image_path_iv)
-          Thread {
-            todoDao.updateToDo(
-              ToDo(
-                id = id,
-                title = title_tv.text.toString(),
-                description = description_tv.text.toString(),
-                imagePath = currentPhotoPath
-              )
-            )
-          }.start()
         }
+      }
+      toDoDatabase.databaseWriteExecutor.execute {
+        toDoDatabase.todoDao().updateToDo(
+          ToDo(
+            id = id,
+            title = title_tv.text.toString(),
+            description = description_tv.text.toString(),
+            imagePath = currentPhotoPath
+          )
+        )
       }
     }
   }
