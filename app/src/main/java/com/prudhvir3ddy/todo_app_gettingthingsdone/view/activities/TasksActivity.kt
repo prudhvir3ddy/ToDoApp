@@ -13,6 +13,7 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDoDao
+import com.prudhvir3ddy.todo_app_gettingthingsdone.utils.IntentConstants
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.BottomSheetDialog
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.BottomSheetDialog.BottomSheetListener
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.ItemClickListener
@@ -67,8 +68,10 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
       ItemClickListener {
       override fun onClick(todo: ToDo) {
         val intent = Intent(this@TasksActivity, DetailActivity::class.java)
-        intent.putExtra("title", todo.title)
-        intent.putExtra("title", todo.description)
+        intent.putExtra(IntentConstants.TITLE, todo.title)
+        intent.putExtra(IntentConstants.DESCRIPTION, todo.description)
+        intent.putExtra(IntentConstants.ID, todo.id)
+        intent.putExtra(IntentConstants.IMAGE_PATH, todo.imagePath)
         startActivity(intent)
       }
 

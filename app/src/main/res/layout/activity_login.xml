@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/username"
         android:imeOptions="actionNext"
+        android:singleLine="true"
         android:maxLines="1"
         />
 
@@ -48,6 +49,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/full_name"
         android:imeOptions="actionNext"
+        android:singleLine="true"
         android:maxLines="1"
         />
 

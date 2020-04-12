@@ -8,4 +8,7 @@
   <string name="username">Username</string>
   <string name="full_name">Full Name</string>
   <string name="log_in">Log in</string>
+  <string name="camera">Camera</string>
+  <string name="gallery">Gallery</string>
+  <string name="task_image">Task Image</string>
 </resources>

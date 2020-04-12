@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.prudhvir3ddy.todo_app_gettingthingsdone">
-
   <application
       android:name=".ToDoApp"
       android:allowBackup="false"
@@ -10,7 +9,9 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
-    <activity android:name=".view.activities.DetailActivity" />
+    <activity
+        android:name=".view.activities.DetailActivity"
+        android:parentActivityName=".view.activities.TasksActivity" />
     <activity android:name=".view.activities.SplashActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -30,6 +31,16 @@
         <action android:name="com.google.firebase.MESSAGING_EVENT" />
       </intent-filter>
     </service>
+
+    <provider
+        android:name="androidx.core.content.FileProvider"
+        android:authorities="${applicationId}.fileprovider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+      <meta-data
+          android:name="android.support.FILE_PROVIDER_PATHS"
+          android:resource="@xml/file_paths" />
+    </provider>
 
   </application>
 
