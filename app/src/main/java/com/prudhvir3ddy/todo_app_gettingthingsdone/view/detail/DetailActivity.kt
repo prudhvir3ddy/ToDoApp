@@ -1,4 +1,4 @@
-package com.prudhvir3ddy.todo_app_gettingthingsdone.view.activities
+package com.prudhvir3ddy.todo_app_gettingthingsdone.view.detail
 
 import android.app.Activity
 import android.content.Intent
@@ -17,9 +17,9 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.R
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDoDatabase
 import com.prudhvir3ddy.todo_app_gettingthingsdone.utils.IntentConstants
-import kotlinx.android.synthetic.main.activity_detail.description_tv
-import kotlinx.android.synthetic.main.activity_detail.image_path_iv
-import kotlinx.android.synthetic.main.activity_detail.title_tv
+import kotlinx.android.synthetic.main.activity_detail.descriptionTv
+import kotlinx.android.synthetic.main.activity_detail.imagePathIv
+import kotlinx.android.synthetic.main.activity_detail.titleTv
 import kotlinx.android.synthetic.main.dialog_image_source_selector.view.camera_tv
 import kotlinx.android.synthetic.main.dialog_image_source_selector.view.gallery_tv
 import org.koin.android.ext.android.inject
@@ -45,15 +45,15 @@ class DetailActivity : AppCompatActivity() {
     setContentView(R.layout.activity_detail)
 
     val intent = intent
-    title_tv.text = intent.getStringExtra(IntentConstants.TITLE)
-    description_tv.text = intent.getStringExtra(IntentConstants.DESCRIPTION)
+    titleTv.text = intent.getStringExtra(IntentConstants.TITLE)
+    descriptionTv.text = intent.getStringExtra(IntentConstants.DESCRIPTION)
     id = intent.getIntExtra(IntentConstants.ID, 0)
     val image = intent.getStringExtra(IntentConstants.IMAGE_PATH)
 
     if (image != null && !TextUtils.isEmpty(image)) {
-      Glide.with(this).load(image).into(image_path_iv)
+      Glide.with(this).load(image).into(imagePathIv)
     }
-    image_path_iv.setOnClickListener {
+    imagePathIv.setOnClickListener {
       setupDialog()
     }
   }
@@ -138,18 +138,18 @@ class DetailActivity : AppCompatActivity() {
         GALLERY_PICK_RC -> {
           val selectedImage = data?.data
           currentPhotoPath = selectedImage.toString()
-          Glide.with(this).load(selectedImage).into(image_path_iv)
+          Glide.with(this).load(selectedImage).into(imagePathIv)
         }
         CAMERA_CAPTURE_RC -> {
-          Glide.with(this).load(currentPhotoPath).into(image_path_iv)
+          Glide.with(this).load(currentPhotoPath).into(imagePathIv)
         }
       }
       toDoDatabase.databaseWriteExecutor.execute {
         toDoDatabase.todoDao().updateToDo(
           ToDo(
             id = id,
-            title = title_tv.text.toString(),
-            description = description_tv.text.toString(),
+            title = titleTv.text.toString(),
+            description = descriptionTv.text.toString(),
             imagePath = currentPhotoPath
           )
         )

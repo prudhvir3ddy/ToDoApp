@@ -1,4 +1,4 @@
-package com.prudhvir3ddy.todo_app_gettingthingsdone.view.activities
+package com.prudhvir3ddy.todo_app_gettingthingsdone.view.splash
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,9 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
+import com.prudhvir3ddy.todo_app_gettingthingsdone.view.login.LoginActivity
+import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.TasksActivity
+import com.prudhvir3ddy.todo_app_gettingthingsdone.view.onboarding.OnBoardingActivity
 import org.koin.android.ext.android.inject
 
 class SplashActivity : AppCompatActivity() {
@@ -21,10 +24,16 @@ class SplashActivity : AppCompatActivity() {
     setContentView(layout.activity_splash)
 
     getFcmToken()
-    if (sharedPrefs.getLogin()) {
-      startActivity(Intent(this, TasksActivity::class.java))
-    } else {
-      startActivity(Intent(this, LoginActivity::class.java))
+    when {
+      sharedPrefs.getLogin() -> {
+        startActivity(Intent(this, TasksActivity::class.java))
+      }
+      sharedPrefs.getFirstTime() -> {
+        startActivity(Intent(this, LoginActivity::class.java))
+      }
+      else -> {
+        startActivity(Intent(this, OnBoardingActivity::class.java))
+      }
     }
     finish()
   }

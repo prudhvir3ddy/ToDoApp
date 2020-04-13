@@ -4,13 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/root_detail"
     android:padding="16dp"
-    tools:context=".view.activities.DetailActivity"
+    tools:context=".view.detail.DetailActivity"
     >
 
   <TextView
-      android:id="@+id/title_tv"
+      android:id="@+id/titleTv"
       style="@style/TextAppearance.MaterialComponents.Headline5"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
@@ -18,22 +17,22 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="1.0"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/image_path_iv"
+      app:layout_constraintTop_toBottomOf="@+id/imagePathIv"
       tools:text="@string/task_name"
       />
   <TextView
-      android:id="@+id/description_tv"
+      android:id="@+id/descriptionTv"
       style="@style/TextAppearance.MaterialComponents.Body2"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginTop="16dp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/title_tv"
+      app:layout_constraintTop_toBottomOf="@+id/titleTv"
       tools:text="@string/task_description"
       />
   <ImageView
-      android:id="@+id/image_path_iv"
+      android:id="@+id/imagePathIv"
       android:layout_width="0dp"
       android:layout_height="200dp"
       android:contentDescription="@string/task_image"

@@ -12,11 +12,16 @@
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
     <activity
-        android:name=".view.activities.DetailActivity"
-        android:parentActivityName=".view.activities.TasksActivity"
+        android:name=".view.onboarding.OnBoardingActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme.NoActionBar"
+        tools:ignore="LockedOrientationActivity" />
+    <activity
+        android:name=".view.detail.DetailActivity"
+        android:parentActivityName=".view.main.TasksActivity"
         android:screenOrientation="portrait"
         tools:ignore="LockedOrientationActivity" />
-    <activity android:name=".view.activities.SplashActivity">
+    <activity android:name=".view.splash.SplashActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 
@@ -24,12 +29,12 @@
       </intent-filter>
     </activity>
     <activity
-        android:name=".view.activities.TasksActivity"
+        android:name=".view.main.TasksActivity"
         android:screenOrientation="portrait"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="LockedOrientationActivity" />
     <activity
-        android:name=".view.activities.LoginActivity"
+        android:name=".view.login.LoginActivity"
         android:screenOrientation="portrait"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="LockedOrientationActivity" />
@@ -51,7 +56,6 @@
           android:name="android.support.FILE_PROVIDER_PATHS"
           android:resource="@xml/file_paths" />
     </provider>
-
   </application>
 
 </manifest>

@@ -15,4 +15,6 @@
   <string name="let_s_get_started_with_a_plan">Let\'s get started with a plan ?</string>
   <string name="get_started">Get Started</string>
   <string name="please_enter_your_name">Please Enter Your Name</string>
+  <string name="continue_btn_txt">Continue</string>
+  <string name="dot">•</string>
 </resources>

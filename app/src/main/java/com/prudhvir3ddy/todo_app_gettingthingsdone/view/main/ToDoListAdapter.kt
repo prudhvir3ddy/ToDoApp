@@ -1,4 +1,4 @@
-package com.prudhvir3ddy.todo_app_gettingthingsdone.view
+package com.prudhvir3ddy.todo_app_gettingthingsdone.view.main
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
-import com.prudhvir3ddy.todo_app_gettingthingsdone.view.ToDoListAdapter.ToDoListViewHolder
+import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.ToDoListAdapter.ToDoListViewHolder
 import kotlinx.android.synthetic.main.item_todo.view.checkbox
 import kotlinx.android.synthetic.main.item_todo.view.todo_description
 import kotlinx.android.synthetic.main.item_todo.view.todo_name
