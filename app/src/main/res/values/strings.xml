@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">ToDo-App-GettingThingsDone</string>
+  <string name="app_name">ToDo-App</string>
   <string name="welcome">Welcome, %1$s 🙏</string>
   <string name="task_name">Task Name</string>
   <string name="task_description">Task Description</string>
