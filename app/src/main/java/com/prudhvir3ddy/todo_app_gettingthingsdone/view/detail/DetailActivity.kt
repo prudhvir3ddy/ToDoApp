@@ -44,6 +44,7 @@ class DetailActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_detail)
 
+    setToolbar()
     val intent = intent
     titleTv.text = intent.getStringExtra(IntentConstants.TITLE)
     descriptionTv.text = intent.getStringExtra(IntentConstants.DESCRIPTION)
@@ -56,6 +57,10 @@ class DetailActivity : AppCompatActivity() {
     imagePathIv.setOnClickListener {
       setupDialog()
     }
+  }
+
+  private fun setToolbar() {
+    supportActionBar?.title = "Get it Done"
   }
 
   private fun setupDialog() {
