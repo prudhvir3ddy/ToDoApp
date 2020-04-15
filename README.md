@@ -1,6 +1,8 @@
 # ToDoApp
 ###### A pretty simple notes app
 
+![Android CI](https://github.com/prudhvir3ddy/ToDoApp/workflows/Android%20CI/badge.svg)
+
 <table>
    <tr>
      <td><kbd><img src="./screenshots/ss1.png"></kbd></td>
