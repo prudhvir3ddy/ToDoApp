@@ -13,7 +13,10 @@ buildscript {
    * properties common to all modules in the project
    */
   ext {
-    kotlinVersion = '1.3.61'
+    kotlinVersion = '1.3.71'
+    roomVersion = '2.2.5'
+    koinVersion = '2.1.5'
+    workVersion = '2.3.4'
   }
 
   /**
@@ -40,6 +43,8 @@ buildscript {
   dependencies {
     classpath 'com.android.tools.build:gradle:3.6.2'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    classpath "org.koin:koin-gradle-plugin:$koinVersion"
+    classpath 'com.google.gms:google-services:4.3.3'
 
     // NOTE: Do not place your application dependencies here; they belong
     // in the individual module build.gradle files
@@ -61,6 +66,8 @@ allprojects {
     jcenter()
   }
 }
+
+apply plugin: 'koin'
 
 task clean(type: Delete) {
   delete rootProject.buildDir

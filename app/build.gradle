@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-kapt'
 
 android {
   compileSdkVersion 29
@@ -22,6 +24,13 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
     }
   }
+  compileOptions {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+  }
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
 }
 
 dependencies {
@@ -33,4 +42,25 @@ dependencies {
   testImplementation 'junit:junit:4.13'
   androidTestImplementation 'androidx.test.ext:junit:1.1.1'
   androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+  implementation "com.google.android.material:material:1.1.0"
+
+  implementation "androidx.room:room-runtime:$roomVersion"
+  kapt "androidx.room:room-compiler:$roomVersion"
+
+  implementation "org.koin:koin-android:$koinVersion"
+  implementation "org.koin:koin-androidx-viewmodel:$koinVersion"
+
+
+  // Kotlin + coroutines
+  implementation "androidx.work:work-runtime-ktx:$workVersion"
+
+  //noinspection GradleDependency
+  implementation 'com.google.firebase:firebase-messaging:19.0.1'
+
+  implementation 'com.github.bumptech.glide:glide:4.11.0'
+  kapt 'com.github.bumptech.glide:compiler:4.11.0'
+
+  implementation "androidx.viewpager2:viewpager2:1.0.0"
+
 }

@@ -1,3 +1,20 @@
 <resources>
-  <string name="app_name">ToDo-App-GettingThingsDone</string>
+  <string name="app_name">ToDo-App</string>
+  <string name="welcome">Welcome, %1$s 🙏</string>
+  <string name="task_name">Task Name</string>
+  <string name="task_description">Task Description</string>
+  <string name="add_task">Add Task</string>
+  <string name="save">save</string>
+  <string name="username">Username</string>
+  <string name="full_name">Full Name</string>
+  <string name="log_in">Log in</string>
+  <string name="camera">Camera</string>
+  <string name="gallery">Gallery</string>
+  <string name="task_image">Task Image</string>
+  <string name="hi_it_s_great_to_see_you_here">Hi 👋, It\'s Great To See You Here</string>
+  <string name="let_s_get_started_with_a_plan">Let\'s get started with a plan ?</string>
+  <string name="get_started">Get Started</string>
+  <string name="please_enter_your_name">Please Enter Your Name</string>
+  <string name="continue_btn_txt">Continue</string>
+  <string name="dot">•</string>
 </resources>
