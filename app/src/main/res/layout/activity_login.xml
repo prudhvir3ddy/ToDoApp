@@ -9,15 +9,17 @@
     >
 
   <ImageView
-      android:id="@+id/imageView"
+      android:id="@+id/master_plan_iv"
       android:layout_width="0dp"
       android:layout_height="280dp"
       android:layout_marginTop="32dp"
+      android:layout_marginBottom="32dp"
+      app:layout_constraintBottom_toTopOf="@+id/textView"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.0"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/textView2"
-      app:srcCompat="@drawable/master_plan"
+      tools:srcCompat="@drawable/master_plan"
       />
   <TextView
       android:id="@+id/textView"
@@ -35,7 +37,7 @@
       style="@style/TextAppearance.MaterialComponents.Headline5"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_marginTop="32dp"
+      android:layout_marginTop="16dp"
       android:text="@string/hi_it_s_great_to_see_you_here"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +71,6 @@
       android:id="@+id/login_btn"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-
       android:imeOptions="actionDone"
       android:text="@string/get_started"
       app:layout_constraintBottom_toBottomOf="parent"
