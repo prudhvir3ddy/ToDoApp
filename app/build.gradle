@@ -5,8 +5,16 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-kapt'
 
 android {
+  signingConfigs {
+    release {
+      storeFile file('keystores/todoapp.keystore')
+      storePassword 'toooor'
+      keyAlias = 'key'
+      keyPassword 'toooor'
+    }
+  }
   compileSdkVersion 29
-  buildToolsVersion "29.0.2"
+  buildToolsVersion "29.0.3"
 
   defaultConfig {
     applicationId "com.prudhvir3ddy.todo_app_gettingthingsdone"
@@ -21,6 +29,7 @@ android {
   buildTypes {
     release {
       minifyEnabled false
+      signingConfig signingConfigs.release
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
     }
   }
