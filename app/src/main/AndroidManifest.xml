@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.prudhvir3ddy.todo_app_gettingthingsdone">
 
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
   <application
       android:name=".ToDoApp"
       android:allowBackup="false"

@@ -79,6 +79,7 @@ class DetailActivity : AppCompatActivity() {
       .setTitle("Choose an action")
       .setView(view)
       .create()
+    dialog.show()
 
     cameraTv.setOnClickListener {
       createImageFile()
@@ -92,8 +93,6 @@ class DetailActivity : AppCompatActivity() {
       startActivityForResult(intent, GALLERY_PICK_RC)
       dialog.hide()
     }
-
-    dialog.show()
   }
 
   private fun takePicture() {
