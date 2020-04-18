@@ -24,7 +24,7 @@ class TasksViewModel(
   val tasksList: LiveData<List<ToDo>> = getDataFromDb()
 
   fun setUpWorkManager() {
-    val request = PeriodicWorkRequest.Builder(MyWorker::class.java, 15, MINUTES)
+    val request = PeriodicWorkRequest.Builder(MyWorker::class.java, 15L, MINUTES)
       .build()
     WorkManager.getInstance(context).enqueueUniquePeriodicWork("boo", KEEP, request)
   }

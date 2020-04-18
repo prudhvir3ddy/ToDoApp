@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.login.LoginActivity
@@ -51,7 +52,7 @@ class OnBoardViewPagerAdapter(
 
     title_tv.text = data[position].title
     desc_tv.text = data[position].description
-    main_iv.setImageResource(data[position].image)
+    Glide.with(this).load(data[position].image).into(main_iv)
     if (position == data.size - 1) {
       continue_btn.visibility = View.VISIBLE
       layoutDots.visibility = View.GONE

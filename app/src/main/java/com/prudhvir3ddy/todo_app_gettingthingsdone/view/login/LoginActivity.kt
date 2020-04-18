@@ -4,12 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import com.bumptech.glide.Glide
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.TasksActivity
 import kotlinx.android.synthetic.main.activity_login.fullname_til
 import kotlinx.android.synthetic.main.activity_login.login_btn
+import kotlinx.android.synthetic.main.activity_login.master_plan_iv
 import org.koin.android.ext.android.inject
 
 class LoginActivity : AppCompatActivity() {
@@ -19,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(layout.activity_login)
-
+    Glide.with(this).load(R.drawable.master_plan).into(master_plan_iv)
     addTextWatcher()
 
     login_btn.setOnClickListener {

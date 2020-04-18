@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
+import com.bumptech.glide.Glide
+import com.prudhvir3ddy.todo_app_gettingthingsdone.R
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
@@ -30,6 +32,7 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
     super.onCreate(savedInstanceState)
     setContentView(layout.activity_tasks)
 
+    Glide.with(this).load(R.drawable.add_task).into(noWorkIv)
     setTitle()
 
     add_task_fab.setOnClickListener {
