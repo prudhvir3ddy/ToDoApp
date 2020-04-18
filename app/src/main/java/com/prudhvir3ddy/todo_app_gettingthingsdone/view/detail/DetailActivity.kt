@@ -14,6 +14,7 @@ import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.prudhvir3ddy.todo_app_gettingthingsdone.BuildConfig
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R
+import com.prudhvir3ddy.todo_app_gettingthingsdone.ToDoApp
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDoDatabase
 import com.prudhvir3ddy.todo_app_gettingthingsdone.utils.IntentConstants
@@ -22,14 +23,17 @@ import kotlinx.android.synthetic.main.activity_detail.imagePathIv
 import kotlinx.android.synthetic.main.activity_detail.titleTv
 import kotlinx.android.synthetic.main.dialog_image_source_selector.view.camera_tv
 import kotlinx.android.synthetic.main.dialog_image_source_selector.view.gallery_tv
-import org.koin.android.ext.android.inject
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import javax.inject.Inject
 
 class DetailActivity : AppCompatActivity() {
+
+  @Inject
+  lateinit var toDoDatabase: ToDoDatabase
 
   companion object {
     const val GALLERY_PICK_RC = 2
@@ -38,11 +42,10 @@ class DetailActivity : AppCompatActivity() {
 
   lateinit var currentPhotoPath: String
 
-  private val toDoDatabase: ToDoDatabase by inject()
-
   var todo: ToDo? = ToDo()
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    (application as ToDoApp).appComponent.inject(this)
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_detail)
 

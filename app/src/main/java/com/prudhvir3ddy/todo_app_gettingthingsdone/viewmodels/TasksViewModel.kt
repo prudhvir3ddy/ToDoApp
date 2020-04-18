@@ -10,15 +10,14 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDoDatabase
 import com.prudhvir3ddy.todo_app_gettingthingsdone.workmanager.MyWorker
-import org.koin.core.KoinComponent
 import java.util.concurrent.TimeUnit.MINUTES
+import javax.inject.Inject
 
-class TasksViewModel(
+class TasksViewModel @Inject constructor(
   private val context: Context,
   private val todoDatabase: ToDoDatabase,
   private val sharedPrefs: SharedPrefs
-) : ViewModel(), KoinComponent {
-
+) : ViewModel() {
 
   val tasksList: LiveData<List<ToDo>> = getDataFromDb()
 

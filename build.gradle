@@ -17,6 +17,7 @@ buildscript {
     roomVersion = '2.2.5'
     koinVersion = '2.1.5'
     workVersion = '2.3.4'
+    daggerVersion = '2.25.4'
   }
 
   /**

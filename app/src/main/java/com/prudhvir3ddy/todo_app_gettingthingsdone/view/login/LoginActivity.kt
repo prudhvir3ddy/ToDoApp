@@ -7,18 +7,21 @@ import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
+import com.prudhvir3ddy.todo_app_gettingthingsdone.ToDoApp
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.TasksActivity
 import kotlinx.android.synthetic.main.activity_login.fullname_til
 import kotlinx.android.synthetic.main.activity_login.login_btn
 import kotlinx.android.synthetic.main.activity_login.master_plan_iv
-import org.koin.android.ext.android.inject
+import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity() {
 
-  private val sharedPrefs: SharedPrefs by inject()
+  @Inject
+  lateinit var sharedPrefs: SharedPrefs
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    (application as ToDoApp).appComponent.inject(this)
     super.onCreate(savedInstanceState)
     setContentView(layout.activity_login)
     Glide.with(this).load(R.drawable.master_plan).into(master_plan_iv)

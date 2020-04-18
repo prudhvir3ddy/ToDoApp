@@ -61,10 +61,6 @@ dependencies {
   implementation "androidx.room:room-runtime:$roomVersion"
   kapt "androidx.room:room-compiler:$roomVersion"
 
-  implementation "org.koin:koin-android:$koinVersion"
-  implementation "org.koin:koin-androidx-viewmodel:$koinVersion"
-  testImplementation "org.koin:koin-test:$koinVersion"
-
   testImplementation 'androidx.test:core:1.2.0'
   testImplementation 'org.mockito:mockito-core:2.23.4'
 
@@ -80,5 +76,9 @@ dependencies {
   kapt 'com.github.bumptech.glide:compiler:4.11.0'
 
   implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+  //dagger
+  implementation "com.google.dagger:dagger:$daggerVersion"
+  kapt "com.google.dagger:dagger-compiler:$daggerVersion"
 
 }
