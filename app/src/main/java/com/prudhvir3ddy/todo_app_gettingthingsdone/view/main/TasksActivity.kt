@@ -57,10 +57,7 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
       ItemClickListener {
       override fun onClick(todo: ToDo) {
         val intent = Intent(this@TasksActivity, DetailActivity::class.java)
-        intent.putExtra(IntentConstants.TITLE, todo.title)
-        intent.putExtra(IntentConstants.DESCRIPTION, todo.description)
-        intent.putExtra(IntentConstants.ID, todo.id)
-        intent.putExtra(IntentConstants.IMAGE_PATH, todo.imagePath)
+        intent.putExtra(IntentConstants.TODO, todo)
         startActivity(intent)
       }
 

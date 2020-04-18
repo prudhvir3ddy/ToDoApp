@@ -12,6 +12,11 @@ class ToDoApp : Application() {
   override fun onCreate() {
     super.onCreate()
 
+    koinInit()
+
+  }
+
+  private fun koinInit() {
     startKoin {
       androidContext(this@ToDoApp)
 
@@ -21,4 +26,5 @@ class ToDoApp : Application() {
       modules(listOf(appModule, viewModelModule))
     }
   }
+
 }

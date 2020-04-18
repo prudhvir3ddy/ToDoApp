@@ -31,14 +31,16 @@ import java.util.Locale
 
 class DetailActivity : AppCompatActivity() {
 
-  val GALLERY_PICK_RC = 2
-  val CAMERA_CAPTURE_RC = 1
+  companion object {
+    const val GALLERY_PICK_RC = 2
+    const val CAMERA_CAPTURE_RC = 1
+  }
 
   lateinit var currentPhotoPath: String
 
   private val toDoDatabase: ToDoDatabase by inject()
 
-  var id: Int? = null
+  var todo: ToDo? = ToDo()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -46,16 +48,20 @@ class DetailActivity : AppCompatActivity() {
 
     setToolbar()
     val intent = intent
-    titleTv.text = intent.getStringExtra(IntentConstants.TITLE)
-    descriptionTv.text = intent.getStringExtra(IntentConstants.DESCRIPTION)
-    id = intent.getIntExtra(IntentConstants.ID, 0)
-    val image = intent.getStringExtra(IntentConstants.IMAGE_PATH)
 
-    if (image != null && !TextUtils.isEmpty(image)) {
-      Glide.with(this).load(image).into(imagePathIv)
-    }
+    setViews(intent)
     imagePathIv.setOnClickListener {
       setupDialog()
+    }
+  }
+
+  private fun setViews(intent: Intent?) {
+    todo = intent?.getParcelableExtra(IntentConstants.TODO)
+    titleTv.text = todo?.title
+    descriptionTv.text = todo?.description
+    val image = todo?.imagePath
+    if (image != null && !TextUtils.isEmpty(image)) {
+      Glide.with(this).load(image).into(imagePathIv)
     }
   }
 
@@ -80,7 +86,6 @@ class DetailActivity : AppCompatActivity() {
       dialog.hide()
 
     }
-
 
     galleryTv.setOnClickListener {
       val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -131,10 +136,6 @@ class DetailActivity : AppCompatActivity() {
     }
   }
 
-  private fun askPermissions() {
-
-  }
-
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
 
@@ -152,10 +153,11 @@ class DetailActivity : AppCompatActivity() {
       toDoDatabase.databaseWriteExecutor.execute {
         toDoDatabase.todoDao().updateToDo(
           ToDo(
-            id = id,
-            title = titleTv.text.toString(),
-            description = descriptionTv.text.toString(),
-            imagePath = currentPhotoPath
+            id = todo?.id,
+            title = todo?.title ?: "",
+            description = todo?.description ?: "",
+            imagePath = currentPhotoPath,
+            isCompleted = todo?.isCompleted ?: false
           )
         )
       }
