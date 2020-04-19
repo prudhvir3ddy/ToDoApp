@@ -8,16 +8,23 @@ plugins {
 }
 
 android {
-  compileSdkVersion(BuildPlugins.AndroidSdk.compile)
+
+  testOptions {
+    unitTests(delegateClosureOf<com.android.build.gradle.internal.dsl.TestOptions.UnitTestOptions> {
+      isReturnDefaultValues = true
+    })
+  }
 
   signingConfigs {
-    register("release ") {
+    register("release") {
       storeFile = file("keystores/todoapp.keystore")
       storePassword = "toooor"
       keyAlias = "key"
       keyPassword = "toooor"
     }
   }
+
+  compileSdkVersion(BuildPlugins.AndroidSdk.compile)
 
   defaultConfig {
     applicationId = "com.prudhvir3ddy.todo_app_gettingthingsdone"
@@ -31,6 +38,7 @@ android {
   buildTypes {
     getByName("release") {
       isMinifyEnabled = false
+      signingConfig = signingConfigs.getByName("release")
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
   }
