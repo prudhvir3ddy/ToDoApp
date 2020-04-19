@@ -81,4 +81,6 @@ dependencies {
   implementation "com.google.dagger:dagger:$daggerVersion"
   kapt "com.google.dagger:dagger-compiler:$daggerVersion"
 
+  testImplementation 'org.robolectric:robolectric:4.3'
+
 }

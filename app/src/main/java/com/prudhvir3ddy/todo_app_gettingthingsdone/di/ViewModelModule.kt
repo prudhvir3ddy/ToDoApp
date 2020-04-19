@@ -2,8 +2,8 @@ package com.prudhvir3ddy.todo_app_gettingthingsdone.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.prudhvir3ddy.todo_app_gettingthingsdone.utils.ViewModelFactory
 import com.prudhvir3ddy.todo_app_gettingthingsdone.viewmodels.TasksViewModel
+import com.prudhvir3ddy.todo_app_gettingthingsdone.viewmodels.ViewModelFactory
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

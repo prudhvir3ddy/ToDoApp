@@ -22,7 +22,7 @@ class TasksViewModel @Inject constructor(
   val tasksList: LiveData<List<ToDo>> = getDataFromDb()
 
   fun setUpWorkManager() {
-    val request = PeriodicWorkRequest.Builder(MyWorker::class.java, 15, MINUTES)
+    val request = PeriodicWorkRequest.Builder(MyWorker::class.java, 15L, MINUTES)
       .build()
     val workManager = WorkManager.getInstance(context)
     workManager.enqueueUniquePeriodicWork("boo", KEEP, request)
