@@ -15,10 +15,10 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
 import com.prudhvir3ddy.todo_app_gettingthingsdone.ToDoApp
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 import com.prudhvir3ddy.todo_app_gettingthingsdone.utils.IntentConstants
-import com.prudhvir3ddy.todo_app_gettingthingsdone.utils.ViewModelFactory
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.detail.DetailActivity
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.BottomSheetDialog.BottomSheetListener
 import com.prudhvir3ddy.todo_app_gettingthingsdone.viewmodels.TasksViewModel
+import com.prudhvir3ddy.todo_app_gettingthingsdone.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_tasks.add_task_fab
 import kotlinx.android.synthetic.main.activity_tasks.noWorkIv
 import kotlinx.android.synthetic.main.activity_tasks.tasksRv

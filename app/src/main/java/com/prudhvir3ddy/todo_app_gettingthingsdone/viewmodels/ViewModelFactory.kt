@@ -1,4 +1,4 @@
-package com.prudhvir3ddy.todo_app_gettingthingsdone.utils
+package com.prudhvir3ddy.todo_app_gettingthingsdone.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

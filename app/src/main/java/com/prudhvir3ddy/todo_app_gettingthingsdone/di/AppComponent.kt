@@ -6,6 +6,7 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.view.login.LoginActivity
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.TasksActivity
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.onboarding.OnBoardingActivity
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.splash.SplashActivity
+import com.prudhvir3ddy.todo_app_gettingthingsdone.workmanager.MyWorker
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -39,4 +40,5 @@ interface AppComponent {
   fun inject(loginActivity: LoginActivity)
   fun inject(detailActivity: DetailActivity)
   fun inject(onBoardingActivity: OnBoardingActivity)
+  fun inject(worker: MyWorker)
 }
