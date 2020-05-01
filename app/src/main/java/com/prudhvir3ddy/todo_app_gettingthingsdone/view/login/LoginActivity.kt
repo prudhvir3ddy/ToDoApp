@@ -35,10 +35,11 @@ class LoginActivity : AppCompatActivity() {
 
   private fun getStarted(fullname: String) {
     if (!fullname.isBlank()) {
-      startActivity(Intent(this, TasksActivity::class.java))
       sharedPrefs.setLogin(true)
       sharedPrefs.setFullName(fullname)
-      finish()
+      val intent = Intent(this, TasksActivity::class.java)
+      intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+      startActivity(intent)
     } else {
       fullname_til.error = getString(R.string.please_enter_your_name)
     }

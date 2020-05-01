@@ -60,7 +60,9 @@ class OnBoardViewPagerAdapter(
 
     continue_btn.setOnClickListener {
       sharedPrefs.setFirstTime()
-      context.startActivity(Intent(context, LoginActivity::class.java))
+      val intent = Intent(context, LoginActivity::class.java)
+      intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+      context.startActivity(intent)
     }
   }
 
