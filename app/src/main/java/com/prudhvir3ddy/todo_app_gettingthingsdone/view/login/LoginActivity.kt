@@ -24,13 +24,19 @@ class LoginActivity : AppCompatActivity() {
     (application as ToDoApp).appComponent.inject(this)
     super.onCreate(savedInstanceState)
     setContentView(layout.activity_login)
-    Glide.with(this).load(R.drawable.master_plan).into(master_plan_iv)
+
+    setUpHeaderImage()
     addTextWatcher()
 
     login_btn.setOnClickListener {
       val fullname = fullname_til.editText?.text.toString()
       getStarted(fullname)
     }
+  }
+
+  private fun setUpHeaderImage() {
+    //TODO use bitmap Factory to scale image here
+    Glide.with(this).load(R.drawable.master_plan).into(master_plan_iv)
   }
 
   private fun getStarted(fullname: String) {
