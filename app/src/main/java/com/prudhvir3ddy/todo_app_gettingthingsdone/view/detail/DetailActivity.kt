@@ -14,6 +14,7 @@ import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.prudhvir3ddy.todo_app_gettingthingsdone.BuildConfig
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R
+import com.prudhvir3ddy.todo_app_gettingthingsdone.ToDoApp
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDoDatabase
 import com.prudhvir3ddy.todo_app_gettingthingsdone.utils.IntentConstants
@@ -22,40 +23,48 @@ import kotlinx.android.synthetic.main.activity_detail.imagePathIv
 import kotlinx.android.synthetic.main.activity_detail.titleTv
 import kotlinx.android.synthetic.main.dialog_image_source_selector.view.camera_tv
 import kotlinx.android.synthetic.main.dialog_image_source_selector.view.gallery_tv
-import org.koin.android.ext.android.inject
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import javax.inject.Inject
 
 class DetailActivity : AppCompatActivity() {
 
-  val GALLERY_PICK_RC = 2
-  val CAMERA_CAPTURE_RC = 1
+  @Inject
+  lateinit var toDoDatabase: ToDoDatabase
+
+  companion object {
+    const val GALLERY_PICK_RC = 2
+    const val CAMERA_CAPTURE_RC = 1
+  }
 
   lateinit var currentPhotoPath: String
 
-  private val toDoDatabase: ToDoDatabase by inject()
-
-  var id: Int? = null
+  var todo: ToDo? = ToDo()
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    (application as ToDoApp).appComponent.inject(this)
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_detail)
 
     setToolbar()
     val intent = intent
-    titleTv.text = intent.getStringExtra(IntentConstants.TITLE)
-    descriptionTv.text = intent.getStringExtra(IntentConstants.DESCRIPTION)
-    id = intent.getIntExtra(IntentConstants.ID, 0)
-    val image = intent.getStringExtra(IntentConstants.IMAGE_PATH)
 
-    if (image != null && !TextUtils.isEmpty(image)) {
-      Glide.with(this).load(image).into(imagePathIv)
-    }
+    setViews(intent)
     imagePathIv.setOnClickListener {
       setupDialog()
+    }
+  }
+
+  private fun setViews(intent: Intent?) {
+    todo = intent?.getParcelableExtra(IntentConstants.TODO)
+    titleTv.text = todo?.title
+    descriptionTv.text = todo?.description
+    val image = todo?.imagePath
+    if (image != null && !TextUtils.isEmpty(image)) {
+      Glide.with(this).load(image).into(imagePathIv)
     }
   }
 
@@ -73,6 +82,7 @@ class DetailActivity : AppCompatActivity() {
       .setTitle("Choose an action")
       .setView(view)
       .create()
+    dialog.show()
 
     cameraTv.setOnClickListener {
       createImageFile()
@@ -81,14 +91,11 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
-
     galleryTv.setOnClickListener {
       val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
       startActivityForResult(intent, GALLERY_PICK_RC)
       dialog.hide()
     }
-
-    dialog.show()
   }
 
   private fun takePicture() {
@@ -131,10 +138,6 @@ class DetailActivity : AppCompatActivity() {
     }
   }
 
-  private fun askPermissions() {
-
-  }
-
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
 
@@ -152,10 +155,11 @@ class DetailActivity : AppCompatActivity() {
       toDoDatabase.databaseWriteExecutor.execute {
         toDoDatabase.todoDao().updateToDo(
           ToDo(
-            id = id,
-            title = titleTv.text.toString(),
-            description = descriptionTv.text.toString(),
-            imagePath = currentPhotoPath
+            id = todo?.id,
+            title = todo?.title ?: "",
+            description = todo?.description ?: "",
+            imagePath = currentPhotoPath,
+            isCompleted = todo?.isCompleted ?: false
           )
         )
       }

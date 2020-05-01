@@ -1,5 +1,10 @@
 # ToDoApp
-###### A pretty simple notes app
+###### A pretty simple notes app covering modern android concepts
+
+![Android CI](https://github.com/prudhvir3ddy/ToDoApp/workflows/Android%20CI/badge.svg)
+
+
+<a href='https://play.google.com/store/apps/details?id=com.prudhvir3ddy.todo_app_gettingthingsdone'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width = "150px"/></a>
 
 ![Android CI](https://github.com/prudhvir3ddy/ToDoApp/workflows/Android%20CI/badge.svg)
 

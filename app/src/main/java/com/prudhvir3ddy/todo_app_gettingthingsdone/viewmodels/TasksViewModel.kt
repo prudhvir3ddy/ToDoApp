@@ -10,32 +10,31 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDoDatabase
 import com.prudhvir3ddy.todo_app_gettingthingsdone.workmanager.MyWorker
-import org.koin.core.KoinComponent
-import org.koin.core.inject
 import java.util.concurrent.TimeUnit.MINUTES
+import javax.inject.Inject
 
-class TasksViewModel(
-  private val context: Context
-) : ViewModel(), KoinComponent {
-
-  private val toDoDatabase: ToDoDatabase by inject()
-  private val sharedPrefs: SharedPrefs by inject()
+class TasksViewModel @Inject constructor(
+  private val context: Context,
+  private val todoDatabase: ToDoDatabase,
+  private val sharedPrefs: SharedPrefs
+) : ViewModel() {
 
   val tasksList: LiveData<List<ToDo>> = getDataFromDb()
 
   fun setUpWorkManager() {
     val request = PeriodicWorkRequest.Builder(MyWorker::class.java, 15L, MINUTES)
       .build()
-    WorkManager.getInstance(context).enqueueUniquePeriodicWork("boo", KEEP, request)
+    val workManager = WorkManager.getInstance(context)
+    workManager.enqueueUniquePeriodicWork("boo", KEEP, request)
   }
 
   fun getDataFromDb(): LiveData<List<ToDo>> {
-    return toDoDatabase.todoDao().getAll()
+    return todoDatabase.todoDao().getAll()
   }
 
   fun onTaskUpdate(todo: ToDo) {
-    toDoDatabase.databaseWriteExecutor.execute {
-      toDoDatabase.todoDao().updateToDo(todo)
+    todoDatabase.databaseWriteExecutor.execute {
+      todoDatabase.todoDao().updateToDo(todo)
     }
   }
 
@@ -44,8 +43,8 @@ class TasksViewModel(
   }
 
   fun onTaskSave(taskName: String, taskDesc: String) {
-    toDoDatabase.databaseWriteExecutor.execute {
-      toDoDatabase.todoDao().insertToDo(
+    todoDatabase.databaseWriteExecutor.execute {
+      todoDatabase.todoDao().insertToDo(
         ToDo(
           title = taskName,
           description = taskDesc

@@ -10,16 +10,6 @@
 buildscript {
 
   /**
-   * properties common to all modules in the project
-   */
-  ext {
-    kotlinVersion = '1.3.71'
-    roomVersion = '2.2.5'
-    koinVersion = '2.1.5'
-    workVersion = '2.3.4'
-  }
-
-  /**
    * The repositories block configures the repositories Gradle uses to
    * search or download the dependencies. Gradle pre-configures support for remote
    * repositories such as JCenter, Maven Central, and Ivy. You can also use local
@@ -32,6 +22,10 @@ buildscript {
   repositories {
     google()
     jcenter()
+
+    //Just an instance to show how maven is implemented in kt DSLs
+//    mavenCentral()
+//    maven(url = "https://jitpack.io/")
   }
 
   /**
@@ -41,11 +35,11 @@ buildscript {
    */
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.6.2'
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-    classpath "org.koin:koin-gradle-plugin:$koinVersion"
-    classpath 'com.google.gms:google-services:4.3.3'
-    classpath 'com.google.firebase:firebase-crashlytics-gradle:2.0.0-beta04'
+
+    classpath(BuildPlugins.androidGradlePlugin)
+    classpath(BuildPlugins.androidKotlinPlugin)
+    classpath(BuildPlugins.firebaseLibs.gradleCrashlytics)
+    classpath(BuildPlugins.firebaseLibs.googleGms)
 
     // NOTE: Do not place your application dependencies here; they belong
     // in the individual module build.gradle files
@@ -65,11 +59,11 @@ allprojects {
   repositories {
     google()
     jcenter()
+
   }
 }
 
-apply plugin: 'koin'
 
-task clean(type: Delete) {
-  delete rootProject.buildDir
+tasks.register("clean").configure {
+  delete(rootProject.buildDir)
 }

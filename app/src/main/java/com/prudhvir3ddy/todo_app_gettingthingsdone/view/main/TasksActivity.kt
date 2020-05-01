@@ -5,32 +5,40 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.bumptech.glide.Glide
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
+import com.prudhvir3ddy.todo_app_gettingthingsdone.ToDoApp
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 import com.prudhvir3ddy.todo_app_gettingthingsdone.utils.IntentConstants
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.detail.DetailActivity
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.BottomSheetDialog.BottomSheetListener
 import com.prudhvir3ddy.todo_app_gettingthingsdone.viewmodels.TasksViewModel
+import com.prudhvir3ddy.todo_app_gettingthingsdone.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_tasks.add_task_fab
 import kotlinx.android.synthetic.main.activity_tasks.noWorkIv
 import kotlinx.android.synthetic.main.activity_tasks.tasksRv
 import kotlinx.android.synthetic.main.activity_tasks.welcome_tv
-import org.koin.android.ext.android.inject
+import javax.inject.Inject
 
 class TasksActivity : AppCompatActivity(), BottomSheetListener {
 
   private lateinit var adapter: ToDoListAdapter
 
-  private val viewModel: TasksViewModel by inject()
+  @Inject
+  lateinit var viewModelFactory: ViewModelFactory
+
+  lateinit var viewModel: TasksViewModel
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    (application as ToDoApp).appComponent.inject(this)
     super.onCreate(savedInstanceState)
     setContentView(layout.activity_tasks)
+    viewModel = ViewModelProvider(this, viewModelFactory)[TasksViewModel::class.java]
 
     Glide.with(this).load(R.drawable.add_task).into(noWorkIv)
     setTitle()
@@ -57,10 +65,7 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
       ItemClickListener {
       override fun onClick(todo: ToDo) {
         val intent = Intent(this@TasksActivity, DetailActivity::class.java)
-        intent.putExtra(IntentConstants.TITLE, todo.title)
-        intent.putExtra(IntentConstants.DESCRIPTION, todo.description)
-        intent.putExtra(IntentConstants.ID, todo.id)
-        intent.putExtra(IntentConstants.IMAGE_PATH, todo.imagePath)
+        intent.putExtra(IntentConstants.TODO, todo)
         startActivity(intent)
       }
 
