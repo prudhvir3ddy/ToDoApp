@@ -29,3 +29,8 @@
 * Coming soon...
 
 
+### Contribution
+
+I am happy to accept contributions from the community. Please file issues before making Pull Requests.
+
+This project uses [Firebase Crashlytics](https://firebase.google.com/docs/crashlytics) for crash reporting. To setup your project locally, you will need to create an new Firebase Project on the [Firebase Console](https://console.firebase.google.com). Once the setup process is complete, you will have the opportunity to download the `google-services.json` file. Place it in the `app/` folder and build your project.
