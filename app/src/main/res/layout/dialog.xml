@@ -26,6 +26,7 @@
       android:layout_marginBottom="16dp"
       android:hint="@string/task_description"
       android:singleLine="true"
+      android:imeActionLabel="@string/save"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.0"
@@ -44,7 +45,7 @@
       />
   <TextView
       android:id="@+id/save_tv"
-      style="@style/TextAppearance.AppCompat.Small"
+      style="@style/TextAppearance.AppCompat.Medium"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:gravity="center"
