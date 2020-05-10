@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
+import kotlinx.android.synthetic.main.dialog.save_btn
 import kotlinx.android.synthetic.main.dialog.task_desc_et
 import kotlinx.android.synthetic.main.dialog.task_name_et
+import kotlinx.android.synthetic.main.dialog.view.save_btn
 import kotlinx.android.synthetic.main.dialog.view.task_desc_et
 
 class BottomSheetDialog : BottomSheetDialogFragment() {
@@ -25,7 +27,7 @@ class BottomSheetDialog : BottomSheetDialogFragment() {
 
     val v = inflater.inflate(layout.dialog, container, false)
     setOnEditorAction(v)
-    v.`@+id/save_btn`.setOnClickListener {
+    v.save_btn.setOnClickListener {
       val taskName = task_name_et.text.toString()
       val taskDesc = task_desc_et.text.toString()
 
@@ -41,7 +43,7 @@ class BottomSheetDialog : BottomSheetDialogFragment() {
   private fun setOnEditorAction(v: View) {
     v.task_desc_et.setOnEditorActionListener { v, actionId, event ->
       if (event != null && event.keyCode === KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_DONE) {
-        `@+id/save_btn`.performClick()
+        save_btn.performClick()
         true
       }
       false
