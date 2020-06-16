@@ -5,20 +5,18 @@ import android.app.NotificationManager
 import android.content.Context
 import android.media.RingtoneManager
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R
+import timber.log.Timber
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
-  val TAG = "FIREBASE_MESSAGE"
-
   override fun onMessageReceived(message: RemoteMessage) {
     super.onMessageReceived(message)
-    Log.d(TAG, message.from.toString())
-    Log.d(TAG, message.data.toString())
+    Timber.d(message.from.toString())
+    Timber.d(message.data.toString())
     setUpNotification(message.notification?.title, message.notification?.body)
 
   }
@@ -42,6 +40,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
   override fun onNewToken(p0: String?) {
     super.onNewToken(p0)
-    Log.d(TAG, p0 ?: "No New Token Found")
+    Timber.d(p0 ?: "No New Token Found")
   }
 }

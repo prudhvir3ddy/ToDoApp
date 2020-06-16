@@ -8,27 +8,31 @@
     tools:context=".view.detail.DetailActivity"
     >
 
-  <TextView
-      android:id="@+id/titleTv"
+  <EditText
+      android:id="@+id/titleEt"
       style="@style/TextAppearance.MaterialComponents.Headline5"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginTop="32dp"
+      android:background="@android:color/transparent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="1.0"
       app:layout_constraintStart_toStartOf="parent"
+      android:inputType="text"
       app:layout_constraintTop_toBottomOf="@+id/imagePathIv"
       tools:text="@string/task_name"
       />
-  <TextView
-      android:id="@+id/descriptionTv"
+  <EditText
+      android:id="@+id/descriptionEt"
       style="@style/TextAppearance.MaterialComponents.Body2"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
+      android:background="@android:color/transparent"
       android:layout_marginTop="16dp"
       app:layout_constraintEnd_toEndOf="parent"
+      android:inputType="text"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/titleTv"
+      app:layout_constraintTop_toBottomOf="@+id/titleEt"
       tools:text="@string/task_description"
       />
   <ImageView

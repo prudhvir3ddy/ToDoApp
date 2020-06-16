@@ -1,21 +1,23 @@
-package com.prudhvir3ddy.todo_app_gettingthingsdone.viewmodels
+package com.prudhvir3ddy.todo_app_gettingthingsdone.view.main
 
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingPeriodicWorkPolicy.KEEP
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
+import com.prudhvir3ddy.todo_app_gettingthingsdone.repository.ToDoRepository
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
-import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDoDatabase
 import com.prudhvir3ddy.todo_app_gettingthingsdone.workmanager.MyWorker
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit.MINUTES
 import javax.inject.Inject
 
 class TasksViewModel @Inject constructor(
   private val context: Context,
-  private val todoDatabase: ToDoDatabase,
+  private val repository: ToDoRepository,
   private val sharedPrefs: SharedPrefs
 ) : ViewModel() {
 
@@ -29,27 +31,26 @@ class TasksViewModel @Inject constructor(
   }
 
   fun getDataFromDb(): LiveData<List<ToDo>> {
-    return todoDatabase.todoDao().getAll()
+    return repository.getAllToDos()
   }
 
   fun onTaskUpdate(todo: ToDo) {
-    todoDatabase.databaseWriteExecutor.execute {
-      todoDatabase.todoDao().updateToDo(todo)
+    viewModelScope.launch {
+      repository.updateToDo(todo)
     }
   }
 
-  fun getFullName(): String {
+  fun getFirstName(): String {
     return sharedPrefs.getFullName()
   }
 
   fun onTaskSave(taskName: String, taskDesc: String) {
-    todoDatabase.databaseWriteExecutor.execute {
-      todoDatabase.todoDao().insertToDo(
-        ToDo(
-          title = taskName,
-          description = taskDesc
-        )
+    viewModelScope.launch {
+      val todo = ToDo(
+        title = taskName,
+        description = taskDesc
       )
+      repository.addToDo(todo)
     }
   }
 }

@@ -12,7 +12,7 @@ class SharedPrefs(context: Context) {
   object PrefConstants {
     const val TODO_APP_PREFS = "todoAppPrefs"
     const val IS_LOGGED_IN = "isLoggedIn"
-    const val FULL_NAME = "fullName"
+    const val FULL_NAME = "firstName"
     const val IS_FIRST_TIME = "isFirstTime"
   }
 
@@ -41,4 +41,5 @@ class SharedPrefs(context: Context) {
   }
 
   fun getFirstTime() = sharedPreferences.getBoolean(IS_FIRST_TIME, false)
+
 }

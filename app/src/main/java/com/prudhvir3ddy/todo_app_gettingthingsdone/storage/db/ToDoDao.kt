@@ -15,14 +15,14 @@ interface ToDoDao {
   fun getAll(): LiveData<List<ToDo>>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  fun insertToDo(toDo: ToDo)
+  suspend fun insertToDo(toDo: ToDo)
 
   @Update
-  fun updateToDo(toDo: ToDo)
+  suspend fun updateToDo(toDo: ToDo)
 
   @Delete
-  fun delete(toDo: ToDo)
+  suspend fun delete(toDo: ToDo)
 
   @Query("DELETE FROM todo WHERE isCompleted =:status")
-  fun deleteCompleted(status: Boolean)
+  suspend fun deleteCompleted(status: Boolean)
 }

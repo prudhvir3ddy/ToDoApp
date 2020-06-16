@@ -17,7 +17,6 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 import com.prudhvir3ddy.todo_app_gettingthingsdone.utils.IntentConstants
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.detail.DetailActivity
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.BottomSheetDialog.BottomSheetListener
-import com.prudhvir3ddy.todo_app_gettingthingsdone.viewmodels.TasksViewModel
 import com.prudhvir3ddy.todo_app_gettingthingsdone.viewmodels.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_tasks.add_task_fab
 import kotlinx.android.synthetic.main.activity_tasks.noWorkIv
@@ -26,6 +25,11 @@ import kotlinx.android.synthetic.main.activity_tasks.welcome_tv
 import javax.inject.Inject
 
 class TasksActivity : AppCompatActivity(), BottomSheetListener {
+
+  companion object {
+    private const
+    val DETAIL_CODE: Int = 3
+  }
 
   private lateinit var adapter: ToDoListAdapter
 
@@ -66,7 +70,7 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
       override fun onClick(todo: ToDo) {
         val intent = Intent(this@TasksActivity, DetailActivity::class.java)
         intent.putExtra(IntentConstants.TODO, todo)
-        startActivity(intent)
+        startActivityForResult(intent, DETAIL_CODE)
       }
 
       override fun onUpdate(todo: ToDo) {
@@ -87,12 +91,17 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
   }
 
   private fun setTitle() {
-    welcome_tv.text = String.format(getString(string.welcome), viewModel.getFullName())
+    welcome_tv.text = String.format(getString(string.welcome), viewModel.getFirstName())
   }
 
   override fun onSave(taskName: String, taskDesc: String) {
     viewModel.onTaskSave(taskName, taskDesc)
     adapter.notifyDataSetChanged()
 
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    viewModel.onTaskUpdate(data!!.getParcelableExtra(IntentConstants.TODO)!!)
   }
 }

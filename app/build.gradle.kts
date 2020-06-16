@@ -2,9 +2,9 @@ plugins {
   id(BuildPlugins.androidApplication)
   id(BuildPlugins.kotlinAndroid)
   id(BuildPlugins.kotlinAndroidExtensions)
-  id(BuildPlugins.firebaseLibs.rawGms)
+  id(BuildPlugins.FirebaseLibs.rawGms)
   id(BuildPlugins.kotlinKapt)
-  id(BuildPlugins.firebaseLibs.firebaseCrashlytics)
+  id(BuildPlugins.FirebaseLibs.firebaseCrashlytics)
 }
 
 android {
@@ -51,30 +51,32 @@ android {
   kotlinOptions {
     jvmTarget = "1.8"
   }
+  viewBinding.isEnabled = true
 }
 
 dependencies {
   implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
   implementation(BuildPlugins.Libs.ktStdLib)
   implementation(BuildPlugins.Libs.ktxCore)
+  implementation(BuildPlugins.Libs.lifecycle)
   implementation(BuildPlugins.Libs.appCompat)
   implementation(BuildPlugins.Libs.constraintLayout)
-  testImplementation(BuildPlugins.testLibs.junit)
+  testImplementation(BuildPlugins.TestLibs.junit)
 
   implementation(BuildPlugins.Libs.materialDesign)
 
   implementation(BuildPlugins.Libs.room)
   kapt(BuildPlugins.Libs.roomKapt)
 
-  testImplementation(BuildPlugins.testLibs.coreTest)
-  testImplementation(BuildPlugins.testLibs.mockito)
+  testImplementation(BuildPlugins.TestLibs.coreTest)
+  testImplementation(BuildPlugins.TestLibs.mockito)
 
   // Kotlin + CoRoutines
   implementation(BuildPlugins.Libs.work)
   androidTestImplementation(BuildPlugins.Libs.work)
 
   //noinspection GradleDependency
-  implementation(BuildPlugins.firebaseLibs.fcm)
+  implementation(BuildPlugins.FirebaseLibs.fcm)
   implementation(BuildPlugins.Libs.crashlyticsVersion)
 
   //Glide
@@ -86,4 +88,15 @@ dependencies {
   //dagger
   implementation(BuildPlugins.Libs.dagger)
   kapt(BuildPlugins.Libs.daggerKapt)
+
+  //Retrofit
+  implementation(BuildPlugins.Libs.retrofit)
+  implementation(BuildPlugins.Libs.retrofitMoshi)
+  //interceptor
+  implementation(BuildPlugins.Libs.loggerHttp)
+  //Moshi 
+  implementation(BuildPlugins.Libs.moshi)
+  kapt(BuildPlugins.Libs.moshiKapt)
+  //Timber
+  implementation(BuildPlugins.Libs.timber)
 }
