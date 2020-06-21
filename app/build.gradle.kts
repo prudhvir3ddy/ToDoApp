@@ -5,6 +5,7 @@ plugins {
   id(BuildPlugins.RAW_GMS)
   id(BuildPlugins.KOTLIN_KAPT)
   id(BuildPlugins.FIREBASE_CRASHLYTICS)
+  id(BuildPlugins.DAGGER_HILT)
 }
 
 android {
@@ -64,6 +65,8 @@ dependencies {
   implementation(BuildPlugins.Lib.CONSTRAINT_LAYOUT)
   implementation(BuildPlugins.Lib.MATERIAL_DESIGN)
 
+  implementation("androidx.activity:activity-ktx:1.1.0")
+
   testImplementation(BuildPlugins.TestLibs.JUNIT)
   testImplementation(BuildPlugins.TestLibs.CORE_TEST)
   testImplementation(BuildPlugins.TestLibs.MOCKITO)
@@ -82,8 +85,11 @@ dependencies {
 
   implementation(BuildPlugins.Lib.VIEWPAGER)
 
-  implementation(BuildPlugins.Lib.DAGGER)
-  kapt(BuildPlugins.Lib.DAGGER_KAPT)
+  implementation(BuildPlugins.Lib.DAGGER_HILT_ANDROID)
+  kapt(BuildPlugins.Lib.DAGGER_HILT_ANDROID_COMPILER)
+  implementation(BuildPlugins.Lib.HILT_LIFECYCLE_VIEWMODEL)
+  kapt(BuildPlugins.Lib.HILT_COMPILER)
+  implementation("androidx.hilt:hilt-work:1.0.0-alpha01")
 
   implementation(BuildPlugins.Lib.RETROFIT)
   implementation(BuildPlugins.Lib.RETROFIT_CONVERTER_MOSHI)

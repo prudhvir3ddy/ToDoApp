@@ -1,6 +1,7 @@
 package com.prudhvir3ddy.todo_app_gettingthingsdone.view.main
 
 import android.content.Context
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,12 +12,12 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.repository.ToDoRepository
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 import com.prudhvir3ddy.todo_app_gettingthingsdone.workmanager.MyWorker
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit.MINUTES
-import javax.inject.Inject
 
-class TasksViewModel @Inject constructor(
-  private val context: Context,
+class TasksViewModel @ViewModelInject constructor(
+  @ApplicationContext private val context: Context,
   private val repository: ToDoRepository,
   private val sharedPrefs: SharedPrefs
 ) : ViewModel() {

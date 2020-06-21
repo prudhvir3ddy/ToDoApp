@@ -1,12 +1,12 @@
 package com.prudhvir3ddy.todo_app_gettingthingsdone.view.login
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
-import javax.inject.Inject
 
-class LoginViewModel @Inject constructor(
+class LoginViewModel @ViewModelInject constructor(
   private val sharedPrefs: SharedPrefs
 ) : ViewModel() {
 

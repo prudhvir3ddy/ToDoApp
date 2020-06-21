@@ -8,8 +8,12 @@ object BuildPlugins {
   const val KOTLIN_KAPT = "kotlin-kapt"
   const val FIREBASE_CRASHLYTICS = "com.google.firebase.crashlytics"
   const val RAW_GMS = "com.google.gms.google-services"
+  const val DAGGER_HILT = "dagger.hilt.android.plugin"
 
-  const val KOTLIN_VERSION = "1.3.71"
+  object RootVersion {
+    const val KOTLIN_VERSION = "1.3.71"
+    const val GOOGLE_DAGGER_HILT_ANDROID = "2.28-alpha"
+  }
 
   object GradleLib {
 
@@ -19,9 +23,11 @@ object BuildPlugins {
       const val GMS = "4.3.3"
     }
 
+    const val DAGGER_HILT =
+      "com.google.dagger:hilt-android-gradle-plugin:${RootVersion.GOOGLE_DAGGER_HILT_ANDROID}"
     const val TOOLS_GRADLE = "com.android.tools.build:gradle:${GradleLibVersion.BUILD_VERSION}"
     const val KOTLIN_GRADLE =
-      "org.jetbrains.kotlin:kotlin-gradle-plugin:${KOTLIN_VERSION}"
+      "org.jetbrains.kotlin:kotlin-gradle-plugin:${RootVersion.KOTLIN_VERSION}"
     const val GMS = "com.google.gms:google-services:${GradleLibVersion.GMS}"
     const val GRADLE_CRASHLYTICS =
       "com.google.firebase:firebase-crashlytics-gradle:${GradleLibVersion.GRADLE_CRASHLYTICS}"
@@ -44,16 +50,16 @@ object BuildPlugins {
       const val CONSTRAINT_LAYOUT = "1.1.3"
       const val MATERIAL_DESIGN = "1.1.0"
       const val ROOM = "2.2.5"
-      const val WORK = "2.3.4"
+      const val WORK = "2.4.0-beta01"
       const val CRASHLYTICS = "17.0.0-beta04"
       const val GLIDE = "4.11.0"
       const val VIEWPAGER = "1.0.0"
-      const val DAGGER = "2.25.4"
       const val RETROFIT = "2.8.1"
       const val LIFECYCLE_VIEWMODEL = "2.2.0"
       const val TIMBER = "4.7.1"
       const val LEAK_CANARY = "2.4"
       const val FCM = "19.0.1"
+      const val ANDROID_HILT = "1.0.0-alpha01"
     }
 
     const val LEAK_CANARY = "com.squareup.leakcanary:leakcanary-android:${LibVersion.LEAK_CANARY}"
@@ -64,7 +70,7 @@ object BuildPlugins {
     const val RETROFIT_CONVERTER_MOSHI =
       "com.squareup.retrofit2:converter-moshi:${LibVersion.RETROFIT}"
     const val RETROFIT = "com.squareup.retrofit2:retrofit:${LibVersion.RETROFIT}"
-    const val KT_STD_LIB = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$KOTLIN_VERSION"
+    const val KT_STD_LIB = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${RootVersion.KOTLIN_VERSION}"
     const val APP_COMPAT = "androidx.appcompat:appcompat:${LibVersion.APP_COMPAT}"
     const val KTX_CORE = "androidx.core:core-ktx:${LibVersion.KTX_CORE}"
     const val CONSTRAINT_LAYOUT =
@@ -83,9 +89,14 @@ object BuildPlugins {
     const val GLIDE_KAPT = "com.github.bumptech.glide:compiler:${LibVersion.GLIDE}"
 
     const val VIEWPAGER = "androidx.viewpager2:viewpager2:${LibVersion.VIEWPAGER}"
-    const val DAGGER = "com.google.dagger:dagger:${LibVersion.DAGGER}"
 
-    const val DAGGER_KAPT = "com.google.dagger:dagger-compiler:${LibVersion.DAGGER}"
+    const val DAGGER_HILT_ANDROID =
+      "com.google.dagger:hilt-android:${RootVersion.GOOGLE_DAGGER_HILT_ANDROID}"
+    const val DAGGER_HILT_ANDROID_COMPILER =
+      "com.google.dagger:hilt-android-compiler:${RootVersion.GOOGLE_DAGGER_HILT_ANDROID}"
+    const val HILT_LIFECYCLE_VIEWMODEL =
+      "androidx.hilt:hilt-lifecycle-viewmodel:${LibVersion.ANDROID_HILT}"
+    const val HILT_COMPILER = "androidx.hilt:hilt-compiler:${LibVersion.ANDROID_HILT}"
 
     const val FCM = "com.google.firebase:firebase-messaging:${LibVersion.FCM}"
 

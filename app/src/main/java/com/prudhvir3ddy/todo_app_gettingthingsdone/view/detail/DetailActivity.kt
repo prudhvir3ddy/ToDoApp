@@ -9,19 +9,18 @@ import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.prudhvir3ddy.todo_app_gettingthingsdone.BuildConfig
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R
-import com.prudhvir3ddy.todo_app_gettingthingsdone.ToDoApp
 import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.ActivityDetailBinding
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 import com.prudhvir3ddy.todo_app_gettingthingsdone.utils.IntentConstants
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.TasksActivity
-import com.prudhvir3ddy.todo_app_gettingthingsdone.viewmodels.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.dialog_image_source_selector.view.camera_tv
 import kotlinx.android.synthetic.main.dialog_image_source_selector.view.gallery_tv
 import java.io.File
@@ -29,14 +28,11 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
 
-  @Inject
-  lateinit var viewModelFactory: ViewModelFactory
-
-  private lateinit var viewModel: DetailViewModel
+  private val viewModel: DetailViewModel by viewModels()
 
   companion object {
     const val GALLERY_PICK_RC = 2
@@ -49,12 +45,10 @@ class DetailActivity : AppCompatActivity() {
   var todo: ToDo? = ToDo()
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    (application as ToDoApp).appComponent.inject(this)
     super.onCreate(savedInstanceState)
     binding = ActivityDetailBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
-    viewModel = ViewModelProvider(this, viewModelFactory)[DetailViewModel::class.java]
     setToolbar()
     val intent = intent
 

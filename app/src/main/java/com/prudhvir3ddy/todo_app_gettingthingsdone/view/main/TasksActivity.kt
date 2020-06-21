@@ -3,25 +3,24 @@ package com.prudhvir3ddy.todo_app_gettingthingsdone.view.main
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.bumptech.glide.Glide
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
-import com.prudhvir3ddy.todo_app_gettingthingsdone.ToDoApp
 import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.ActivityTasksBinding
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 import com.prudhvir3ddy.todo_app_gettingthingsdone.utils.IntentConstants
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.detail.DetailActivity
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.BottomSheetDialog.BottomSheetListener
-import com.prudhvir3ddy.todo_app_gettingthingsdone.viewmodels.ViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_tasks.noWorkIv
 import kotlinx.android.synthetic.main.activity_tasks.tasksRv
-import javax.inject.Inject
 
+@AndroidEntryPoint
 class TasksActivity : AppCompatActivity(), BottomSheetListener {
 
   companion object {
@@ -31,20 +30,14 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
 
   private lateinit var adapter: ToDoListAdapter
 
-  @Inject
-  lateinit var viewModelFactory: ViewModelFactory
-
-  lateinit var viewModel: TasksViewModel
+  private val viewModel: TasksViewModel by viewModels()
 
   private lateinit var binding: ActivityTasksBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    (application as ToDoApp).appComponent.inject(this)
     super.onCreate(savedInstanceState)
     binding = ActivityTasksBinding.inflate(layoutInflater)
     setContentView(binding.root)
-
-    viewModel = ViewModelProvider(this, viewModelFactory)[TasksViewModel::class.java]
 
     Glide.with(this).load(R.drawable.add_task).into(noWorkIv)
     setTitle()

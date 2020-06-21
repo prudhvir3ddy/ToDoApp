@@ -2,32 +2,25 @@ package com.prudhvir3ddy.todo_app_gettingthingsdone.view.login
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R
-import com.prudhvir3ddy.todo_app_gettingthingsdone.ToDoApp
 import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.ActivityLoginBinding
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.TasksActivity
-import com.prudhvir3ddy.todo_app_gettingthingsdone.viewmodels.ViewModelFactory
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
   private lateinit var binding: ActivityLoginBinding
-  private lateinit var viewModel: LoginViewModel
-
-  @Inject
-  lateinit var viewModelFactory: ViewModelFactory
+  private val viewModel: LoginViewModel by viewModels()
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    (application as ToDoApp).appComponent.inject(this)
     super.onCreate(savedInstanceState)
     setView()
-
-    setUpViewModel()
 
     viewModel.isLoggedIn.observe(this, Observer {
       if (it) {
@@ -48,10 +41,6 @@ class LoginActivity : AppCompatActivity() {
         binding.fullnameTil.error = getString(R.string.please_enter_your_name)
     }
 
-  }
-
-  private fun setUpViewModel() {
-    viewModel = ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java]
   }
 
   private fun setView() {
