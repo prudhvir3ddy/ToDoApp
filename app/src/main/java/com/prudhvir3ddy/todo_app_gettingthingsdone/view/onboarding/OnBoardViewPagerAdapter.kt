@@ -7,13 +7,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R
+import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.ItemOnboardBinding
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.login.LoginActivity
-import kotlinx.android.synthetic.main.item_onboard.view.continue_btn
-import kotlinx.android.synthetic.main.item_onboard.view.desc_tv
-import kotlinx.android.synthetic.main.item_onboard.view.layoutDots
-import kotlinx.android.synthetic.main.item_onboard.view.main_iv
-import kotlinx.android.synthetic.main.item_onboard.view.title_tv
+import org.jetbrains.annotations.NotNull
 
 class OnBoardViewPagerAdapter(
   private val sharedPrefs: SharedPrefs
@@ -44,28 +41,35 @@ class OnBoardViewPagerAdapter(
   )
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerVH =
-    PagerVH(LayoutInflater.from(parent.context).inflate(R.layout.item_onboard, parent, false))
+    PagerVH(ItemOnboardBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
   override fun getItemCount(): Int = data.size
 
-  override fun onBindViewHolder(holder: PagerVH, position: Int) = holder.itemView.run {
+  override fun onBindViewHolder(holder: PagerVH, position: Int) {
 
-    title_tv.text = data[position].title
-    desc_tv.text = data[position].description
-    Glide.with(this).load(data[position].image).into(main_iv)
+    holder.titleTextView.text = data[position].title
+    holder.descriptionTextView.text = data[position].description
+    Glide.with(holder.itemView.context).load(data[position].image).into(holder.mainImageView)
     if (position == data.size - 1) {
-      continue_btn.visibility = View.VISIBLE
-      layoutDots.visibility = View.GONE
+      holder.continueButton.visibility = View.VISIBLE
+      holder.layoutDots.visibility = View.GONE
     }
 
-    continue_btn.setOnClickListener {
+    holder.continueButton.setOnClickListener {
       sharedPrefs.setFirstTime()
-      val intent = Intent(context, LoginActivity::class.java)
+      val intent = Intent(holder.itemView.context, LoginActivity::class.java)
       intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-      context.startActivity(intent)
+      holder.itemView.context.startActivity(intent)
     }
   }
 
 }
 
-class PagerVH(itemView: View) : RecyclerView.ViewHolder(itemView)
+class PagerVH(itemView: @NotNull ItemOnboardBinding) : RecyclerView.ViewHolder(itemView.root) {
+  val titleTextView = itemView.titleTv
+  val descriptionTextView = itemView.descTv
+  val mainImageView = itemView.mainIv
+  val continueButton = itemView.continueBtn
+  val layoutDots = itemView.layoutDots
+
+}

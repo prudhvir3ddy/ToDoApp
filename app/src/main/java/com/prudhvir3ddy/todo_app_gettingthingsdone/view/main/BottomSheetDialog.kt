@@ -8,16 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
-import kotlinx.android.synthetic.main.dialog.save_btn
-import kotlinx.android.synthetic.main.dialog.task_desc_et
-import kotlinx.android.synthetic.main.dialog.task_name_et
-import kotlinx.android.synthetic.main.dialog.view.save_btn
-import kotlinx.android.synthetic.main.dialog.view.task_desc_et
+import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.DialogBinding
 
 class BottomSheetDialog : BottomSheetDialogFragment() {
 
   private lateinit var mListener: BottomSheetListener
+
+  private lateinit var binding: DialogBinding
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -25,11 +22,11 @@ class BottomSheetDialog : BottomSheetDialogFragment() {
     savedInstanceState: Bundle?
   ): View? {
 
-    val v = inflater.inflate(layout.dialog, container, false)
-    setOnEditorAction(v)
-    v.save_btn.setOnClickListener {
-      val taskName = task_name_et.text.toString()
-      val taskDesc = task_desc_et.text.toString()
+    binding = DialogBinding.inflate(inflater, container, false)
+    setOnEditorAction()
+    binding.saveBtn.setOnClickListener {
+      val taskName = binding.taskNameEt.text.toString()
+      val taskDesc = binding.taskDescEt.text.toString()
 
       if (!taskName.isBlank()) {
         mListener.onSave(taskName, taskDesc)
@@ -37,14 +34,13 @@ class BottomSheetDialog : BottomSheetDialogFragment() {
       }
 
     }
-    return v
+    return binding.root
   }
 
-  private fun setOnEditorAction(v: View) {
-    v.task_desc_et.setOnEditorActionListener { v, actionId, event ->
-      if (event != null && event.keyCode === KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_DONE) {
-        save_btn.performClick()
-        true
+  private fun setOnEditorAction() {
+    binding.taskDescEt.setOnEditorActionListener { _, actionId, event ->
+      if (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_DONE) {
+        binding.saveBtn.performClick()
       }
       false
     }

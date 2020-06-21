@@ -2,18 +2,17 @@ package com.prudhvir3ddy.todo_app_gettingthingsdone.view.main
 
 import android.graphics.Paint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
+import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.ItemTodoBinding
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.ToDoListAdapter.ToDoListViewHolder
-import kotlinx.android.synthetic.main.item_todo.view.checkbox
 import kotlinx.android.synthetic.main.item_todo.view.todo_description
 import kotlinx.android.synthetic.main.item_todo.view.todo_name
+import org.jetbrains.annotations.NotNull
 
 object ToDoDiffCallback : DiffUtil.ItemCallback<ToDo>() {
   override fun areItemsTheSame(oldItem: ToDo, newItem: ToDo): Boolean {
@@ -31,38 +30,42 @@ class ToDoListAdapter(private val itemClickListener: ItemClickListener) :
     ToDoDiffCallback
   ) {
 
-  class ToDoListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+  class ToDoListViewHolder(itemView: @NotNull ItemTodoBinding) :
+    RecyclerView.ViewHolder(itemView.root) {
+
+    val titleTextView = itemView.todoName
+    val descriptionTextView = itemView.todoDescription
+    val updateCheckBox = itemView.checkbox
+  }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoListViewHolder {
     return ToDoListViewHolder(
-      LayoutInflater.from(parent.context).inflate(
-        layout.item_todo,
-        parent,
-        false
-      )
+      ItemTodoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
   }
 
   override fun onBindViewHolder(holder: ToDoListViewHolder, position: Int) {
-    holder.itemView.todo_name.text = getItem(position).title
-    holder.itemView.todo_description.text = getItem(position).description
-    holder.itemView.checkbox.isChecked = getItem(position).isCompleted
+    val item = getItem(position)
+    holder.titleTextView.text = item.title
+    holder.descriptionTextView.text = item.description
+    holder.updateCheckBox.isChecked = item.isCompleted
 
-    if (getItem(position).isCompleted) {
+    if (item.isCompleted) {
       holder.itemView.todo_name.strikeThrough()
       holder.itemView.todo_description.strikeThrough()
     }
+
     holder.itemView.setOnClickListener {
       itemClickListener.onClick(getItem(position))
     }
-    holder.itemView.checkbox.setOnCheckedChangeListener { _, isChecked ->
+    holder.updateCheckBox.setOnCheckedChangeListener { _, isChecked ->
       getItem(position).isCompleted = isChecked
       if (isChecked) {
-        holder.itemView.todo_name.strikeThrough()
-        holder.itemView.todo_description.strikeThrough()
+        holder.titleTextView.strikeThrough()
+        holder.descriptionTextView.strikeThrough()
       } else {
-        holder.itemView.todo_name.removeStrikeThrough()
-        holder.itemView.todo_description.removeStrikeThrough()
+        holder.titleTextView.removeStrikeThrough()
+        holder.descriptionTextView.removeStrikeThrough()
       }
       itemClickListener.onUpdate(getItem(position))
     }

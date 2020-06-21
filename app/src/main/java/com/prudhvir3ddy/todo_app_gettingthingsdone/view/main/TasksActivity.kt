@@ -10,18 +10,16 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.bumptech.glide.Glide
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R
-import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
 import com.prudhvir3ddy.todo_app_gettingthingsdone.ToDoApp
+import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.ActivityTasksBinding
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 import com.prudhvir3ddy.todo_app_gettingthingsdone.utils.IntentConstants
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.detail.DetailActivity
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.BottomSheetDialog.BottomSheetListener
 import com.prudhvir3ddy.todo_app_gettingthingsdone.viewmodels.ViewModelFactory
-import kotlinx.android.synthetic.main.activity_tasks.add_task_fab
 import kotlinx.android.synthetic.main.activity_tasks.noWorkIv
 import kotlinx.android.synthetic.main.activity_tasks.tasksRv
-import kotlinx.android.synthetic.main.activity_tasks.welcome_tv
 import javax.inject.Inject
 
 class TasksActivity : AppCompatActivity(), BottomSheetListener {
@@ -38,16 +36,20 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
 
   lateinit var viewModel: TasksViewModel
 
+  private lateinit var binding: ActivityTasksBinding
+
   override fun onCreate(savedInstanceState: Bundle?) {
     (application as ToDoApp).appComponent.inject(this)
     super.onCreate(savedInstanceState)
-    setContentView(layout.activity_tasks)
+    binding = ActivityTasksBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+
     viewModel = ViewModelProvider(this, viewModelFactory)[TasksViewModel::class.java]
 
     Glide.with(this).load(R.drawable.add_task).into(noWorkIv)
     setTitle()
 
-    add_task_fab.setOnClickListener {
+    binding.addTaskFab.setOnClickListener {
       setUpBottomDialog()
     }
     setUpRecyclerView()
@@ -57,8 +59,8 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
     viewModel.tasksList.observe(this, Observer {
       if (it.isNotEmpty()) {
         adapter.submitList(it)
-        tasksRv.visibility = View.VISIBLE
-        noWorkIv.visibility = View.INVISIBLE
+        binding.tasksRv.visibility = View.VISIBLE
+        binding.noWorkIv.visibility = View.INVISIBLE
       }
     })
 
@@ -80,8 +82,8 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
 
     adapter =
       ToDoListAdapter(click)
-    tasksRv.adapter = adapter
-    tasksRv.addItemDecoration(DividerItemDecoration(tasksRv.context, VERTICAL))
+    binding.tasksRv.adapter = adapter
+    binding.tasksRv.addItemDecoration(DividerItemDecoration(tasksRv.context, VERTICAL))
   }
 
   private fun setUpBottomDialog() {
@@ -91,7 +93,7 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
   }
 
   private fun setTitle() {
-    welcome_tv.text = String.format(getString(string.welcome), viewModel.getFirstName())
+    binding.welcomeTv.text = String.format(getString(string.welcome), viewModel.getFirstName())
   }
 
   override fun onSave(taskName: String, taskDesc: String) {
