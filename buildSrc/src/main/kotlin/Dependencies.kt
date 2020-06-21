@@ -1,16 +1,31 @@
 /** This file contains versions of all the dependencies used in the module  */
 
-const val KOTLIN_VERSION = "1.3.71"
-const val BUILD_VERSION = "3.6.2"
-
 object BuildPlugins {
 
-  const val TOOLS_GRADLE = "com.android.tools.build:gradle:$BUILD_VERSION"
-  const val KOTLIN_GRADLE = "org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN_VERSION"
   const val ANDROID_APPLICATION = "com.android.application"
   const val KOTLIN_ANDROID = "kotlin-android"
   const val KOTLIN_ANDROID_EXTENSIONS = "kotlin-android-extensions"
   const val KOTLIN_KAPT = "kotlin-kapt"
+  const val FIREBASE_CRASHLYTICS = "com.google.firebase.crashlytics"
+  const val RAW_GMS = "com.google.gms.google-services"
+
+  const val KOTLIN_VERSION = "1.3.71"
+
+  object GradleLib {
+
+    private object GradleLibVersion {
+      const val BUILD_VERSION = "3.6.2"
+      const val GRADLE_CRASHLYTICS = "2.0.0-beta04"
+      const val GMS = "4.3.3"
+    }
+
+    const val TOOLS_GRADLE = "com.android.tools.build:gradle:${GradleLibVersion.BUILD_VERSION}"
+    const val KOTLIN_GRADLE =
+      "org.jetbrains.kotlin:kotlin-gradle-plugin:${KOTLIN_VERSION}"
+    const val GMS = "com.google.gms:google-services:${GradleLibVersion.GMS}"
+    const val GRADLE_CRASHLYTICS =
+      "com.google.firebase:firebase-crashlytics-gradle:${GradleLibVersion.GRADLE_CRASHLYTICS}"
+  }
 
   object AndroidSdk {
 
@@ -21,9 +36,9 @@ object BuildPlugins {
   }
 
   /** General Libraries */
-  object Libs {
+  object Lib {
 
-    object LibVersions {
+    object LibVersion {
       const val APP_COMPAT = "1.1.0"
       const val KTX_CORE = "1.2.0"
       const val CONSTRAINT_LAYOUT = "1.1.3"
@@ -38,34 +53,42 @@ object BuildPlugins {
       const val LIFECYCLE_VIEWMODEL = "2.2.0"
       const val TIMBER = "4.7.1"
       const val LEAK_CANARY = "2.4"
+      const val FCM = "19.0.1"
     }
 
-    const val LEAK_CANARY = "com.squareup.leakcanary:leakcanary-android:${LibVersions.LEAK_CANARY}"
-    const val TIMBER = "com.jakewharton.timber:timber:${LibVersions.TIMBER}"
+    const val LEAK_CANARY = "com.squareup.leakcanary:leakcanary-android:${LibVersion.LEAK_CANARY}"
+    const val TIMBER = "com.jakewharton.timber:timber:${LibVersion.TIMBER}"
     const val HTTP_LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:4.5.0"
     const val LIFECYCLE_VIEWMODEL_KTX =
-      "androidx.lifecycle:lifecycle-viewmodel-ktx:${LibVersions.LIFECYCLE_VIEWMODEL}"
+      "androidx.lifecycle:lifecycle-viewmodel-ktx:${LibVersion.LIFECYCLE_VIEWMODEL}"
     const val RETROFIT_CONVERTER_MOSHI =
-      "com.squareup.retrofit2:converter-moshi:${LibVersions.RETROFIT}"
-    const val RETROFIT = "com.squareup.retrofit2:retrofit:${LibVersions.RETROFIT}"
+      "com.squareup.retrofit2:converter-moshi:${LibVersion.RETROFIT}"
+    const val RETROFIT = "com.squareup.retrofit2:retrofit:${LibVersion.RETROFIT}"
     const val KT_STD_LIB = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$KOTLIN_VERSION"
-    const val APP_COMPAT = "androidx.appcompat:appcompat:${LibVersions.APP_COMPAT}"
-    const val KTX_CORE = "androidx.core:core-ktx:${LibVersions.KTX_CORE}"
+    const val APP_COMPAT = "androidx.appcompat:appcompat:${LibVersion.APP_COMPAT}"
+    const val KTX_CORE = "androidx.core:core-ktx:${LibVersion.KTX_CORE}"
     const val CONSTRAINT_LAYOUT =
-      "androidx.constraintlayout:constraintlayout:${LibVersions.CONSTRAINT_LAYOUT}"
+      "androidx.constraintlayout:constraintlayout:${LibVersion.CONSTRAINT_LAYOUT}"
     const val MATERIAL_DESIGN =
-      "com.google.android.material:material:${LibVersions.MATERIAL_DESIGN}"
-    const val ROOM_KTX = "androidx.room:room-ktx:${LibVersions.ROOM}"
-    const val WORK_KTX = "androidx.work:work-runtime-ktx:${LibVersions.WORK}"
-    const val CRASHLYTICS_FIREBASE =
-      "com.google.firebase:firebase-crashlytics:${LibVersions.CRASHLYTICS}"
-    const val GLIDE = "com.github.bumptech.glide:glide:${LibVersions.GLIDE}"
-    const val VIEWPAGER = "androidx.viewpager2:viewpager2:${LibVersions.VIEWPAGER}"
-    const val DAGGER = "com.google.dagger:dagger:${LibVersions.DAGGER}"
+      "com.google.android.material:material:${LibVersion.MATERIAL_DESIGN}"
 
-    const val ROOM_KAPT = "androidx.room:room-compiler:${LibVersions.ROOM}"
-    const val DAGGER_KAPT = "com.google.dagger:dagger-compiler:${LibVersions.DAGGER}"
-    const val GLIDE_KAPT = "com.github.bumptech.glide:compiler:${LibVersions.GLIDE}"
+    const val ROOM_KTX = "androidx.room:room-ktx:${LibVersion.ROOM}"
+    const val ROOM_KAPT = "androidx.room:room-compiler:${LibVersion.ROOM}"
+
+    const val WORK_KTX = "androidx.work:work-runtime-ktx:${LibVersion.WORK}"
+    const val CRASHLYTICS_FIREBASE =
+      "com.google.firebase:firebase-crashlytics:${LibVersion.CRASHLYTICS}"
+
+    const val GLIDE = "com.github.bumptech.glide:glide:${LibVersion.GLIDE}"
+    const val GLIDE_KAPT = "com.github.bumptech.glide:compiler:${LibVersion.GLIDE}"
+
+    const val VIEWPAGER = "androidx.viewpager2:viewpager2:${LibVersion.VIEWPAGER}"
+    const val DAGGER = "com.google.dagger:dagger:${LibVersion.DAGGER}"
+
+    const val DAGGER_KAPT = "com.google.dagger:dagger-compiler:${LibVersion.DAGGER}"
+
+    const val FCM = "com.google.firebase:firebase-messaging:${LibVersion.FCM}"
+
   }
 
   /** Libraries for Tests */
@@ -82,23 +105,6 @@ object BuildPlugins {
     const val CORE_TEST = "androidx.test:core:${TestLibVersions.CORE_TEST}"
     const val MOCKITO = "org.mockito:mockito-core:${TestLibVersions.MOCKITO}"
     const val JUNIT = "junit:junit:${TestLibVersions.JUNIT}"
-  }
-
-  /** Libraries for Firebase */
-  object FirebaseLibs {
-
-    private object FirebaseLibsVersion {
-      const val GRADLE_CRASHLYTICS = "2.0.0-beta04"
-      const val GMS = "4.3.3"
-      const val FCM = "19.0.1"
-    }
-
-    const val GRADLE_CRASHLYTICS =
-      "com.google.firebase:firebase-crashlytics-gradle:${FirebaseLibsVersion.GRADLE_CRASHLYTICS}"
-    const val GMS = "com.google.gms:google-services:${FirebaseLibsVersion.GMS}"
-    const val FCM = "com.google.firebase:firebase-messaging:${FirebaseLibsVersion.FCM}"
-    const val FIREBASE_CRASHLYTICS = "com.google.firebase.crashlytics"
-    const val RAW_GMS = "com.google.gms.google-services"
   }
 
 }

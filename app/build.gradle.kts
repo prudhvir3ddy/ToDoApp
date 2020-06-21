@@ -2,9 +2,9 @@ plugins {
   id(BuildPlugins.ANDROID_APPLICATION)
   id(BuildPlugins.KOTLIN_ANDROID)
   id(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
-  id(BuildPlugins.FirebaseLibs.RAW_GMS)
+  id(BuildPlugins.RAW_GMS)
   id(BuildPlugins.KOTLIN_KAPT)
-  id(BuildPlugins.FirebaseLibs.FIREBASE_CRASHLYTICS)
+  id(BuildPlugins.FIREBASE_CRASHLYTICS)
 }
 
 android {
@@ -57,39 +57,39 @@ android {
 dependencies {
   implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-  implementation(BuildPlugins.Libs.KT_STD_LIB)
-  implementation(BuildPlugins.Libs.KTX_CORE)
-  implementation(BuildPlugins.Libs.LIFECYCLE_VIEWMODEL_KTX)
-  implementation(BuildPlugins.Libs.APP_COMPAT)
-  implementation(BuildPlugins.Libs.CONSTRAINT_LAYOUT)
-  implementation(BuildPlugins.Libs.MATERIAL_DESIGN)
+  implementation(BuildPlugins.Lib.KT_STD_LIB)
+  implementation(BuildPlugins.Lib.KTX_CORE)
+  implementation(BuildPlugins.Lib.LIFECYCLE_VIEWMODEL_KTX)
+  implementation(BuildPlugins.Lib.APP_COMPAT)
+  implementation(BuildPlugins.Lib.CONSTRAINT_LAYOUT)
+  implementation(BuildPlugins.Lib.MATERIAL_DESIGN)
 
   testImplementation(BuildPlugins.TestLibs.JUNIT)
   testImplementation(BuildPlugins.TestLibs.CORE_TEST)
   testImplementation(BuildPlugins.TestLibs.MOCKITO)
 
-  implementation(BuildPlugins.Libs.ROOM_KTX)
-  kapt(BuildPlugins.Libs.ROOM_KAPT)
+  implementation(BuildPlugins.Lib.ROOM_KTX)
+  kapt(BuildPlugins.Lib.ROOM_KAPT)
 
-  implementation(BuildPlugins.Libs.WORK_KTX)
-  androidTestImplementation(BuildPlugins.Libs.WORK_KTX)
+  implementation(BuildPlugins.Lib.WORK_KTX)
+  androidTestImplementation(BuildPlugins.Lib.WORK_KTX)
 
-  implementation(BuildPlugins.FirebaseLibs.FCM)
-  implementation(BuildPlugins.Libs.CRASHLYTICS_FIREBASE)
+  implementation(BuildPlugins.Lib.FCM)
+  implementation(BuildPlugins.Lib.CRASHLYTICS_FIREBASE)
 
-  implementation(BuildPlugins.Libs.GLIDE)
-  kapt(BuildPlugins.Libs.GLIDE_KAPT)
+  implementation(BuildPlugins.Lib.GLIDE)
+  kapt(BuildPlugins.Lib.GLIDE_KAPT)
 
-  implementation(BuildPlugins.Libs.VIEWPAGER)
+  implementation(BuildPlugins.Lib.VIEWPAGER)
 
-  implementation(BuildPlugins.Libs.DAGGER)
-  kapt(BuildPlugins.Libs.DAGGER_KAPT)
+  implementation(BuildPlugins.Lib.DAGGER)
+  kapt(BuildPlugins.Lib.DAGGER_KAPT)
 
-  implementation(BuildPlugins.Libs.RETROFIT)
-  implementation(BuildPlugins.Libs.RETROFIT_CONVERTER_MOSHI)
-  implementation(BuildPlugins.Libs.HTTP_LOGGING_INTERCEPTOR)
+  implementation(BuildPlugins.Lib.RETROFIT)
+  implementation(BuildPlugins.Lib.RETROFIT_CONVERTER_MOSHI)
+  implementation(BuildPlugins.Lib.HTTP_LOGGING_INTERCEPTOR)
 
-  implementation(BuildPlugins.Libs.TIMBER)
-  debugImplementation(BuildPlugins.Libs.LEAK_CANARY)
+  implementation(BuildPlugins.Lib.TIMBER)
+  debugImplementation(BuildPlugins.Lib.LEAK_CANARY)
 
 }
