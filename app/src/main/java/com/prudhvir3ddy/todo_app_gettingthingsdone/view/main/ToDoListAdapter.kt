@@ -1,8 +1,10 @@
 package com.prudhvir3ddy.todo_app_gettingthingsdone.view.main
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -46,12 +48,31 @@ class ToDoListAdapter(private val itemClickListener: ItemClickListener) :
     holder.itemView.todo_description.text = getItem(position).description
     holder.itemView.checkbox.isChecked = getItem(position).isCompleted
 
+    if (getItem(position).isCompleted) {
+      holder.itemView.todo_name.strikeThrough()
+      holder.itemView.todo_description.strikeThrough()
+    }
     holder.itemView.setOnClickListener {
       itemClickListener.onClick(getItem(position))
     }
     holder.itemView.checkbox.setOnCheckedChangeListener { _, isChecked ->
       getItem(position).isCompleted = isChecked
+      if (isChecked) {
+        holder.itemView.todo_name.strikeThrough()
+        holder.itemView.todo_description.strikeThrough()
+      } else {
+        holder.itemView.todo_name.removeStrikeThrough()
+        holder.itemView.todo_description.removeStrikeThrough()
+      }
       itemClickListener.onUpdate(getItem(position))
     }
+  }
+
+  private fun TextView.strikeThrough() {
+    this.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+  }
+
+  private fun TextView.removeStrikeThrough() {
+    this.paintFlags = this.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
   }
 }
