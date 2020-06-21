@@ -4,8 +4,6 @@ import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.ItemTodoBinding
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
@@ -14,21 +12,16 @@ import kotlinx.android.synthetic.main.item_todo.view.todo_description
 import kotlinx.android.synthetic.main.item_todo.view.todo_name
 import org.jetbrains.annotations.NotNull
 
-object ToDoDiffCallback : DiffUtil.ItemCallback<ToDo>() {
-  override fun areItemsTheSame(oldItem: ToDo, newItem: ToDo): Boolean {
-    return oldItem == newItem
-  }
-
-  override fun areContentsTheSame(oldItem: ToDo, newItem: ToDo): Boolean {
-    return oldItem.title == newItem.title
-  }
-
-}
-
-class ToDoListAdapter(private val itemClickListener: ItemClickListener) :
-  ListAdapter<ToDo, ToDoListViewHolder>(
-    ToDoDiffCallback
+class ToDoListAdapter(
+  private var items: List<ToDo>,
+  private val itemClickListener: ItemClickListener
+) :
+  RecyclerView.Adapter<ToDoListViewHolder>(
   ) {
+
+  fun submitList(items: List<ToDo>) {
+    this.items = items
+  }
 
   class ToDoListViewHolder(itemView: @NotNull ItemTodoBinding) :
     RecyclerView.ViewHolder(itemView.root) {
@@ -45,7 +38,7 @@ class ToDoListAdapter(private val itemClickListener: ItemClickListener) :
   }
 
   override fun onBindViewHolder(holder: ToDoListViewHolder, position: Int) {
-    val item = getItem(position)
+    val item = items[position]
     holder.titleTextView.text = item.title
     holder.descriptionTextView.text = item.description
     holder.updateCheckBox.isChecked = item.isCompleted
@@ -56,10 +49,10 @@ class ToDoListAdapter(private val itemClickListener: ItemClickListener) :
     }
 
     holder.itemView.setOnClickListener {
-      itemClickListener.onClick(getItem(position))
+      itemClickListener.onClick(item)
     }
     holder.updateCheckBox.setOnCheckedChangeListener { _, isChecked ->
-      getItem(position).isCompleted = isChecked
+      item.isCompleted = isChecked
       if (isChecked) {
         holder.titleTextView.strikeThrough()
         holder.descriptionTextView.strikeThrough()
@@ -67,7 +60,7 @@ class ToDoListAdapter(private val itemClickListener: ItemClickListener) :
         holder.titleTextView.removeStrikeThrough()
         holder.descriptionTextView.removeStrikeThrough()
       }
-      itemClickListener.onUpdate(getItem(position))
+      itemClickListener.onUpdate(item)
     }
   }
 
@@ -78,4 +71,7 @@ class ToDoListAdapter(private val itemClickListener: ItemClickListener) :
   private fun TextView.removeStrikeThrough() {
     this.paintFlags = this.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
   }
+
+  override fun getItemCount(): Int = items.size
+
 }

@@ -54,6 +54,9 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
         adapter.submitList(it)
         binding.tasksRv.visibility = View.VISIBLE
         binding.noWorkIv.visibility = View.INVISIBLE
+      } else {
+        binding.tasksRv.visibility = View.INVISIBLE
+        binding.noWorkIv.visibility = View.VISIBLE
       }
     })
 
@@ -74,7 +77,7 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
     }
 
     adapter =
-      ToDoListAdapter(click)
+      ToDoListAdapter(listOf(), click)
     binding.tasksRv.adapter = adapter
     binding.tasksRv.addItemDecoration(DividerItemDecoration(tasksRv.context, VERTICAL))
   }
@@ -91,7 +94,7 @@ class TasksActivity : AppCompatActivity(), BottomSheetListener {
 
   override fun onSave(taskName: String, taskDesc: String) {
     viewModel.onTaskSave(taskName, taskDesc)
-    adapter.notifyDataSetChanged()
+    adapter.notifyItemInserted(adapter.itemCount)
 
   }
 
