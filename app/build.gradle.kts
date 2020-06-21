@@ -1,10 +1,10 @@
 plugins {
-  id(BuildPlugins.androidApplication)
-  id(BuildPlugins.kotlinAndroid)
-  id(BuildPlugins.kotlinAndroidExtensions)
-  id(BuildPlugins.FirebaseLibs.rawGms)
-  id(BuildPlugins.kotlinKapt)
-  id(BuildPlugins.FirebaseLibs.firebaseCrashlytics)
+  id(BuildPlugins.ANDROID_APPLICATION)
+  id(BuildPlugins.KOTLIN_ANDROID)
+  id(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
+  id(BuildPlugins.FirebaseLibs.RAW_GMS)
+  id(BuildPlugins.KOTLIN_KAPT)
+  id(BuildPlugins.FirebaseLibs.FIREBASE_CRASHLYTICS)
 }
 
 android {
@@ -24,12 +24,12 @@ android {
     }
   }
 
-  compileSdkVersion(BuildPlugins.AndroidSdk.compile)
+  compileSdkVersion(BuildPlugins.AndroidSdk.COMPILE)
 
   defaultConfig {
     applicationId = "com.prudhvir3ddy.todo_app_gettingthingsdone"
-    minSdkVersion(BuildPlugins.AndroidSdk.min)
-    targetSdkVersion(BuildPlugins.AndroidSdk.target)
+    minSdkVersion(BuildPlugins.AndroidSdk.MIN)
+    targetSdkVersion(BuildPlugins.AndroidSdk.TARGET)
     versionCode = 7
     versionName = "1.0"
     testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
@@ -56,47 +56,40 @@ android {
 
 dependencies {
   implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-  implementation(BuildPlugins.Libs.ktStdLib)
-  implementation(BuildPlugins.Libs.ktxCore)
-  implementation(BuildPlugins.Libs.lifecycle)
-  implementation(BuildPlugins.Libs.appCompat)
-  implementation(BuildPlugins.Libs.constraintLayout)
-  testImplementation(BuildPlugins.TestLibs.junit)
 
-  implementation(BuildPlugins.Libs.materialDesign)
+  implementation(BuildPlugins.Libs.KT_STD_LIB)
+  implementation(BuildPlugins.Libs.KTX_CORE)
+  implementation(BuildPlugins.Libs.LIFECYCLE_VIEWMODEL_KTX)
+  implementation(BuildPlugins.Libs.APP_COMPAT)
+  implementation(BuildPlugins.Libs.CONSTRAINT_LAYOUT)
+  implementation(BuildPlugins.Libs.MATERIAL_DESIGN)
 
-  implementation(BuildPlugins.Libs.room)
-  kapt(BuildPlugins.Libs.roomKapt)
+  testImplementation(BuildPlugins.TestLibs.JUNIT)
+  testImplementation(BuildPlugins.TestLibs.CORE_TEST)
+  testImplementation(BuildPlugins.TestLibs.MOCKITO)
 
-  testImplementation(BuildPlugins.TestLibs.coreTest)
-  testImplementation(BuildPlugins.TestLibs.mockito)
+  implementation(BuildPlugins.Libs.ROOM_KTX)
+  kapt(BuildPlugins.Libs.ROOM_KAPT)
 
-  // Kotlin + CoRoutines
-  implementation(BuildPlugins.Libs.work)
-  androidTestImplementation(BuildPlugins.Libs.work)
+  implementation(BuildPlugins.Libs.WORK_KTX)
+  androidTestImplementation(BuildPlugins.Libs.WORK_KTX)
 
-  //noinspection GradleDependency
-  implementation(BuildPlugins.FirebaseLibs.fcm)
-  implementation(BuildPlugins.Libs.crashlyticsVersion)
+  implementation(BuildPlugins.FirebaseLibs.FCM)
+  implementation(BuildPlugins.Libs.CRASHLYTICS_FIREBASE)
 
-  //Glide
-  implementation(BuildPlugins.Libs.glide)
-  kapt(BuildPlugins.Libs.glideKapt)
+  implementation(BuildPlugins.Libs.GLIDE)
+  kapt(BuildPlugins.Libs.GLIDE_KAPT)
 
-  implementation(BuildPlugins.Libs.viewPager)
+  implementation(BuildPlugins.Libs.VIEWPAGER)
 
-  //dagger
-  implementation(BuildPlugins.Libs.dagger)
-  kapt(BuildPlugins.Libs.daggerKapt)
+  implementation(BuildPlugins.Libs.DAGGER)
+  kapt(BuildPlugins.Libs.DAGGER_KAPT)
 
-  //Retrofit
-  implementation(BuildPlugins.Libs.retrofit)
-  implementation(BuildPlugins.Libs.retrofitMoshi)
-  //interceptor
-  implementation(BuildPlugins.Libs.loggerHttp)
-  //Moshi 
-  implementation(BuildPlugins.Libs.moshi)
-  kapt(BuildPlugins.Libs.moshiKapt)
-  //Timber
-  implementation(BuildPlugins.Libs.timber)
+  implementation(BuildPlugins.Libs.RETROFIT)
+  implementation(BuildPlugins.Libs.RETROFIT_CONVERTER_MOSHI)
+  implementation(BuildPlugins.Libs.HTTP_LOGGING_INTERCEPTOR)
+
+  implementation(BuildPlugins.Libs.TIMBER)
+  debugImplementation(BuildPlugins.Libs.LEAK_CANARY)
+
 }
