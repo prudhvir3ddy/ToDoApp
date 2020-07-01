@@ -140,7 +140,7 @@ class DetailActivity : AppCompatActivity() {
     super.onActivityResult(requestCode, resultCode, data)
 
     if (resultCode == Activity.RESULT_OK) {
-      dialog?.hide()
+      dialog?.dismiss()
       when (requestCode) {
         GALLERY_PICK_RC -> {
           val selectedImage = data?.data

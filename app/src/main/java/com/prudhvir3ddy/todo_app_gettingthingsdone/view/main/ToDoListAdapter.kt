@@ -21,6 +21,7 @@ class ToDoListAdapter(
 
   fun submitList(items: List<ToDo>) {
     this.items = items
+    notifyDataSetChanged()
   }
 
   class ToDoListViewHolder(itemView: @NotNull ItemTodoBinding) :
