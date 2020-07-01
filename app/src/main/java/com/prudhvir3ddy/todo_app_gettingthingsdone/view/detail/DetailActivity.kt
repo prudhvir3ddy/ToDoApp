@@ -8,6 +8,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -33,13 +34,14 @@ import java.util.Locale
 class DetailActivity : AppCompatActivity() {
 
   private val viewModel: DetailViewModel by viewModels()
+  private var dialog: AlertDialog? = null
 
   companion object {
     const val GALLERY_PICK_RC = 2
     const val CAMERA_CAPTURE_RC = 1
   }
 
-  private lateinit var binding: ActivityDetailBinding
+  private var binding: ActivityDetailBinding? = null
   private lateinit var currentPhotoPath: String
 
   var todo: ToDo? = ToDo()
@@ -47,26 +49,23 @@ class DetailActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     binding = ActivityDetailBinding.inflate(layoutInflater)
-    setContentView(binding.root)
+    setContentView(binding?.root)
 
     setToolbar()
     val intent = intent
 
     setViews(intent)
-    binding.imagePathIv.setOnClickListener {
-      setupDialog()
-    }
   }
 
   private fun setViews(intent: Intent?) {
     todo = intent?.getParcelableExtra(IntentConstants.TODO)
-    binding.apply {
+    binding?.apply {
       titleEt.setText(todo?.title, TextView.BufferType.EDITABLE)
       descriptionEt.setText(todo?.description, TextView.BufferType.EDITABLE)
     }
     val image = todo?.imagePath
     if (image != null && !TextUtils.isEmpty(image)) {
-      Glide.with(this).load(image).into(binding.imagePathIv)
+      Glide.with(this).load(image).into(binding?.imagePathIv!!)
     }
   }
 
@@ -74,29 +73,26 @@ class DetailActivity : AppCompatActivity() {
     supportActionBar?.title = "Get it Done"
   }
 
-  private fun setupDialog() {
+  fun setupDialog(v: View) {
     val view = LayoutInflater.from(this).inflate(R.layout.dialog_image_source_selector, null)
     val cameraTv = view.camera_tv
     val galleryTv = view.gallery_tv
 
-    val dialog = AlertDialog.Builder(this)
+    dialog = AlertDialog.Builder(this)
       .setCancelable(true)
       .setTitle("Choose an action")
       .setView(view)
       .create()
-    dialog.show()
+    dialog?.show()
 
     cameraTv.setOnClickListener {
       createImageFile()
       takePicture()
-      dialog.hide()
-
     }
 
     galleryTv.setOnClickListener {
       val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
       startActivityForResult(intent, GALLERY_PICK_RC)
-      dialog.hide()
     }
   }
 
@@ -144,14 +140,15 @@ class DetailActivity : AppCompatActivity() {
     super.onActivityResult(requestCode, resultCode, data)
 
     if (resultCode == Activity.RESULT_OK) {
+      dialog?.hide()
       when (requestCode) {
         GALLERY_PICK_RC -> {
           val selectedImage = data?.data
           currentPhotoPath = selectedImage.toString()
-          Glide.with(this).load(selectedImage).into(binding.imagePathIv)
+          Glide.with(this).load(selectedImage).into(binding?.imagePathIv!!)
         }
         CAMERA_CAPTURE_RC -> {
-          Glide.with(this).load(currentPhotoPath).into(binding.imagePathIv)
+          Glide.with(this).load(currentPhotoPath).into(binding?.imagePathIv!!)
         }
       }
     }
@@ -166,8 +163,8 @@ class DetailActivity : AppCompatActivity() {
     val todo =
       ToDo(
         id = todo?.id,
-        title = binding.titleEt.text.toString(),
-        description = binding.descriptionEt.text.toString(),
+        title = binding?.titleEt?.text.toString(),
+        description = binding?.descriptionEt?.text.toString(),
         imagePath = picPath,
         isCompleted = todo?.isCompleted ?: false
       )
@@ -182,4 +179,8 @@ class DetailActivity : AppCompatActivity() {
     return true
   }
 
+  override fun onDestroy() {
+    dialog = null
+    super.onDestroy()
+  }
 }
