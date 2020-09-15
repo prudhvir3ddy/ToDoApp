@@ -4,7 +4,6 @@
     package="com.prudhvir3ddy.todo_app_gettingthingsdone">
 
   <uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
   <application
       android:name=".ToDoApp"
@@ -14,16 +13,7 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
-    <activity
-        android:name=".view.onboarding.OnBoardingActivity"
-        android:screenOrientation="portrait"
-        android:theme="@style/AppTheme.NoActionBar"
-        tools:ignore="LockedOrientationActivity" />
-    <activity
-        android:name=".view.detail.DetailActivity"
-        android:parentActivityName=".view.main.TasksActivity"
-        android:screenOrientation="portrait"
-        tools:ignore="LockedOrientationActivity" />
+
     <activity android:name=".view.splash.SplashActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -54,15 +44,7 @@
         android:name="androidx.work.impl.WorkManagerInitializer"
         android:authorities="${applicationId}.workmanager-init"
         tools:node="remove" />
-    <provider
-        android:name="androidx.core.content.FileProvider"
-        android:authorities="${applicationId}.fileprovider"
-        android:exported="false"
-        android:grantUriPermissions="true">
-      <meta-data
-          android:name="android.support.FILE_PROVIDER_PATHS"
-          android:resource="@xml/file_paths" />
-    </provider>
+
   </application>
 
 </manifest>

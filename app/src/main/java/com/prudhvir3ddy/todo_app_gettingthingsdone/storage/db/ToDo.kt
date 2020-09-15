@@ -4,14 +4,14 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
+import java.util.UUID
 
 @Parcelize
 @Entity(tableName = "todo")
 data class ToDo(
-  @PrimaryKey(autoGenerate = true)
-  val id: Int? = null,
+  @PrimaryKey
+  val id: String = UUID.randomUUID().toString(),
   val title: String = "",
   val description: String = "",
-  val imagePath: String = "",
   var isCompleted: Boolean = false
 ) : Parcelable

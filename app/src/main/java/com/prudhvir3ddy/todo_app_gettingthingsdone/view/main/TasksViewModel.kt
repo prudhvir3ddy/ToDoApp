@@ -22,7 +22,7 @@ class TasksViewModel @ViewModelInject constructor(
   private val sharedPrefs: SharedPrefs
 ) : ViewModel() {
 
-  val tasksList: LiveData<List<ToDo>> = getDataFromDb()
+  var tasksList: LiveData<List<ToDo>> = repository.getAllToDos()
 
   fun setUpWorkManager() {
     val request = PeriodicWorkRequest.Builder(MyWorker::class.java, 15L, MINUTES)
@@ -31,12 +31,9 @@ class TasksViewModel @ViewModelInject constructor(
     workManager.enqueueUniquePeriodicWork("boo", KEEP, request)
   }
 
-  fun getDataFromDb(): LiveData<List<ToDo>> {
-    return repository.getAllToDos()
-  }
-
-  fun onTaskUpdate(todo: ToDo) {
+  fun onTaskUpdate(todo: ToDo, isCompleted: Boolean) {
     viewModelScope.launch {
+      todo.isCompleted = isCompleted
       repository.updateToDo(todo)
     }
   }

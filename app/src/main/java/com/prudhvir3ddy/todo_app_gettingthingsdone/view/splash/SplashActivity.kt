@@ -9,7 +9,6 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.login.LoginActivity
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.TasksActivity
-import com.prudhvir3ddy.todo_app_gettingthingsdone.view.onboarding.OnBoardingActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -29,11 +28,8 @@ class SplashActivity : AppCompatActivity() {
       sharedPrefs.getLogin() -> {
         startActivity(Intent(this, TasksActivity::class.java))
       }
-      sharedPrefs.getFirstTime() -> {
-        startActivity(Intent(this, LoginActivity::class.java))
-      }
       else -> {
-        startActivity(Intent(this, OnBoardingActivity::class.java))
+        startActivity(Intent(this, LoginActivity::class.java))
       }
     }
     finish()

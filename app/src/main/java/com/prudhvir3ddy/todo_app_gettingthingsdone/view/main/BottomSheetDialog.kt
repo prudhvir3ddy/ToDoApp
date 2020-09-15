@@ -1,6 +1,5 @@
 package com.prudhvir3ddy.todo_app_gettingthingsdone.view.main
 
-import android.content.Context
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -10,9 +9,9 @@ import android.view.inputmethod.EditorInfo
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.DialogBinding
 
-class BottomSheetDialog : BottomSheetDialogFragment() {
-
-  private lateinit var mListener: BottomSheetListener
+class BottomSheetDialog(
+  private val viewModel: TasksViewModel
+) : BottomSheetDialogFragment() {
 
   private lateinit var binding: DialogBinding
 
@@ -29,7 +28,7 @@ class BottomSheetDialog : BottomSheetDialogFragment() {
       val taskDesc = binding.taskDescEt.text.toString()
 
       if (!taskName.isBlank()) {
-        mListener.onSave(taskName, taskDesc)
+        viewModel.onTaskSave(taskName, taskDesc)
         dismiss()
       }
 
@@ -46,14 +45,6 @@ class BottomSheetDialog : BottomSheetDialogFragment() {
     }
   }
 
-  override fun onAttach(context: Context) {
-    super.onAttach(context)
-    mListener = context as BottomSheetListener
-  }
-
-  interface BottomSheetListener {
-    fun onSave(taskName: String, taskDesc: String)
-  }
 }
 
 
