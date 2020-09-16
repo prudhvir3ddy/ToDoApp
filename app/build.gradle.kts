@@ -31,7 +31,7 @@ android {
     applicationId = "com.prudhvir3ddy.todo_app_gettingthingsdone"
     minSdkVersion(BuildPlugins.AndroidSdk.MIN)
     targetSdkVersion(BuildPlugins.AndroidSdk.TARGET)
-    versionCode = 7
+    versionCode = 8
     versionName = "1.0"
     testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
   }

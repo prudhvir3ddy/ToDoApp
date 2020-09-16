@@ -13,7 +13,7 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 
 class BottomSheetDialog(
   private val viewModel: TasksViewModel,
-  val toDo: ToDo
+  private val toDo: ToDo
 ) : BottomSheetDialogFragment() {
 
   private lateinit var binding: DialogBinding
