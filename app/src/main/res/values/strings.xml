@@ -18,4 +18,5 @@
   <string name="continue_btn_txt">Continue</string>
   <string name="dot">•</string>
   <string name="sign_in_with_google">Sign in With Google</string>
+  <string name="edit_task">Edit Task</string>
 </resources>

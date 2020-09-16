@@ -3,6 +3,8 @@ package com.prudhvir3ddy.todo_app_gettingthingsdone.view.main
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
 import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.ActivityTasksBinding
+import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_tasks.noWorkIv
 import kotlinx.android.synthetic.main.activity_tasks.tasksRv
@@ -19,37 +22,37 @@ import kotlinx.android.synthetic.main.activity_tasks.tasksRv
 @AndroidEntryPoint
 class TasksActivity : AppCompatActivity() {
 
-  private lateinit var adapter: ToDoListAdapter
-
   private val viewModel: TasksViewModel by viewModels()
 
   private lateinit var binding: ActivityTasksBinding
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    binding = ActivityTasksBinding.inflate(layoutInflater).apply {
-      viewmodel = viewModel
-      lifecycleOwner = this@TasksActivity
-    }
-    setContentView(binding.root)
+    binding = DataBindingUtil.setContentView(this, R.layout.activity_tasks)
+    binding.viewmodel = viewModel
+    binding.lifecycleOwner = this@TasksActivity
 
     Glide.with(this).load(R.drawable.add_task).into(noWorkIv)
     setTitle()
 
+    viewModel.editTaskEvent.observe(this, Observer {
+      setUpBottomDialog(BottomSheetTag.EDIT_TASK, it.peekContent())
+    })
+
     binding.addTaskFab.setOnClickListener {
-      setUpBottomDialog()
+      setUpBottomDialog(BottomSheetTag.ADD_TASK)
     }
     setUpRecyclerView()
-    viewModel.setUpWorkManager()
+
+    // viewModel.setUpWorkManager()
 
   }
 
   private fun setUpRecyclerView() {
 
     binding.viewmodel?.let {
-      adapter =
+      binding.tasksRv.adapter =
         ToDoListAdapter(viewModel = it)
-      binding.tasksRv.adapter = adapter
       binding.tasksRv.addItemDecoration(DividerItemDecoration(tasksRv.context, VERTICAL))
 
       val itemTouchCallback =
@@ -73,12 +76,12 @@ class TasksActivity : AppCompatActivity() {
     }
   }
 
-  private fun setUpBottomDialog() {
-    binding.viewmodel?.let {
-      val bottomSheetDialog =
-        BottomSheetDialog(it)
-      bottomSheetDialog.show(supportFragmentManager, "ADD_TASK")
-    }
+  private fun setUpBottomDialog(
+    tag: String,
+    toDo: ToDo = ToDo()
+  ) {
+    val bottomSheetDialog = BottomSheetDialog(viewModel, toDo)
+    bottomSheetDialog.show(supportFragmentManager, tag)
   }
 
   private fun setTitle() {

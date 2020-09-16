@@ -20,9 +20,9 @@
   <com.google.android.material.card.MaterialCardView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:onClick="@{() -> viewModel.editToDo(todo)}"
       >
     <androidx.constraintlayout.widget.ConstraintLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
@@ -33,7 +33,7 @@
           android:layout_height="wrap_content"
           android:layout_marginStart="8dp"
           android:checked="@{todo.completed}"
-          android:onClick="@{(view)-> viewModel.onTaskUpdate(todo, ((CompoundButton)view).isChecked())}"
+          android:onClick="@{(view)-> viewModel.onTaskToggle(todo, ((CompoundButton)view).isChecked())}"
           app:layout_constraintBottom_toBottomOf="@+id/todo_description"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="@+id/todo_name"
