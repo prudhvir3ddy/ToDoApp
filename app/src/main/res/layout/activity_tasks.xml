@@ -4,7 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
   <data>
-
+    <import type="android.view.View" />
+    <variable
+        name="viewmodel"
+        type="com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.TasksViewModel"
+        />
   </data>
   <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
@@ -40,12 +44,14 @@
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
-        android:visibility="gone"
+        android:visibility="@{viewmodel.tasksList.size() > 0 ? View.VISIBLE: View.GONE}"
+        app:items="@{viewmodel.tasksList}"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcome_tv"
+
         />
     <ImageView
         android:id="@+id/noWorkIv"
@@ -54,6 +60,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
+        android:visibility="@{viewmodel.tasksList.size() > 0 ? View.GONE: View.VISIBLE}"
         app:layout_constraintBottom_toTopOf="@+id/add_task_fab"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

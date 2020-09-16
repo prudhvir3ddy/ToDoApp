@@ -2,7 +2,6 @@ package com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -20,8 +19,8 @@ interface ToDoDao {
   @Update
   suspend fun updateToDo(toDo: ToDo)
 
-  @Delete
-  suspend fun delete(toDo: ToDo)
+  @Query("DELETE FROM todo WHERE id =:taskId")
+  suspend fun delete(taskId: String?)
 
   @Query("DELETE FROM todo WHERE isCompleted =:status")
   suspend fun deleteCompleted(status: Boolean)

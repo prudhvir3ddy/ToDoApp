@@ -27,4 +27,10 @@ class ToDoRepository @Inject constructor(
       toDoDatabase.todoDao().updateToDo(todo)
     }
   }
+
+  suspend fun deleteToDo(taskId: String?) {
+    withContext(Dispatchers.IO) {
+      toDoDatabase.todoDao().delete(taskId)
+    }
+  }
 }

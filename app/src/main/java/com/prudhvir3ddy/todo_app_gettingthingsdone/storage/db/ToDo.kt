@@ -11,7 +11,7 @@ import java.util.UUID
 data class ToDo(
   @PrimaryKey
   val id: String = UUID.randomUUID().toString(),
-  val title: String = "",
-  val description: String = "",
+  var title: String = "",
+  var description: String = "",
   var isCompleted: Boolean = false
 ) : Parcelable

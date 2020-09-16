@@ -33,13 +33,19 @@ class TasksViewModel @ViewModelInject constructor(
 
   fun onTaskUpdate(todo: ToDo, isCompleted: Boolean) {
     viewModelScope.launch {
-      todo.isCompleted = isCompleted
-      repository.updateToDo(todo)
+      val updatedToDo = todo.copy(isCompleted = isCompleted)
+      repository.updateToDo(updatedToDo)
     }
   }
 
   fun getFirstName(): String {
     return sharedPrefs.getFullName()
+  }
+
+  fun onTaskDelete(taskId: String?) {
+    viewModelScope.launch {
+      repository.deleteToDo(taskId)
+    }
   }
 
   fun onTaskSave(taskName: String, taskDesc: String) {

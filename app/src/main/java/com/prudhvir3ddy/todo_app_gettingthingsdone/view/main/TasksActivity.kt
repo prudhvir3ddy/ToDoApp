@@ -1,12 +1,13 @@
 package com.prudhvir3ddy.todo_app_gettingthingsdone.view.main
 
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
@@ -26,7 +27,10 @@ class TasksActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    binding = ActivityTasksBinding.inflate(layoutInflater)
+    binding = ActivityTasksBinding.inflate(layoutInflater).apply {
+      viewmodel = viewModel
+      lifecycleOwner = this@TasksActivity
+    }
     setContentView(binding.root)
 
     Glide.with(this).load(R.drawable.add_task).into(noWorkIv)
@@ -38,31 +42,43 @@ class TasksActivity : AppCompatActivity() {
     setUpRecyclerView()
     viewModel.setUpWorkManager()
 
-    viewModel.tasksList.observe(this, Observer {
-      if (it.isNotEmpty()) {
-        adapter.submitList(it)
-        binding.tasksRv.visibility = View.VISIBLE
-        binding.noWorkIv.visibility = View.INVISIBLE
-      } else {
-        binding.tasksRv.visibility = View.INVISIBLE
-        binding.noWorkIv.visibility = View.VISIBLE
-      }
-    })
-
   }
 
   private fun setUpRecyclerView() {
 
-    adapter =
-      ToDoListAdapter(viewModel = viewModel)
-    binding.tasksRv.adapter = adapter
-    binding.tasksRv.addItemDecoration(DividerItemDecoration(tasksRv.context, VERTICAL))
+    binding.viewmodel?.let {
+      adapter =
+        ToDoListAdapter(viewModel = it)
+      binding.tasksRv.adapter = adapter
+      binding.tasksRv.addItemDecoration(DividerItemDecoration(tasksRv.context, VERTICAL))
+
+      val itemTouchCallback =
+        object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
+          override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: ViewHolder,
+            target: ViewHolder
+          ): Boolean {
+            return false
+          }
+
+          override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
+            viewModel.onTaskDelete(viewModel.tasksList.value?.get(viewHolder.adapterPosition)?.id)
+          }
+
+        }
+      val itemTouchHelper = ItemTouchHelper(itemTouchCallback)
+      itemTouchHelper.attachToRecyclerView(binding.tasksRv)
+      binding.tasksRv.setHasFixedSize(true)
+    }
   }
 
   private fun setUpBottomDialog() {
-    val bottomSheetDialog =
-      BottomSheetDialog(viewModel)
-    bottomSheetDialog.show(supportFragmentManager, "ADD_TASK")
+    binding.viewmodel?.let {
+      val bottomSheetDialog =
+        BottomSheetDialog(it)
+      bottomSheetDialog.show(supportFragmentManager, "ADD_TASK")
+    }
   }
 
   private fun setTitle() {

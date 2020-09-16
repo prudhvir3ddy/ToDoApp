@@ -16,7 +16,7 @@ class ToDoListAdapter(
     TaskDiffCallback()
   ) {
 
-  class ToDoListViewHolder(val binding: ItemTodoBinding) :
+  class ToDoListViewHolder private constructor(val binding: ItemTodoBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(
@@ -27,18 +27,23 @@ class ToDoListAdapter(
       binding.viewModel = viewModel
       binding.executePendingBindings()
     }
+
+    companion object {
+      fun from(parent: ViewGroup): ToDoListViewHolder {
+        return ToDoListViewHolder(
+          ItemTodoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        )
+      }
+    }
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoListViewHolder {
-    return ToDoListViewHolder(
-      ItemTodoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-    )
+    return ToDoListViewHolder.from(parent)
   }
 
   override fun onBindViewHolder(holder: ToDoListViewHolder, position: Int) {
     val item = getItem(position)
     holder.bind(item, viewModel)
-
   }
 
 }
