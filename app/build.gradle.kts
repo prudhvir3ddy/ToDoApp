@@ -31,14 +31,14 @@ android {
     applicationId = "com.prudhvir3ddy.todo_app_gettingthingsdone"
     minSdkVersion(BuildPlugins.AndroidSdk.MIN)
     targetSdkVersion(BuildPlugins.AndroidSdk.TARGET)
-    versionCode = 9
-    versionName = "1.0"
+    versionCode = 10
+    versionName = "2.0"
     testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
   }
 
   buildTypes {
     getByName("release") {
-      isMinifyEnabled = false
+      isMinifyEnabled = true
       signingConfig = signingConfigs.getByName("release")
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
