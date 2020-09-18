@@ -36,10 +36,11 @@ buildscript {
 
   dependencies {
 
-    classpath(BuildPlugins.androidGradlePlugin)
-    classpath(BuildPlugins.androidKotlinPlugin)
-    classpath(BuildPlugins.firebaseLibs.gradleCrashlytics)
-    classpath(BuildPlugins.firebaseLibs.googleGms)
+    classpath(BuildPlugins.GradleLib.TOOLS_GRADLE)
+    classpath(BuildPlugins.GradleLib.KOTLIN_GRADLE)
+    classpath(BuildPlugins.GradleLib.GRADLE_CRASHLYTICS)
+    classpath(BuildPlugins.GradleLib.GMS)
+    classpath(BuildPlugins.GradleLib.DAGGER_HILT)
 
     // NOTE: Do not place your application dependencies here; they belong
     // in the individual module build.gradle files

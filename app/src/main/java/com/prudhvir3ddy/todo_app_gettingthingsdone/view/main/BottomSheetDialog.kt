@@ -1,19 +1,22 @@
 package com.prudhvir3ddy.todo_app_gettingthingsdone.view.main
 
-import android.content.Context
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
-import kotlinx.android.synthetic.main.dialog.task_desc_et
-import kotlinx.android.synthetic.main.dialog.task_name_et
-import kotlinx.android.synthetic.main.dialog.view.save_tv
+import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
+import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.DialogBinding
+import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 
-class BottomSheetDialog : BottomSheetDialogFragment() {
+class BottomSheetDialog(
+  private val viewModel: TasksViewModel,
+  private val toDo: ToDo
+) : BottomSheetDialogFragment() {
 
-  private lateinit var mListener: BottomSheetListener
+  private lateinit var binding: DialogBinding
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -21,28 +24,53 @@ class BottomSheetDialog : BottomSheetDialogFragment() {
     savedInstanceState: Bundle?
   ): View? {
 
-    val v = inflater.inflate(layout.dialog, container, false)
-    v.save_tv.setOnClickListener {
-      val taskName = task_name_et.text.toString()
-      val taskDesc = task_desc_et.text.toString()
+    binding = DialogBinding.inflate(inflater, container, false)
+    setOnEditorAction()
 
-      if (!taskName.isBlank()) {
-        mListener.onSave(taskName, taskDesc)
-        dismiss()
-      }
-
+    when (tag) {
+      BottomSheetTag.ADD_TASK -> binding.taskActionTv.text = getString(string.add_task)
+      BottomSheetTag.EDIT_TASK ->
+        binding.taskActionTv.text = getString(string.edit_task)
     }
-    return v
+
+    binding.taskDescEt.setText(toDo.description)
+    binding.taskNameEt.setText(toDo.title)
+    binding.saveBtn.setOnClickListener {
+      val taskName = binding.taskNameEt.text.toString()
+      val taskDesc = binding.taskDescEt.text.toString()
+
+      if (tag == BottomSheetTag.ADD_TASK) {
+        if (!taskName.isBlank()) {
+          viewModel.onTaskSave(taskName, taskDesc)
+          dismiss()
+        }
+      } else if (tag == BottomSheetTag.EDIT_TASK) {
+        if (!taskName.isBlank()) {
+          viewModel.onTaskUpdate(
+            toDo
+              .copy(title = taskName, description = taskDesc)
+          )
+          dismiss()
+        }
+      }
+    }
+    return binding.root
   }
 
-  override fun onAttach(context: Context) {
-    super.onAttach(context)
-    mListener = context as BottomSheetListener
+  private fun setOnEditorAction() {
+    binding.taskDescEt.setOnEditorActionListener { _, actionId, event ->
+      if (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_DONE) {
+        binding.saveBtn.performClick()
+      }
+      false
+    }
   }
 
-  interface BottomSheetListener {
-    fun onSave(taskName: String, taskDesc: String)
-  }
+}
+
+object BottomSheetTag {
+  const val ADD_TASK = "addTask"
+  const val EDIT_TASK = "editTask"
 }
 
 

@@ -1,50 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     >
-  <androidx.constraintlayout.widget.ConstraintLayout
+  <data>
 
+    <import type="android.widget.CompoundButton" />
+
+    <variable
+        name="todo"
+        type="com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo"
+        />
+
+    <variable
+        name="viewModel"
+        type="com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.TasksViewModel"
+        />
+  </data>
+  <com.google.android.material.card.MaterialCardView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:onClick="@{() -> viewModel.editToDo(todo)}"
       >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
 
-    <CheckBox
-        android:id="@+id/checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/todo_description"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/todo_name"
-        />
-    <TextView
-        android:id="@+id/todo_description"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="8dp"
-        android:ellipsize="end"
-        android:maxLines="2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/todo_name"
-        app:layout_constraintTop_toBottomOf="@+id/todo_name"
-        tools:text="Go to heritage shop and buy half litre milk"
-        />
-    <TextView
-        android:id="@+id/todo_name"
-        style="@android:style/TextAppearance.Material.Large"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/checkbox"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Buy milk packet"
-        />
-  </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.card.MaterialCardView>
+      <CheckBox
+          android:id="@+id/checkbox"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="8dp"
+          android:checked="@{todo.completed}"
+          android:onClick="@{(view)-> viewModel.onTaskToggle(todo, ((CompoundButton)view).isChecked())}"
+          app:layout_constraintBottom_toBottomOf="@+id/todo_description"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="@+id/todo_name"
+          />
+      <TextView
+          android:id="@+id/todo_description"
+          style="@style/TextAppearance.AppCompat.Body1"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="4dp"
+          android:layout_marginBottom="8dp"
+          android:ellipsize="end"
+          android:maxLines="2"
+          android:text="@{todo.description}"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="@+id/todo_name"
+          app:layout_constraintTop_toBottomOf="@+id/todo_name"
+          app:strikeThrough="@{todo.completed}"
+          tools:text="Go to heritage shop and buy half litre milk"
+          />
+      <TextView
+          android:id="@+id/todo_name"
+          style="@android:style/TextAppearance.Material.Large"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:text="@{todo.title}"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toEndOf="@+id/checkbox"
+          app:layout_constraintTop_toTopOf="parent"
+          app:strikeThrough="@{todo.completed}"
+          tools:text="Buy milk packet"
+          />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </com.google.android.material.card.MaterialCardView>
+</layout>

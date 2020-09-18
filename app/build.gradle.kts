@@ -1,10 +1,11 @@
 plugins {
-  id(BuildPlugins.androidApplication)
-  id(BuildPlugins.kotlinAndroid)
-  id(BuildPlugins.kotlinAndroidExtensions)
-  id(BuildPlugins.firebaseLibs.rawGms)
-  id(BuildPlugins.kotlinKapt)
-  id(BuildPlugins.firebaseLibs.firebaseCrashlytics)
+  id(BuildPlugins.ANDROID_APPLICATION)
+  id(BuildPlugins.KOTLIN_ANDROID)
+  id(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
+  id(BuildPlugins.RAW_GMS)
+  id(BuildPlugins.KOTLIN_KAPT)
+  id(BuildPlugins.FIREBASE_CRASHLYTICS)
+  id(BuildPlugins.DAGGER_HILT)
 }
 
 android {
@@ -24,20 +25,20 @@ android {
     }
   }
 
-  compileSdkVersion(BuildPlugins.AndroidSdk.compile)
+  compileSdkVersion(BuildPlugins.AndroidSdk.COMPILE)
 
   defaultConfig {
     applicationId = "com.prudhvir3ddy.todo_app_gettingthingsdone"
-    minSdkVersion(BuildPlugins.AndroidSdk.min)
-    targetSdkVersion(BuildPlugins.AndroidSdk.target)
-    versionCode = 7
-    versionName = "1.0"
+    minSdkVersion(BuildPlugins.AndroidSdk.MIN)
+    targetSdkVersion(BuildPlugins.AndroidSdk.TARGET)
+    versionCode = 10
+    versionName = "2.0"
     testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
   }
 
   buildTypes {
     getByName("release") {
-      isMinifyEnabled = false
+      isMinifyEnabled = true
       signingConfig = signingConfigs.getByName("release")
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
@@ -51,39 +52,50 @@ android {
   kotlinOptions {
     jvmTarget = "1.8"
   }
+  dataBinding.isEnabled = true
 }
 
 dependencies {
   implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-  implementation(BuildPlugins.Libs.ktStdLib)
-  implementation(BuildPlugins.Libs.ktxCore)
-  implementation(BuildPlugins.Libs.appCompat)
-  implementation(BuildPlugins.Libs.constraintLayout)
-  testImplementation(BuildPlugins.testLibs.junit)
 
-  implementation(BuildPlugins.Libs.materialDesign)
+  implementation(BuildPlugins.Lib.KT_STD_LIB)
+  implementation(BuildPlugins.Lib.KTX_CORE)
+  implementation(BuildPlugins.Lib.LIFECYCLE_VIEWMODEL_KTX)
+  implementation(BuildPlugins.Lib.APP_COMPAT)
+  implementation(BuildPlugins.Lib.CONSTRAINT_LAYOUT)
+  implementation(BuildPlugins.Lib.MATERIAL_DESIGN)
 
-  implementation(BuildPlugins.Libs.room)
-  kapt(BuildPlugins.Libs.roomKapt)
+  implementation("androidx.activity:activity-ktx:1.1.0")
 
-  testImplementation(BuildPlugins.testLibs.coreTest)
-  testImplementation(BuildPlugins.testLibs.mockito)
+  testImplementation(BuildPlugins.TestLibs.JUNIT)
+  testImplementation(BuildPlugins.TestLibs.CORE_TEST)
+  testImplementation(BuildPlugins.TestLibs.MOCKITO)
 
-  // Kotlin + CoRoutines
-  implementation(BuildPlugins.Libs.work)
-  androidTestImplementation(BuildPlugins.Libs.work)
+  implementation(BuildPlugins.Lib.ROOM_KTX)
+  kapt(BuildPlugins.Lib.ROOM_KAPT)
 
-  //noinspection GradleDependency
-  implementation(BuildPlugins.firebaseLibs.fcm)
-  implementation(BuildPlugins.Libs.crashlyticsVersion)
+  implementation(BuildPlugins.Lib.WORK_KTX)
+  androidTestImplementation(BuildPlugins.Lib.WORK_KTX)
 
-  //Glide
-  implementation(BuildPlugins.Libs.glide)
-  kapt(BuildPlugins.Libs.glideKapt)
+  implementation(BuildPlugins.Lib.FCM)
+  implementation(BuildPlugins.Lib.CRASHLYTICS_FIREBASE)
 
-  implementation(BuildPlugins.Libs.viewPager)
+  implementation(BuildPlugins.Lib.GLIDE)
+  kapt(BuildPlugins.Lib.GLIDE_KAPT)
 
-  //dagger
-  implementation(BuildPlugins.Libs.dagger)
-  kapt(BuildPlugins.Libs.daggerKapt)
+  implementation(BuildPlugins.Lib.VIEWPAGER)
+
+  implementation(BuildPlugins.Lib.DAGGER_HILT_ANDROID)
+  kapt(BuildPlugins.Lib.DAGGER_HILT_ANDROID_COMPILER)
+  implementation(BuildPlugins.Lib.HILT_LIFECYCLE_VIEWMODEL)
+  kapt(BuildPlugins.Lib.HILT_COMPILER)
+  implementation("androidx.hilt:hilt-work:1.0.0-alpha01")
+
+  implementation(BuildPlugins.Lib.RETROFIT)
+  implementation(BuildPlugins.Lib.RETROFIT_CONVERTER_MOSHI)
+  implementation(BuildPlugins.Lib.HTTP_LOGGING_INTERCEPTOR)
+
+  implementation(BuildPlugins.Lib.TIMBER)
+  debugImplementation(BuildPlugins.Lib.LEAK_CANARY)
+
 }

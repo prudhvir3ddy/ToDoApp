@@ -1,95 +1,121 @@
 /** This file contains versions of all the dependencies used in the module  */
 
-const val kotlinVersion = "1.3.71"
-const val buildVersion = "3.6.2"
-
 object BuildPlugins {
 
-  object Versions {
-    const val buildToolsVersion = "29.0.3"
+  const val ANDROID_APPLICATION = "com.android.application"
+  const val KOTLIN_ANDROID = "kotlin-android"
+  const val KOTLIN_ANDROID_EXTENSIONS = "kotlin-android-extensions"
+  const val KOTLIN_KAPT = "kotlin-kapt"
+  const val FIREBASE_CRASHLYTICS = "com.google.firebase.crashlytics"
+  const val RAW_GMS = "com.google.gms.google-services"
+  const val DAGGER_HILT = "dagger.hilt.android.plugin"
+
+  object RootVersion {
+    const val KOTLIN_VERSION = "1.3.71"
+    const val GOOGLE_DAGGER_HILT_ANDROID = "2.28-alpha"
   }
 
-  const val androidGradlePlugin = "com.android.tools.build:gradle:$buildVersion"
-  const val androidKotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-  const val androidApplication = "com.android.application"
-  const val kotlinAndroid = "kotlin-android"
-  const val kotlinAndroidExtensions = "kotlin-android-extensions"
-  const val kotlinKapt = "kotlin-kapt"
+  object GradleLib {
+
+    private object GradleLibVersion {
+      const val BUILD_VERSION = "3.6.2"
+      const val GRADLE_CRASHLYTICS = "2.0.0-beta04"
+      const val GMS = "4.3.3"
+    }
+
+    const val DAGGER_HILT =
+      "com.google.dagger:hilt-android-gradle-plugin:${RootVersion.GOOGLE_DAGGER_HILT_ANDROID}"
+    const val TOOLS_GRADLE = "com.android.tools.build:gradle:${GradleLibVersion.BUILD_VERSION}"
+    const val KOTLIN_GRADLE =
+      "org.jetbrains.kotlin:kotlin-gradle-plugin:${RootVersion.KOTLIN_VERSION}"
+    const val GMS = "com.google.gms:google-services:${GradleLibVersion.GMS}"
+    const val GRADLE_CRASHLYTICS =
+      "com.google.firebase:firebase-crashlytics-gradle:${GradleLibVersion.GRADLE_CRASHLYTICS}"
+  }
 
   object AndroidSdk {
 
-    const val compile = 29
-    const val min = 21
-    const val target = 29
+    const val COMPILE = 29
+    const val MIN = 21
+    const val TARGET = 29
 
   }
 
   /** General Libraries */
-  object Libs {
+  object Lib {
 
-    object libVersions {
-      const val jetpack = "1.1.0"
-      const val ktxCore = "1.2.0"
-      const val constraintLayout = "1.1.3"
-      const val materialDesign = "1.1.0"
-      const val roomVersion = "2.2.5"
-      const val workVersion = "2.3.4"
-      const val crashlyticsVersion = "17.0.0-beta04"
-      const val glideVersion = "4.11.0"
-      const val viewPagerVersion = "1.0.0"
-      const val daggerVersion = "2.25.4"
+    object LibVersion {
+      const val APP_COMPAT = "1.1.0"
+      const val KTX_CORE = "1.2.0"
+      const val CONSTRAINT_LAYOUT = "1.1.3"
+      const val MATERIAL_DESIGN = "1.1.0"
+      const val ROOM = "2.2.5"
+      const val WORK = "2.4.0-beta01"
+      const val CRASHLYTICS = "17.0.0-beta04"
+      const val GLIDE = "4.11.0"
+      const val VIEWPAGER = "1.0.0"
+      const val RETROFIT = "2.8.1"
+      const val LIFECYCLE_VIEWMODEL = "2.2.0"
+      const val TIMBER = "4.7.1"
+      const val LEAK_CANARY = "2.4"
+      const val FCM = "19.0.1"
+      const val ANDROID_HILT = "1.0.0-alpha01"
     }
 
-    const val ktStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    const val appCompat = "androidx.appcompat:appcompat:${libVersions.jetpack}"
-    const val ktxCore = "androidx.core:core-ktx:${libVersions.ktxCore}"
-    const val constraintLayout =
-      "androidx.constraintlayout:constraintlayout:${libVersions.constraintLayout}"
-    const val materialDesign = "com.google.android.material:material:${libVersions.materialDesign}"
-    const val room = "androidx.room:room-runtime:${libVersions.roomVersion}"
-    const val work = "androidx.work:work-runtime-ktx:${libVersions.workVersion}"
-    const val crashlyticsVersion =
-      "com.google.firebase:firebase-crashlytics:${libVersions.crashlyticsVersion}"
-    const val glide = "com.github.bumptech.glide:glide:${libVersions.glideVersion}"
-    const val viewPager = "androidx.viewpager2:viewpager2:${libVersions.viewPagerVersion}"
-    const val dagger = "com.google.dagger:dagger:${libVersions.daggerVersion}"
+    const val LEAK_CANARY = "com.squareup.leakcanary:leakcanary-android:${LibVersion.LEAK_CANARY}"
+    const val TIMBER = "com.jakewharton.timber:timber:${LibVersion.TIMBER}"
+    const val HTTP_LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:4.5.0"
+    const val LIFECYCLE_VIEWMODEL_KTX =
+      "androidx.lifecycle:lifecycle-viewmodel-ktx:${LibVersion.LIFECYCLE_VIEWMODEL}"
+    const val RETROFIT_CONVERTER_MOSHI =
+      "com.squareup.retrofit2:converter-moshi:${LibVersion.RETROFIT}"
+    const val RETROFIT = "com.squareup.retrofit2:retrofit:${LibVersion.RETROFIT}"
+    const val KT_STD_LIB = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${RootVersion.KOTLIN_VERSION}"
+    const val APP_COMPAT = "androidx.appcompat:appcompat:${LibVersion.APP_COMPAT}"
+    const val KTX_CORE = "androidx.core:core-ktx:${LibVersion.KTX_CORE}"
+    const val CONSTRAINT_LAYOUT =
+      "androidx.constraintlayout:constraintlayout:${LibVersion.CONSTRAINT_LAYOUT}"
+    const val MATERIAL_DESIGN =
+      "com.google.android.material:material:${LibVersion.MATERIAL_DESIGN}"
 
-    const val roomKapt = "androidx.room:room-compiler:${libVersions.roomVersion}"
-    const val daggerKapt = "com.google.dagger:dagger-compiler:${libVersions.daggerVersion}"
-    const val glideKapt = "com.github.bumptech.glide:compiler:${libVersions.glideVersion}"
+    const val ROOM_KTX = "androidx.room:room-ktx:${LibVersion.ROOM}"
+    const val ROOM_KAPT = "androidx.room:room-compiler:${LibVersion.ROOM}"
+
+    const val WORK_KTX = "androidx.work:work-runtime-ktx:${LibVersion.WORK}"
+    const val CRASHLYTICS_FIREBASE =
+      "com.google.firebase:firebase-crashlytics:${LibVersion.CRASHLYTICS}"
+
+    const val GLIDE = "com.github.bumptech.glide:glide:${LibVersion.GLIDE}"
+    const val GLIDE_KAPT = "com.github.bumptech.glide:compiler:${LibVersion.GLIDE}"
+
+    const val VIEWPAGER = "androidx.viewpager2:viewpager2:${LibVersion.VIEWPAGER}"
+
+    const val DAGGER_HILT_ANDROID =
+      "com.google.dagger:hilt-android:${RootVersion.GOOGLE_DAGGER_HILT_ANDROID}"
+    const val DAGGER_HILT_ANDROID_COMPILER =
+      "com.google.dagger:hilt-android-compiler:${RootVersion.GOOGLE_DAGGER_HILT_ANDROID}"
+    const val HILT_LIFECYCLE_VIEWMODEL =
+      "androidx.hilt:hilt-lifecycle-viewmodel:${LibVersion.ANDROID_HILT}"
+    const val HILT_COMPILER = "androidx.hilt:hilt-compiler:${LibVersion.ANDROID_HILT}"
+
+    const val FCM = "com.google.firebase:firebase-messaging:${LibVersion.FCM}"
+
   }
 
   /** Libraries for Tests */
-  object testLibs {
+  object TestLibs {
 
-    private object testLibVersions {
-      const val coreTestVersion = "1.2.0"
-      const val mockitoVersion = "2.23.4"
-      const val workVersion = "2.3.4"
-      const val junitVersion = "4.13"
+    private object TestLibVersions {
+      const val CORE_TEST = "1.2.0"
+      const val MOCKITO = "2.23.4"
+      const val WORK = "2.3.4"
+      const val JUNIT = "4.13"
     }
 
-    const val work = "androidx.work:work-testing:${testLibVersions.workVersion}"
-    const val coreTest = "androidx.test:core:${testLibVersions.coreTestVersion}"
-    const val mockito = "org.mockito:mockito-core:${testLibVersions.mockitoVersion}"
-    const val junit = "junit:junit:${testLibVersions.junitVersion}"
-  }
-
-  /** Libraries for Firebase */
-  object firebaseLibs {
-
-    private object firebaseLibsVersion {
-      const val gradleCrashlyticsVersion = "2.0.0-beta04"
-      const val gmsVersion = "4.3.3"
-      const val fcmVersion = "19.0.1"
-    }
-
-    const val gradleCrashlytics =
-      "com.google.firebase:firebase-crashlytics-gradle:${firebaseLibsVersion.gradleCrashlyticsVersion}"
-    const val googleGms = "com.google.gms:google-services:${firebaseLibsVersion.gmsVersion}"
-    const val fcm = "com.google.firebase:firebase-messaging:${firebaseLibsVersion.fcmVersion}"
-    const val firebaseCrashlytics = "com.google.firebase.crashlytics"
-    const val rawGms = "com.google.gms.google-services"
+    const val WORK_TESTING = "androidx.work:work-testing:${TestLibVersions.WORK}"
+    const val CORE_TEST = "androidx.test:core:${TestLibVersions.CORE_TEST}"
+    const val MOCKITO = "org.mockito:mockito-core:${TestLibVersions.MOCKITO}"
+    const val JUNIT = "junit:junit:${TestLibVersions.JUNIT}"
   }
 
 }

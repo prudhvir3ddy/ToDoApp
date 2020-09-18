@@ -1,25 +1,21 @@
 package com.prudhvir3ddy.todo_app_gettingthingsdone.workmanager
 
 import android.content.Context
-import androidx.work.Worker
+import androidx.hilt.Assisted
+import androidx.hilt.work.WorkerInject
+import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.prudhvir3ddy.todo_app_gettingthingsdone.ToDoApp
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDoDatabase
-import javax.inject.Inject
+import dagger.hilt.android.qualifiers.ApplicationContext
 
-class MyWorker(
-  val context: Context,
-  workerParameters: WorkerParameters
-) : Worker(context, workerParameters) {
+class MyWorker @WorkerInject constructor(
+  private val toDoDatabase: ToDoDatabase,
+  @Assisted @ApplicationContext context: Context,
+  @Assisted workerParameters: WorkerParameters
+) : CoroutineWorker(context, workerParameters) {
 
-  @Inject
-  lateinit var toDoDatabase: ToDoDatabase
-
-  override fun doWork(): Result {
-    (applicationContext as ToDoApp).appComponent.inject(this)
-    toDoDatabase.databaseWriteExecutor.execute {
-      toDoDatabase.todoDao().deleteCompleted(true)
-    }
+  override suspend fun doWork(): Result {
+    toDoDatabase.todoDao().deleteCompleted(true)
     return Result.success()
   }
 }
