@@ -67,6 +67,7 @@
           android:hint="@string/please_enter_your_name"
           android:imeOptions="actionNext"
           android:maxLines="1"
+          android:inputType="textPersonName"
           android:nextFocusDown="@id/login_btn"
           android:singleLine="true"
           />
