@@ -19,4 +19,8 @@
   <string name="dot">•</string>
   <string name="sign_in_with_google">Sign in With Google</string>
   <string name="edit_task">Edit Task</string>
+  <string name="daily_notifications_channel_id">Daily Notifications</string>
+  <string name="remember_why_you_started">Remember Why You Started</string>
+  <string name="remember_why_you_started_desc">Get Back to Plan The Work</string>
+  <string name="daily_notifications_channel_name">Daily Notification</string>
 </resources>

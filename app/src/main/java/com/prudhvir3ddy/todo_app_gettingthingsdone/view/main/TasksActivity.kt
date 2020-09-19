@@ -1,5 +1,9 @@
 package com.prudhvir3ddy.todo_app_gettingthingsdone.view.main
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -44,7 +48,11 @@ class TasksActivity : AppCompatActivity() {
     }
     setUpRecyclerView()
 
-    // viewModel.setUpWorkManager()
+    createChannel(
+      getString(string.daily_notifications_channel_id),
+      getString(string.daily_notifications_channel_name)
+    )
+    viewModel.setUpWorkManager()
 
   }
 
@@ -82,6 +90,20 @@ class TasksActivity : AppCompatActivity() {
   ) {
     val bottomSheetDialog = BottomSheetDialog(viewModel, toDo)
     bottomSheetDialog.show(supportFragmentManager, tag)
+  }
+
+  private fun createChannel(channelId: String, channelName: String) {
+    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+      val notificationChannel =
+        NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_LOW)
+      notificationChannel.enableLights(true)
+      notificationChannel.lightColor = Color.RED
+      notificationChannel.enableVibration(true)
+      notificationChannel.description = getString(string.remember_why_you_started_desc)
+
+      val notificationManager = this.getSystemService(NotificationManager::class.java)
+      notificationManager.createNotificationChannel(notificationChannel)
+    }
   }
 
   private fun setTitle() {
