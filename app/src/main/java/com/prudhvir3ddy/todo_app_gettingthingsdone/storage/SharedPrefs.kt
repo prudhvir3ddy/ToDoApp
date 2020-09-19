@@ -3,7 +3,6 @@ package com.prudhvir3ddy.todo_app_gettingthingsdone.storage
 import android.content.Context
 import android.content.SharedPreferences
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs.PrefConstants.FULL_NAME
-import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs.PrefConstants.IS_FIRST_TIME
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs.PrefConstants.IS_LOGGED_IN
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs.PrefConstants.TODO_APP_PREFS
 
@@ -13,7 +12,6 @@ class SharedPrefs(context: Context) {
     const val TODO_APP_PREFS = "todoAppPrefs"
     const val IS_LOGGED_IN = "isLoggedIn"
     const val FULL_NAME = "firstName"
-    const val IS_FIRST_TIME = "isFirstTime"
   }
 
   private val sharedPreferences: SharedPreferences =
@@ -34,12 +32,5 @@ class SharedPrefs(context: Context) {
   fun getFullName(): String = sharedPreferences.getString(FULL_NAME, null) ?: "boo"
 
   fun getLogin(): Boolean = sharedPreferences.getBoolean(IS_LOGGED_IN, false)
-
-  fun setFirstTime() {
-    editor.putBoolean(IS_FIRST_TIME, true)
-    editor.commit()
-  }
-
-  fun getFirstTime() = sharedPreferences.getBoolean(IS_FIRST_TIME, false)
 
 }
