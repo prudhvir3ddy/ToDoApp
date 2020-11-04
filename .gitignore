@@ -61,7 +61,7 @@ captures/
 # Keystore files
 # Uncomment the following lines if you do not want to check your keystore files in.
 *.jks
-*.keystore
+release.keystore
 *.pepk
 
 # External native build folder generated in Android Studio 2.2 and later
@@ -90,3 +90,5 @@ lint/intermediates/
 lint/generated/
 lint/outputs/
 lint/tmp/
+/.idea/compiler.xml
+/.idea/jarRepositories.xml
