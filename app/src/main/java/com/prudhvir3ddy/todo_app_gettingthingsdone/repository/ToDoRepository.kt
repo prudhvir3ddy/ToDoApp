@@ -18,7 +18,7 @@ class ToDoRepository @Inject constructor(
   }
 
   fun getAllToDos(): LiveData<List<ToDo>> {
-    return toDoDatabase.todoDao().getAll()
+    return toDoDatabase.todoDao().getAllToDos()
 
   }
 
@@ -31,6 +31,12 @@ class ToDoRepository @Inject constructor(
   suspend fun deleteToDo(taskId: String?) {
     withContext(Dispatchers.IO) {
       toDoDatabase.todoDao().delete(taskId)
+    }
+  }
+
+  suspend fun addToDos(todoList: List<ToDo>) {
+    withContext(Dispatchers.IO) {
+      toDoDatabase.todoDao().addToDos(todoList)
     }
   }
 }
