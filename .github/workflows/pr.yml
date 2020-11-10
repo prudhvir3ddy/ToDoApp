@@ -1,11 +1,13 @@
-name: Android CI
+name: Pull Request
 
-on: [pull_request]
+on:
+  pull_request:
+    branches:
+    - development
 
 jobs:
-  build:
+  pull_request:
     runs-on: macOS-latest
-
     steps:
       - uses: actions/checkout@v2
       - name: set up JDK 1.8
@@ -14,9 +16,9 @@ jobs:
           java-version: 1.8
       - name: pre-ci
         run: mv ./app/mock-google-services.json ./app/google-services.json
-      - name: Lint check
+      - name: Lint Check
         run: ./gradlew lint
-      - name: Build with Gradle
+      - name: Run Tests
         run: ./gradlew assembleDebug
       - name: Upload app APK
         uses: actions/upload-artifact@v1

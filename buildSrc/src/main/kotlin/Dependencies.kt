@@ -1,14 +1,7 @@
 /** This file contains versions of all the dependencies used in the module  */
+package com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc
 
 object BuildPlugins {
-
-  const val ANDROID_APPLICATION = "com.android.application"
-  const val KOTLIN_ANDROID = "kotlin-android"
-  const val KOTLIN_ANDROID_EXTENSIONS = "kotlin-android-extensions"
-  const val KOTLIN_KAPT = "kotlin-kapt"
-  const val FIREBASE_CRASHLYTICS = "com.google.firebase.crashlytics"
-  const val RAW_GMS = "com.google.gms.google-services"
-  const val DAGGER_HILT = "dagger.hilt.android.plugin"
 
   object RootVersion {
     const val KOTLIN_VERSION = "1.3.71"
@@ -18,7 +11,7 @@ object BuildPlugins {
   object GradleLib {
 
     private object GradleLibVersion {
-      const val BUILD_VERSION = "3.6.2"
+      const val BUILD_VERSION = "4.1.0"
       const val GRADLE_CRASHLYTICS = "2.0.0-beta04"
       const val GMS = "4.3.3"
     }
