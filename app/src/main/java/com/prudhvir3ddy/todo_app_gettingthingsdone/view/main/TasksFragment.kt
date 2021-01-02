@@ -5,9 +5,9 @@ import android.app.NotificationManager
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -17,23 +17,26 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
-import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.ActivityTasksBinding
+import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.FragmentTasksBinding
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_tasks.noWorkIv
-import kotlinx.android.synthetic.main.activity_tasks.tasksRv
 
 @AndroidEntryPoint
-class TasksActivity : AppCompatActivity() {
+class TasksFragment : Fragment(R.layout.fragment_tasks) {
 
   private val viewModel: TasksViewModel by viewModels()
 
-  private lateinit var binding: ActivityTasksBinding
+  private lateinit var binding: FragmentTasksBinding
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    initUi(view)
+
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    initUi()
+
 
     viewModel.editTaskEvent.observe(this, Observer {
       setUpBottomDialog(BottomSheetTag.EDIT_TASK, it.peekContent())
@@ -47,12 +50,12 @@ class TasksActivity : AppCompatActivity() {
 
   }
 
-  private fun initUi() {
-    binding = DataBindingUtil.setContentView(this, R.layout.activity_tasks)
+  private fun initUi(view: View) {
+    binding = FragmentTasksBinding.bind(view)
     binding.viewmodel = viewModel
-    binding.lifecycleOwner = this@TasksActivity
+    binding.lifecycleOwner = this@TasksFragment
 
-    Glide.with(this).load(R.drawable.add_task).into(noWorkIv)
+    Glide.with(this).load(R.drawable.add_task).into(binding.noWorkIv)
     setTitle()
 
     binding.addTaskFab.setOnClickListener {
@@ -66,7 +69,7 @@ class TasksActivity : AppCompatActivity() {
     binding.viewmodel?.let {
       binding.tasksRv.adapter =
         ToDoListAdapter(viewModel = it)
-      binding.tasksRv.addItemDecoration(DividerItemDecoration(tasksRv.context, VERTICAL))
+      binding.tasksRv.addItemDecoration(DividerItemDecoration(binding.tasksRv.context, VERTICAL))
 
       val itemTouchCallback =
         object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
@@ -94,7 +97,7 @@ class TasksActivity : AppCompatActivity() {
     toDo: ToDo = ToDo()
   ) {
     val bottomSheetDialog = BottomSheetDialog(viewModel, toDo)
-    bottomSheetDialog.show(supportFragmentManager, tag)
+    bottomSheetDialog.show(childFragmentManager, tag)
   }
 
   private fun createChannel(channelId: String, channelName: String) {
@@ -106,7 +109,7 @@ class TasksActivity : AppCompatActivity() {
       notificationChannel.enableVibration(true)
       notificationChannel.description = getString(string.remember_why_you_started_desc)
 
-      val notificationManager = this.getSystemService(NotificationManager::class.java)
+      val notificationManager = requireContext().getSystemService(NotificationManager::class.java)
       notificationManager.createNotificationChannel(notificationChannel)
     }
   }

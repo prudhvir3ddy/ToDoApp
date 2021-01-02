@@ -54,7 +54,14 @@ dependencies {
   implementation(BuildPlugins.Lib.CONSTRAINT_LAYOUT)
   implementation(BuildPlugins.Lib.MATERIAL_DESIGN)
 
-  implementation("androidx.activity:activity-ktx:1.1.0")
+  implementation(BuildPlugins.Lib.ACTIVITY_KTX)
+  implementation(BuildPlugins.Lib.FRAGMENT_KTX)
+
+  implementation(BuildPlugins.Lib.NAVIGATION_FRAGMENT_KTX)
+  implementation(BuildPlugins.Lib.NAVIGATION_UI_KTX)
+  implementation 'androidx.appcompat:appcompat:1.2.0'
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
   testImplementation(BuildPlugins.TestLibs.JUNIT)
   testImplementation(BuildPlugins.TestLibs.CORE_TEST)
@@ -78,7 +85,7 @@ dependencies {
   kapt(BuildPlugins.Lib.DAGGER_HILT_ANDROID_COMPILER)
   implementation(BuildPlugins.Lib.HILT_LIFECYCLE_VIEWMODEL)
   kapt(BuildPlugins.Lib.HILT_COMPILER)
-  implementation("androidx.hilt:hilt-work:1.0.0-alpha01")
+  implementation(BuildPlugins.Lib.HILT_WORKER)
 
   implementation(BuildPlugins.Lib.RETROFIT)
   implementation(BuildPlugins.Lib.RETROFIT_CONVERTER_MOSHI)

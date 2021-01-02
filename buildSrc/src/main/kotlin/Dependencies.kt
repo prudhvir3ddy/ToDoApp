@@ -11,7 +11,7 @@ object BuildPlugins {
   object GradleLib {
 
     private object GradleLibVersion {
-      const val BUILD_VERSION = "4.1.0"
+      const val BUILD_VERSION = "4.1.1"
       const val GRADLE_CRASHLYTICS = "2.0.0-beta04"
       const val GMS = "4.3.3"
     }
@@ -52,7 +52,8 @@ object BuildPlugins {
       const val TIMBER = "4.7.1"
       const val LEAK_CANARY = "2.4"
       const val FCM = "19.0.1"
-      const val ANDROID_HILT = "1.0.0-alpha01"
+      const val ANDROID_HILT = "1.0.0-alpha02"
+      const val NAVIGATION = "2.3.2"
     }
 
     const val LEAK_CANARY = "com.squareup.leakcanary:leakcanary-android:${LibVersion.LEAK_CANARY}"
@@ -70,6 +71,12 @@ object BuildPlugins {
       "androidx.constraintlayout:constraintlayout:${LibVersion.CONSTRAINT_LAYOUT}"
     const val MATERIAL_DESIGN =
       "com.google.android.material:material:${LibVersion.MATERIAL_DESIGN}"
+
+    const val ACTIVITY_KTX = "androidx.activity:activity-ktx:1.1.0"
+    const val FRAGMENT_KTX = "androidx.fragment:fragment-ktx:1.2.5"
+
+    const val NAVIGATION_FRAGMENT_KTX = "androidx.navigation:navigation-fragment-ktx:${LibVersion.NAVIGATION}"
+    const val NAVIGATION_UI_KTX = "androidx.navigation:navigation-ui-ktx:${LibVersion.NAVIGATION}"
 
     const val ROOM_KTX = "androidx.room:room-ktx:${LibVersion.ROOM}"
     const val ROOM_KAPT = "androidx.room:room-compiler:${LibVersion.ROOM}"
@@ -90,7 +97,7 @@ object BuildPlugins {
     const val HILT_LIFECYCLE_VIEWMODEL =
       "androidx.hilt:hilt-lifecycle-viewmodel:${LibVersion.ANDROID_HILT}"
     const val HILT_COMPILER = "androidx.hilt:hilt-compiler:${LibVersion.ANDROID_HILT}"
-
+    const val HILT_WORKER = "androidx.hilt:hilt-work:1.0.0-alpha02"
     const val FCM = "com.google.firebase:firebase-messaging:${LibVersion.FCM}"
 
   }

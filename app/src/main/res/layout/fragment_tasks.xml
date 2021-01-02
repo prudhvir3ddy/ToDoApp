@@ -14,7 +14,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:padding="16dp"
-      tools:context=".view.main.TasksActivity"
+      tools:context=".view.main.TasksFragment"
       >
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

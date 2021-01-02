@@ -13,6 +13,9 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
+    <activity
+        android:name=".view.HostActivity"
+        android:theme="@style/AppTheme.NoActionBar" />
 
     <activity android:name=".view.splash.SplashActivity">
       <intent-filter>
@@ -21,16 +24,6 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-    <activity
-        android:name=".view.main.TasksActivity"
-        android:screenOrientation="portrait"
-        android:theme="@style/AppTheme.NoActionBar"
-        tools:ignore="LockedOrientationActivity" />
-    <activity
-        android:name=".view.login.LoginActivity"
-        android:screenOrientation="portrait"
-        android:theme="@style/AppTheme.NoActionBar"
-        tools:ignore="LockedOrientationActivity" />
 
     <service
         android:name=".fcm.MyFirebaseMessagingService"
@@ -44,7 +37,6 @@
         android:name="androidx.work.impl.WorkManagerInitializer"
         android:authorities="${applicationId}.workmanager-init"
         tools:node="remove" />
-
   </application>
 
 </manifest>
