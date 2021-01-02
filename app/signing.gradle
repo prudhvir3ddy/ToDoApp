@@ -1,0 +1,16 @@
+apply plugin: 'com.android.application'
+
+android.signingConfigs {
+  debug {
+    keyAlias = "key"
+    keyPassword = "toooor"
+    storeFile = rootProject.file('keystore/debug.keystore')
+    storePassword = "toooor"
+  }
+  release {
+    keyAlias = "key"
+    keyPassword = "toooor"
+    storeFile = rootProject.file('keystore/release.keystore')
+    storePassword = "toooor"
+  }
+}

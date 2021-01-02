@@ -1,0 +1,16 @@
+apply plugin: 'com.android.application'
+apply from: 'signing.gradle'
+
+android {
+  buildTypes {
+    release {
+      minifyEnabled true
+      shrinkResources true
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+      signingConfig signingConfigs.release
+    }
+    debug {
+      signingConfig signingConfigs.debug
+    }
+  }
+}

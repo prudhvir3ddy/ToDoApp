@@ -7,11 +7,11 @@
 
 <table>
    <tr>
-     <td><kbd><img src="./screenshots/ss1.png"></kbd></td>
-     <td><kbd><img src="./screenshots/ss2.png"></kbd></td>
-     <td><kbd><img src="./screenshots/ss3.png"></kbd></td>
+     <td><kbd><img src="./screenshots/ss1.jpg"></kbd></td>
+     <td><kbd><img src="./screenshots/ss2.jpg"></kbd></td>
+     <td><kbd><img src="./screenshots/ss3.jpg"></kbd></td>
      <tr> 
-     <td><kbd><img src="./screenshots/ss4.png"></kbd></td>
-     <td><kbd><img src="./screenshots/ss5.png"></kbd></td>
-     <td><kbd><img src="./screenshots/ss6.png"></kbd></td>
+     <td><kbd><img src="./screenshots/ss4.jpg"></kbd></td>
+     <td><kbd><img src="./screenshots/ss5.jpg"></kbd></td>
+     <td><kbd><img src="./screenshots/ss6.jpg"></kbd></td>
 </table>

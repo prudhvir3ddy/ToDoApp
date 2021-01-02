@@ -1,27 +1,23 @@
+import com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc.BuildPlugins
+
 plugins {
-  id(BuildPlugins.ANDROID_APPLICATION)
-  id(BuildPlugins.KOTLIN_ANDROID)
-  id(BuildPlugins.KOTLIN_ANDROID_EXTENSIONS)
-  id(BuildPlugins.RAW_GMS)
-  id(BuildPlugins.KOTLIN_KAPT)
-  id(BuildPlugins.FIREBASE_CRASHLYTICS)
-  id(BuildPlugins.DAGGER_HILT)
+  id 'com.android.application'
+  id 'kotlin-android'
+  id 'kotlin-android-extensions'
+  id 'com.google.gms.google-services'
+  id 'kotlin-kapt'
+  id 'com.google.firebase.crashlytics'
+  id 'dagger.hilt.android.plugin'
 }
+
+apply from: './variants.gradle'
+apply from: './signing.gradle'
 
 android {
 
   testOptions {
-    unitTests(delegateClosureOf<com.android.build.gradle.internal.dsl.TestOptions.UnitTestOptions> {
-      isReturnDefaultValues = true
-    })
-  }
-
-  signingConfigs {
-    register("release") {
-      storeFile = file("keystores/todoapp.keystore")
-      storePassword = "toooor"
-      keyAlias = "key"
-      keyPassword = "toooor"
+    unitTests {
+      includeAndroidResources = true
     }
   }
 
@@ -36,14 +32,6 @@ android {
     testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
   }
 
-  buildTypes {
-    getByName("release") {
-      isMinifyEnabled = true
-      signingConfig = signingConfigs.getByName("release")
-      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-    }
-  }
-
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -52,12 +40,13 @@ android {
   kotlinOptions {
     jvmTarget = "1.8"
   }
-  dataBinding.isEnabled = true
+
+  buildFeatures {
+    dataBinding true
+  }
 }
 
 dependencies {
-  implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-
   implementation(BuildPlugins.Lib.KT_STD_LIB)
   implementation(BuildPlugins.Lib.KTX_CORE)
   implementation(BuildPlugins.Lib.LIFECYCLE_VIEWMODEL_KTX)
@@ -97,5 +86,4 @@ dependencies {
 
   implementation(BuildPlugins.Lib.TIMBER)
   debugImplementation(BuildPlugins.Lib.LEAK_CANARY)
-
 }
