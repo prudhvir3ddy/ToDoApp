@@ -32,21 +32,12 @@ class TasksActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    binding = DataBindingUtil.setContentView(this, R.layout.activity_tasks)
-    binding.viewmodel = viewModel
-    binding.lifecycleOwner = this@TasksActivity
 
-    Glide.with(this).load(R.drawable.add_task).into(noWorkIv)
-    setTitle()
+    initUi()
 
     viewModel.editTaskEvent.observe(this, Observer {
       setUpBottomDialog(BottomSheetTag.EDIT_TASK, it.peekContent())
     })
-
-    binding.addTaskFab.setOnClickListener {
-      setUpBottomDialog(BottomSheetTag.ADD_TASK)
-    }
-    setUpRecyclerView()
 
     createChannel(
       getString(string.daily_notifications_channel_id),
@@ -54,6 +45,20 @@ class TasksActivity : AppCompatActivity() {
     )
     viewModel.setUpWorkManager()
 
+  }
+
+  private fun initUi() {
+    binding = DataBindingUtil.setContentView(this, R.layout.activity_tasks)
+    binding.viewmodel = viewModel
+    binding.lifecycleOwner = this@TasksActivity
+
+    Glide.with(this).load(R.drawable.add_task).into(noWorkIv)
+    setTitle()
+
+    binding.addTaskFab.setOnClickListener {
+      setUpBottomDialog(BottomSheetTag.ADD_TASK)
+    }
+    setUpRecyclerView()
   }
 
   private fun setUpRecyclerView() {

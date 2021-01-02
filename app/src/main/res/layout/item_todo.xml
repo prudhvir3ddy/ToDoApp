@@ -44,10 +44,11 @@
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_marginTop="4dp"
+          android:layout_marginEnd="8dp"
           android:layout_marginBottom="8dp"
           android:ellipsize="end"
-          android:maxLines="2"
           android:maxLength="120"
+          android:maxLines="2"
           android:text="@{todo.description}"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
@@ -62,6 +63,7 @@
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_marginTop="8dp"
+          android:layout_marginEnd="8dp"
           android:maxLength="64"
           android:maxLines="2"
           android:text="@{todo.title}"
@@ -71,6 +73,7 @@
           app:strikeThrough="@{todo.completed}"
           tools:text="Buy milk packet"
           />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
   </com.google.android.material.card.MaterialCardView>
 </layout>

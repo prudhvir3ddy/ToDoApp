@@ -1,8 +1,6 @@
 package com.prudhvir3ddy.todo_app_gettingthingsdone.view.main
 
-import android.app.NotificationManager
 import android.content.Context
-import androidx.core.content.ContextCompat
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,17 +9,14 @@ import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingPeriodicWorkPolicy.KEEP
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
-import com.prudhvir3ddy.todo_app_gettingthingsdone.R
 import com.prudhvir3ddy.todo_app_gettingthingsdone.repository.ToDoRepository
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 import com.prudhvir3ddy.todo_app_gettingthingsdone.utils.Event
-import com.prudhvir3ddy.todo_app_gettingthingsdone.utils.sendNotification
-import com.prudhvir3ddy.todo_app_gettingthingsdone.workmanager.MyWorker
+import com.prudhvir3ddy.todo_app_gettingthingsdone.workers.NotificationWorker
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit.DAYS
-import java.util.concurrent.TimeUnit.MINUTES
 
 class TasksViewModel @ViewModelInject constructor(
   @ApplicationContext private val context: Context,
@@ -35,7 +30,7 @@ class TasksViewModel @ViewModelInject constructor(
   val editTaskEvent: LiveData<Event<ToDo>> = _editTaskEvent
 
   fun setUpWorkManager() {
-    val request = PeriodicWorkRequest.Builder(MyWorker::class.java, 1L, DAYS)
+    val request = PeriodicWorkRequest.Builder(NotificationWorker::class.java, 1L, DAYS)
       .build()
     val workManager = WorkManager.getInstance(context)
     workManager.enqueueUniquePeriodicWork("boo", KEEP, request)
@@ -45,6 +40,12 @@ class TasksViewModel @ViewModelInject constructor(
     viewModelScope.launch {
       val updatedToDo = todo.copy(isCompleted = isCompleted)
       repository.updateToDo(updatedToDo)
+    }
+  }
+
+  fun updateTaskList(todoList: List<ToDo>) {
+    viewModelScope.launch {
+      repository.addToDos(todoList)
     }
   }
 

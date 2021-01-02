@@ -11,7 +11,7 @@ import androidx.room.Update
 interface ToDoDao {
 
   @Query("SELECT * FROM todo")
-  fun getAll(): LiveData<List<ToDo>>
+  fun getAllToDos(): LiveData<List<ToDo>>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   suspend fun insertToDo(toDo: ToDo)
@@ -24,4 +24,7 @@ interface ToDoDao {
 
   @Query("DELETE FROM todo WHERE isCompleted =:status")
   suspend fun deleteCompleted(status: Boolean)
+
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  suspend fun addToDos(todoList: List<ToDo>)
 }

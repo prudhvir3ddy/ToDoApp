@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
-import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.DialogBinding
+import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.TaskInputDialogBinding
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 
 class BottomSheetDialog(
@@ -16,7 +16,7 @@ class BottomSheetDialog(
   private val toDo: ToDo
 ) : BottomSheetDialogFragment() {
 
-  private lateinit var binding: DialogBinding
+  private lateinit var binding: TaskInputDialogBinding
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -24,7 +24,7 @@ class BottomSheetDialog(
     savedInstanceState: Bundle?
   ): View? {
 
-    binding = DialogBinding.inflate(inflater, container, false)
+    binding = TaskInputDialogBinding.inflate(inflater, container, false)
     setOnEditorAction()
 
     when (tag) {

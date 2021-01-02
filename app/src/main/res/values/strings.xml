@@ -23,4 +23,5 @@
   <string name="remember_why_you_started">Remember Why You Started</string>
   <string name="remember_why_you_started_desc">Get Back to Plan The Work</string>
   <string name="daily_notifications_channel_name">Daily Notification</string>
+  <string name="drag_handler">drag handler</string>
 </resources>
