@@ -7,8 +7,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
-import com.prudhvir3ddy.todo_app_gettingthingsdone.view.login.LoginActivity
-import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.TasksActivity
+import com.prudhvir3ddy.todo_app_gettingthingsdone.view.HostActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -24,14 +23,9 @@ class SplashActivity : AppCompatActivity() {
     setContentView(layout.activity_splash)
 
     getFcmToken()
-    when {
-      sharedPrefs.getLogin() -> {
-        startActivity(Intent(this, TasksActivity::class.java))
-      }
-      else -> {
-        startActivity(Intent(this, LoginActivity::class.java))
-      }
-    }
+
+    startActivity(Intent(this, HostActivity::class.java))
+
     finish()
   }
 

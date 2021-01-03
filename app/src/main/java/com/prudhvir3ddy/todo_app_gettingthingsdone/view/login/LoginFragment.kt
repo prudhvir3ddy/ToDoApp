@@ -1,34 +1,34 @@
 package com.prudhvir3ddy.todo_app_gettingthingsdone.view.login
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R
-import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.ActivityLoginBinding
-import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.TasksActivity
+import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
+class LoginFragment : Fragment(R.layout.fragment_login) {
 
-  private lateinit var binding: ActivityLoginBinding
+  private var _binding: FragmentLoginBinding? = null
+  private val binding get() = _binding!!
+
   private val viewModel: LoginViewModel by viewModels()
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setView()
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    _binding = FragmentLoginBinding.bind(view)
 
-    viewModel.isLoggedIn.observe(this, Observer {
-      if (it) {
-        val intent = Intent(this, TasksActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
+    viewModel.checkLogin()
+    viewModel.isLoggedIn.observe(viewLifecycleOwner) {
+      if (it.getContentIfNotHandled() == true) {
+        val action = LoginFragmentDirections.actionLoginFragmentToTasksFragment()
+        findNavController().navigate(action)
       }
-    })
+    }
 
     loadMainImage()
     addTextWatcher()
@@ -40,12 +40,6 @@ class LoginActivity : AppCompatActivity() {
       else
         binding.fullnameTil.error = getString(R.string.please_enter_your_name)
     }
-
-  }
-
-  private fun setView() {
-    binding = ActivityLoginBinding.inflate(layoutInflater)
-    setContentView(binding.root)
   }
 
   private fun loadMainImage() {
@@ -58,5 +52,10 @@ class LoginActivity : AppCompatActivity() {
       if (it.isNullOrBlank())
         binding.fullnameTil.error = getString(R.string.please_enter_your_name)
     }
+  }
+
+  override fun onDestroyView() {
+    super.onDestroyView()
+    _binding = null
   }
 }

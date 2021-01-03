@@ -3,11 +3,12 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc.BuildPlugins
 plugins {
   id 'com.android.application'
   id 'kotlin-android'
-  id 'kotlin-android-extensions'
+  id 'kotlin-parcelize'
   id 'com.google.gms.google-services'
   id 'kotlin-kapt'
   id 'com.google.firebase.crashlytics'
   id 'dagger.hilt.android.plugin'
+  id 'androidx.navigation.safeargs.kotlin'
 }
 
 apply from: './variants.gradle'
@@ -54,7 +55,11 @@ dependencies {
   implementation(BuildPlugins.Lib.CONSTRAINT_LAYOUT)
   implementation(BuildPlugins.Lib.MATERIAL_DESIGN)
 
-  implementation("androidx.activity:activity-ktx:1.1.0")
+  implementation(BuildPlugins.Lib.ACTIVITY_KTX)
+  implementation(BuildPlugins.Lib.FRAGMENT_KTX)
+
+  implementation(BuildPlugins.Lib.NAVIGATION_FRAGMENT_KTX)
+  implementation(BuildPlugins.Lib.NAVIGATION_UI_KTX)
 
   testImplementation(BuildPlugins.TestLibs.JUNIT)
   testImplementation(BuildPlugins.TestLibs.CORE_TEST)
@@ -78,7 +83,7 @@ dependencies {
   kapt(BuildPlugins.Lib.DAGGER_HILT_ANDROID_COMPILER)
   implementation(BuildPlugins.Lib.HILT_LIFECYCLE_VIEWMODEL)
   kapt(BuildPlugins.Lib.HILT_COMPILER)
-  implementation("androidx.hilt:hilt-work:1.0.0-alpha01")
+  implementation(BuildPlugins.Lib.HILT_WORKER)
 
   implementation(BuildPlugins.Lib.RETROFIT)
   implementation(BuildPlugins.Lib.RETROFIT_CONVERTER_MOSHI)

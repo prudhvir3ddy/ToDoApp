@@ -6,13 +6,13 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R
-import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.TasksActivity
+import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.TasksFragment
 
 fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context) {
 
   val NOTIFICATION_ID = 1
 
-  val contentIntent = Intent(applicationContext, TasksActivity::class.java)
+  val contentIntent = Intent(applicationContext, TasksFragment::class.java)
   val contentPendingIntent = PendingIntent.getActivity(
     applicationContext,
     NOTIFICATION_ID,
