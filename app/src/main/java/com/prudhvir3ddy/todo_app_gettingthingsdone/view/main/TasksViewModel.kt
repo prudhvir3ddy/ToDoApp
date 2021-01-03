@@ -5,6 +5,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingPeriodicWorkPolicy.KEEP
 import androidx.work.PeriodicWorkRequest
@@ -24,7 +25,7 @@ class TasksViewModel @ViewModelInject constructor(
   private val sharedPrefs: SharedPrefs
 ) : ViewModel() {
 
-  val tasksList: LiveData<List<ToDo>> = repository.getAllToDos()
+  val tasksList: LiveData<List<ToDo>> = repository.getAllToDos().asLiveData()
 
   private val _editTaskEvent = MutableLiveData<Event<ToDo>>()
   val editTaskEvent: LiveData<Event<ToDo>> = _editTaskEvent

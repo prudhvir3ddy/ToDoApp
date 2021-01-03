@@ -51,7 +51,7 @@ object BuildPlugins {
       const val GLIDE = "4.11.0"
       const val VIEWPAGER = "1.0.0"
       const val RETROFIT = "2.8.1"
-      const val LIFECYCLE_VIEWMODEL = "2.2.0"
+      const val LIFECYCLE = "2.2.0"
       const val TIMBER = "4.7.1"
       const val LEAK_CANARY = "2.4"
       const val FCM = "19.0.1"
@@ -63,7 +63,8 @@ object BuildPlugins {
     const val TIMBER = "com.jakewharton.timber:timber:${LibVersion.TIMBER}"
     const val HTTP_LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:4.5.0"
     const val LIFECYCLE_VIEWMODEL_KTX =
-      "androidx.lifecycle:lifecycle-viewmodel-ktx:${LibVersion.LIFECYCLE_VIEWMODEL}"
+      "androidx.lifecycle:lifecycle-viewmodel-ktx:${LibVersion.LIFECYCLE}"
+    const val LIFECYCLE_LIVEDATA_KTX = "androidx.lifecycle:lifecycle-livedata-ktx:${LibVersion.LIFECYCLE}"
     const val RETROFIT_CONVERTER_MOSHI =
       "com.squareup.retrofit2:converter-moshi:${LibVersion.RETROFIT}"
     const val RETROFIT = "com.squareup.retrofit2:retrofit:${LibVersion.RETROFIT}"
