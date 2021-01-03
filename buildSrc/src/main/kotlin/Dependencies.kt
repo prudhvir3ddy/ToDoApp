@@ -14,7 +14,7 @@ object BuildPlugins {
 
     private object GradleLibVersion {
       const val BUILD_VERSION = "4.1.1"
-      const val GRADLE_CRASHLYTICS = "2.0.0-beta04"
+      const val GRADLE_CRASHLYTICS = "2.4.1"
       const val GMS = "4.3.3"
     }
 
@@ -47,7 +47,7 @@ object BuildPlugins {
       const val MATERIAL_DESIGN = "1.1.0"
       const val ROOM = "2.2.5"
       const val WORK = "2.4.0-beta01"
-      const val CRASHLYTICS = "17.0.0-beta04"
+      const val CRASHLYTICS = "17.3.0"
       const val GLIDE = "4.11.0"
       const val VIEWPAGER = "1.0.0"
       const val RETROFIT = "2.8.1"
