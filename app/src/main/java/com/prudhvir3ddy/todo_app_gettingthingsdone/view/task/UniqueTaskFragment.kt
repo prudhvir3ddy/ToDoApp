@@ -13,6 +13,7 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.R
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
 import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.FragmentTaskUniqueBinding
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
+import com.prudhvir3ddy.todo_app_gettingthingsdone.utils.hideKeyboard
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.TasksViewModel
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.task.UniqueTaskFragment.Companion.TaskType.ADD_TASK
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.task.UniqueTaskFragment.Companion.TaskType.EDIT_TASK
@@ -48,20 +49,11 @@ class UniqueTaskFragment : Fragment(R.layout.fragment_task_unique) {
   }
 
   private fun onSaveButtonClicked() {
+    hideKeyboard(requireActivity())
     val taskName = binding.taskNameEt.text.toString()
     val taskDesc = binding.taskDescEt.text.toString()
-    if (!taskName.isBlank()) {
-      if (args.taskType == ADD_TASK) {
-
-        viewModel.onTaskSave(taskName, taskDesc)
-      } else if (args.taskType == EDIT_TASK) {
-        viewModel.onTaskUpdate(
-          args.todo
-            .copy(title = taskName, description = taskDesc)
-        )
-      }
-      val action = UniqueTaskFragmentDirections.actionUniqueTaskFragmentToTasksFragment()
-      findNavController().navigate(action)
+    if (taskName.isNotBlank()) {
+      actionAddTask(taskName, taskDesc)
     } else {
       Snackbar.make(
         requireView(),
@@ -69,6 +61,19 @@ class UniqueTaskFragment : Fragment(R.layout.fragment_task_unique) {
         Snackbar.LENGTH_SHORT
       ).show()
     }
+  }
+
+  private fun actionAddTask(taskName: String, taskDesc: String) {
+    if (args.taskType == ADD_TASK) {
+      viewModel.onTaskSave(taskName, taskDesc)
+    } else if (args.taskType == EDIT_TASK) {
+      viewModel.onTaskUpdate(
+        args.todo
+          .copy(title = taskName, description = taskDesc)
+      )
+    }
+    val action = UniqueTaskFragmentDirections.actionUniqueTaskFragmentToTasksFragment()
+    findNavController().navigate(action)
   }
 
   private fun prePopulateTodo(todo: ToDo) {
