@@ -16,7 +16,6 @@
     <activity
         android:name=".view.HostActivity"
         android:theme="@style/AppTheme.NoActionBar" />
-
     <activity android:name=".view.splash.SplashActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

@@ -1,6 +1,8 @@
 /** This file contains versions of all the dependencies used in the module  */
 package com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc
 
+import com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc.BuildPlugins.Lib.LibVersion
+
 object BuildPlugins {
 
   object RootVersion {
@@ -24,6 +26,7 @@ object BuildPlugins {
     const val GMS = "com.google.gms:google-services:${GradleLibVersion.GMS}"
     const val GRADLE_CRASHLYTICS =
       "com.google.firebase:firebase-crashlytics-gradle:${GradleLibVersion.GRADLE_CRASHLYTICS}"
+    const val NAVIGATION_SAFE_ARGS = "androidx.navigation:navigation-safe-args-gradle-plugin:${LibVersion.NAVIGATION}"
   }
 
   object AndroidSdk {

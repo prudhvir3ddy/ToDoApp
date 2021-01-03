@@ -10,7 +10,7 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc.BuildPlugins
  */
 buildscript {
   ext {
-    kotlin_version = '1.4.10'
+    kotlin_version = '1.4.21'
   }
 
 
@@ -46,6 +46,7 @@ buildscript {
     classpath BuildPlugins.GradleLib.GRADLE_CRASHLYTICS
     classpath BuildPlugins.GradleLib.GMS
     classpath BuildPlugins.GradleLib.DAGGER_HILT
+    classpath BuildPlugins.GradleLib.NAVIGATION_SAFE_ARGS
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
     // NOTE: Do not place your application dependencies here; they belong

@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +19,8 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.R
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
 import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.FragmentTasksBinding
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
+import com.prudhvir3ddy.todo_app_gettingthingsdone.view.task.UniqueTaskFragment.Companion.TaskType.ADD_TASK
+import com.prudhvir3ddy.todo_app_gettingthingsdone.view.task.UniqueTaskFragment.Companion.TaskType.EDIT_TASK
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,21 +28,31 @@ class TasksFragment : Fragment(R.layout.fragment_tasks) {
 
   private val viewModel: TasksViewModel by viewModels()
 
-  private lateinit var binding: FragmentTasksBinding
+  private var _binding: FragmentTasksBinding? = null
+  private val binding get() = _binding!!
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     initUi(view)
+    setUpObservers()
 
+  }
+
+  private fun setUpObservers() {
+    viewModel.editTaskEvent.observe(viewLifecycleOwner) {
+      val todo = it.getContentIfNotHandled()
+      todo?.let { safeToDo ->
+        val action =
+          TasksFragmentDirections.actionTasksFragmentToUniqueTaskFragment(
+            EDIT_TASK,
+            safeToDo
+          )
+        findNavController().navigate(action)
+      }
+    }
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-
-
-
-    viewModel.editTaskEvent.observe(this, Observer {
-      setUpBottomDialog(BottomSheetTag.EDIT_TASK, it.peekContent())
-    })
 
     createChannel(
       getString(string.daily_notifications_channel_id),
@@ -51,15 +63,16 @@ class TasksFragment : Fragment(R.layout.fragment_tasks) {
   }
 
   private fun initUi(view: View) {
-    binding = FragmentTasksBinding.bind(view)
+    _binding = FragmentTasksBinding.bind(view)
     binding.viewmodel = viewModel
     binding.lifecycleOwner = this@TasksFragment
 
-    Glide.with(this).load(R.drawable.add_task).into(binding.noWorkIv)
+    Glide.with(requireContext()).load(R.drawable.add_task).into(binding.noWorkIv)
     setTitle()
 
     binding.addTaskFab.setOnClickListener {
-      setUpBottomDialog(BottomSheetTag.ADD_TASK)
+      val action = TasksFragmentDirections.actionTasksFragmentToUniqueTaskFragment(ADD_TASK, ToDo())
+      findNavController().navigate(action)
     }
     setUpRecyclerView()
   }
@@ -92,14 +105,6 @@ class TasksFragment : Fragment(R.layout.fragment_tasks) {
     }
   }
 
-  private fun setUpBottomDialog(
-    tag: String,
-    toDo: ToDo = ToDo()
-  ) {
-    val bottomSheetDialog = BottomSheetDialog(viewModel, toDo)
-    bottomSheetDialog.show(childFragmentManager, tag)
-  }
-
   private fun createChannel(channelId: String, channelName: String) {
     if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
       val notificationChannel =
@@ -118,4 +123,8 @@ class TasksFragment : Fragment(R.layout.fragment_tasks) {
     binding.welcomeTv.text = String.format(getString(string.welcome), viewModel.getFirstName())
   }
 
+  override fun onDestroyView() {
+    super.onDestroyView()
+    _binding = null
+  }
 }

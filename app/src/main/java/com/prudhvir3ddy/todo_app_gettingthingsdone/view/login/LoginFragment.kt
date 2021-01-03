@@ -14,16 +14,19 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
-  private lateinit var binding: FragmentLoginBinding
+  private var _binding: FragmentLoginBinding? = null
+  private val binding get() = _binding!!
+
   private val viewModel: LoginViewModel by viewModels()
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    binding = FragmentLoginBinding.bind(view)
+    _binding = FragmentLoginBinding.bind(view)
 
     viewModel.checkLogin()
     viewModel.isLoggedIn.observe(viewLifecycleOwner) {
       if (it.getContentIfNotHandled() == true) {
-        findNavController().navigate(R.id.action_loginFragment_to_tasksFragment)
+        val action = LoginFragmentDirections.actionLoginFragmentToTasksFragment()
+        findNavController().navigate(action)
       }
     }
 
@@ -49,5 +52,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
       if (it.isNullOrBlank())
         binding.fullnameTil.error = getString(R.string.please_enter_your_name)
     }
+  }
+
+  override fun onDestroyView() {
+    super.onDestroyView()
+    _binding = null
   }
 }
