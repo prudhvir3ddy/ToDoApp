@@ -51,6 +51,7 @@ dependencies {
   implementation(BuildPlugins.Lib.KT_STD_LIB)
   implementation(BuildPlugins.Lib.KTX_CORE)
   implementation(BuildPlugins.Lib.LIFECYCLE_VIEWMODEL_KTX)
+  implementation BuildPlugins.Lib.LIFECYCLE_LIVEDATA_KTX
   implementation(BuildPlugins.Lib.APP_COMPAT)
   implementation(BuildPlugins.Lib.CONSTRAINT_LAYOUT)
   implementation(BuildPlugins.Lib.MATERIAL_DESIGN)

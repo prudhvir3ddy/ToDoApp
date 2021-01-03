@@ -1,17 +1,17 @@
 package com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ToDoDao {
 
   @Query("SELECT * FROM todo")
-  fun getAllToDos(): LiveData<List<ToDo>>
+  fun getAllToDos(): Flow<List<ToDo>>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   suspend fun insertToDo(toDo: ToDo)

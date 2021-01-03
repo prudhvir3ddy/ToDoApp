@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDoDatabase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -17,7 +18,7 @@ class ToDoRepository @Inject constructor(
     }
   }
 
-  fun getAllToDos(): LiveData<List<ToDo>> {
+  fun getAllToDos(): Flow<List<ToDo>> {
     return toDoDatabase.todoDao().getAllToDos()
 
   }
