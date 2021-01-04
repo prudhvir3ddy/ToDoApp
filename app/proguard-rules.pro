@@ -19,3 +19,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keepnames class com.prudhvir3ddy.todo_app_gettingthingsdone.view.task.UniqueTaskFragment$Companion$TaskType
+-keepnames class com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
