@@ -26,7 +26,8 @@ object BuildPlugins {
     const val GMS = "com.google.gms:google-services:${GradleLibVersion.GMS}"
     const val GRADLE_CRASHLYTICS =
       "com.google.firebase:firebase-crashlytics-gradle:${GradleLibVersion.GRADLE_CRASHLYTICS}"
-    const val NAVIGATION_SAFE_ARGS = "androidx.navigation:navigation-safe-args-gradle-plugin:${LibVersion.NAVIGATION}"
+    const val NAVIGATION_SAFE_ARGS =
+      "androidx.navigation:navigation-safe-args-gradle-plugin:${LibVersion.NAVIGATION}"
   }
 
   object AndroidSdk {
@@ -35,6 +36,14 @@ object BuildPlugins {
     const val MIN = 21
     const val TARGET = 29
 
+  }
+
+  object AppVersion {
+    private const val VERSION_MAJOR = 2
+    private const val VERSION_MINOR = 1
+    private const val VERSION_PATCH = 2
+    const val VERSION_NAME = "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}"
+    const val VERSION_CODE = VERSION_MAJOR * 1000 + VERSION_MINOR * 100 + VERSION_PATCH
   }
 
   /** General Libraries */
@@ -64,7 +73,8 @@ object BuildPlugins {
     const val HTTP_LOGGING_INTERCEPTOR = "com.squareup.okhttp3:logging-interceptor:4.5.0"
     const val LIFECYCLE_VIEWMODEL_KTX =
       "androidx.lifecycle:lifecycle-viewmodel-ktx:${LibVersion.LIFECYCLE}"
-    const val LIFECYCLE_LIVEDATA_KTX = "androidx.lifecycle:lifecycle-livedata-ktx:${LibVersion.LIFECYCLE}"
+    const val LIFECYCLE_LIVEDATA_KTX =
+      "androidx.lifecycle:lifecycle-livedata-ktx:${LibVersion.LIFECYCLE}"
     const val RETROFIT_CONVERTER_MOSHI =
       "com.squareup.retrofit2:converter-moshi:${LibVersion.RETROFIT}"
     const val RETROFIT = "com.squareup.retrofit2:retrofit:${LibVersion.RETROFIT}"
@@ -79,7 +89,8 @@ object BuildPlugins {
     const val ACTIVITY_KTX = "androidx.activity:activity-ktx:1.1.0"
     const val FRAGMENT_KTX = "androidx.fragment:fragment-ktx:1.2.5"
 
-    const val NAVIGATION_FRAGMENT_KTX = "androidx.navigation:navigation-fragment-ktx:${LibVersion.NAVIGATION}"
+    const val NAVIGATION_FRAGMENT_KTX =
+      "androidx.navigation:navigation-fragment-ktx:${LibVersion.NAVIGATION}"
     const val NAVIGATION_UI_KTX = "androidx.navigation:navigation-ui-ktx:${LibVersion.NAVIGATION}"
 
     const val ROOM_KTX = "androidx.room:room-ktx:${LibVersion.ROOM}"
