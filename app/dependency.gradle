@@ -1,0 +1,49 @@
+import com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc.Lib
+import com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc.TestLibs
+
+dependencies {
+  implementation Lib.KT_STD_LIB
+  implementation Lib.KTX_CORE
+  implementation Lib.LIFECYCLE_VIEWMODEL_KTX
+  implementation Lib.LIFECYCLE_LIVEDATA_KTX
+  implementation Lib.APP_COMPAT
+  implementation Lib.CONSTRAINT_LAYOUT
+  implementation Lib.MATERIAL_DESIGN
+
+  implementation Lib.ACTIVITY_KTX
+  implementation Lib.FRAGMENT_KTX
+
+  implementation Lib.NAVIGATION_FRAGMENT_KTX
+  implementation Lib.NAVIGATION_UI_KTX
+
+  testImplementation TestLibs.JUNIT
+  testImplementation TestLibs.CORE_TEST
+  testImplementation TestLibs.MOCKITO
+
+  implementation Lib.ROOM_KTX
+  kapt Lib.ROOM_KAPT
+
+  implementation Lib.WORK_KTX
+  androidTestImplementation Lib.WORK_KTX
+
+  implementation Lib.FCM
+  implementation Lib.CRASHLYTICS_FIREBASE
+
+  implementation Lib.GLIDE
+  kapt Lib.GLIDE_KAPT
+
+  implementation Lib.VIEWPAGER
+
+  implementation Lib.DAGGER_HILT_ANDROID
+  kapt Lib.DAGGER_HILT_ANDROID_COMPILER
+  implementation Lib.HILT_LIFECYCLE_VIEWMODEL
+  kapt Lib.HILT_COMPILER
+  implementation Lib.HILT_WORKER
+
+  implementation Lib.RETROFIT
+  implementation Lib.RETROFIT_CONVERTER_MOSHI
+  implementation Lib.HTTP_LOGGING_INTERCEPTOR
+
+  implementation Lib.TIMBER
+  debugImplementation Lib.LEAK_CANARY
+}

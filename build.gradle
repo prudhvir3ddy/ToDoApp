@@ -1,6 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-import com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc.BuildPlugins
-
+import com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc.GradleLib
 /**
  * The buildscript block is where you configure the repositories and
  * dependencies for Gradle itself—meaning, you should not include dependencies
@@ -9,10 +8,6 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc.BuildPlugins
  * needs to build Android app modules.
  */
 buildscript {
-  ext {
-    kotlin_version = '1.4.21'
-  }
-
 
   /**
    * The repositories block configures the repositories Gradle uses to
@@ -41,13 +36,13 @@ buildscript {
 
   dependencies {
 
-    classpath BuildPlugins.GradleLib.TOOLS_GRADLE
-    classpath BuildPlugins.GradleLib.KOTLIN_GRADLE
-    classpath BuildPlugins.GradleLib.GRADLE_CRASHLYTICS
-    classpath BuildPlugins.GradleLib.GMS
-    classpath BuildPlugins.GradleLib.DAGGER_HILT
-    classpath BuildPlugins.GradleLib.NAVIGATION_SAFE_ARGS
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    classpath GradleLib.TOOLS_GRADLE
+    classpath GradleLib.KOTLIN_GRADLE
+    classpath GradleLib.GRADLE_CRASHLYTICS
+    classpath GradleLib.GMS
+    classpath GradleLib.DAGGER_HILT
+    classpath GradleLib.NAVIGATION_SAFE_ARGS
+    classpath GradleLib.KOTLIN_GRADLE
 
     // NOTE: Do not place your application dependencies here; they belong
     // in the individual module build.gradle files
