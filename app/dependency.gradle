@@ -9,6 +9,11 @@ dependencies {
   implementation Lib.APP_COMPAT
   implementation Lib.CONSTRAINT_LAYOUT
   implementation Lib.MATERIAL_DESIGN
+  androidTestImplementation TestLibs.EXT_JUNIT
+  androidTestImplementation TestLibs.RUNNER
+  androidTestImplementation TestLibs.ANDROIDX_TRUTH
+  androidTestImplementation TestLibs.GOOGLE_TRUTH
+  androidTestImplementation TestLibs.RULES
 
   implementation Lib.ACTIVITY_KTX
   implementation Lib.FRAGMENT_KTX
@@ -24,7 +29,7 @@ dependencies {
   kapt Lib.ROOM_KAPT
 
   implementation Lib.WORK_KTX
-  androidTestImplementation Lib.WORK_KTX
+  androidTestImplementation TestLibs.WORK_TESTING
 
   implementation Lib.FCM
   implementation Lib.CRASHLYTICS_FIREBASE
@@ -39,6 +44,8 @@ dependencies {
   implementation Lib.HILT_LIFECYCLE_VIEWMODEL
   kapt Lib.HILT_COMPILER
   implementation Lib.HILT_WORKER
+  androidTestImplementation TestLibs.HILT_ANDROID_TESTING
+
 
   implementation Lib.RETROFIT
   implementation Lib.RETROFIT_CONVERTER_MOSHI

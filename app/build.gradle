@@ -30,7 +30,7 @@ android {
     targetSdkVersion AppConfig.TARGET_SDK
     versionCode AppConfig.AppVersion.VERSION_CODE
     versionName AppConfig.AppVersion.VERSION_NAME
-    testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
   compileOptions {

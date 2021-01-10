@@ -10,7 +10,7 @@ object Lib {
     const val CONSTRAINT_LAYOUT = "1.1.3"
     const val MATERIAL_DESIGN = "1.1.0"
     const val ROOM = "2.2.5"
-    const val WORK = "2.4.0-beta01"
+    const val WORK = "2.4.0"
     const val CRASHLYTICS = "17.3.0"
     const val GLIDE = "4.11.0"
     const val VIEWPAGER = "1.0.0"
@@ -77,14 +77,21 @@ object TestLibs {
   private object TestLibVersions {
     const val CORE_TEST = "1.2.0"
     const val MOCKITO = "2.23.4"
-    const val WORK = "2.3.4"
-    const val JUNIT = "4.13"
+    const val JUNIT = "4.12"
   }
 
-  const val WORK_TESTING = "androidx.work:work-testing:${TestLibVersions.WORK}"
+  const val WORK_TESTING = "androidx.work:work-testing:${LibVersion.WORK}"
   const val CORE_TEST = "androidx.test:core:${TestLibVersions.CORE_TEST}"
   const val MOCKITO = "org.mockito:mockito-core:${TestLibVersions.MOCKITO}"
+  const val EXT_JUNIT = "androidx.test.ext:junit-ktx:1.1.1"
   const val JUNIT = "junit:junit:${TestLibVersions.JUNIT}"
+  const val RUNNER = "androidx.test:runner:1.1.0"
+  const val HILT_ANDROID_TESTING =
+    "com.google.dagger:hilt-android-testing:${RootVersion.GOOGLE_DAGGER_HILT_ANDROID}"
+  const val ANDROIDX_TRUTH = "androidx.test.ext:truth:1.0.0"
+  const val GOOGLE_TRUTH = "com.google.truth:truth:0.42"
+  const val RULES =  "androidx.test:rules:1.1.0"
+
 }
 
 object RootVersion {
