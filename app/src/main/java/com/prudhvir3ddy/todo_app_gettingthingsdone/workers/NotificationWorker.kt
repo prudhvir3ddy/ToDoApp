@@ -3,8 +3,7 @@ package com.prudhvir3ddy.todo_app_gettingthingsdone.workers
 import android.app.NotificationManager
 import android.content.Context
 import androidx.core.content.ContextCompat
-import androidx.hilt.Assisted
-import androidx.hilt.work.WorkerInject
+import androidx.hilt.work.HiltWorker
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -12,12 +11,14 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R
 import com.prudhvir3ddy.todo_app_gettingthingsdone.utils.sendNotification
-import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import java.util.Calendar
 import java.util.concurrent.TimeUnit.MILLISECONDS
 
-class NotificationWorker @WorkerInject constructor(
-  @Assisted @ApplicationContext val context: Context,
+@HiltWorker
+class NotificationWorker @AssistedInject constructor(
+  @Assisted val context: Context,
   @Assisted workerParameters: WorkerParameters
 ) : Worker(context, workerParameters) {
 

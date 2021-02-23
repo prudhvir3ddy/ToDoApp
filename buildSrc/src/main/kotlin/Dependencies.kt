@@ -14,12 +14,12 @@ object Lib {
     const val CRASHLYTICS = "17.3.0"
     const val GLIDE = "4.11.0"
     const val VIEWPAGER = "1.0.0"
-    const val RETROFIT = "2.8.1"
+    const val RETROFIT = "2.9.0"
     const val LIFECYCLE = "2.2.0"
     const val TIMBER = "4.7.1"
     const val LEAK_CANARY = "2.4"
     const val FCM = "19.0.1"
-    const val ANDROID_HILT = "1.0.0-alpha02"
+    const val ANDROID_HILT = "1.0.0-alpha03"
     const val NAVIGATION = "2.3.2"
   }
 
@@ -41,8 +41,8 @@ object Lib {
   const val MATERIAL_DESIGN =
     "com.google.android.material:material:${LibVersion.MATERIAL_DESIGN}"
 
-  const val ACTIVITY_KTX = "androidx.activity:activity-ktx:1.1.0"
-  const val FRAGMENT_KTX = "androidx.fragment:fragment-ktx:1.2.5"
+  const val ACTIVITY_KTX = "androidx.activity:activity-ktx:1.2.0"
+  const val FRAGMENT_KTX = "androidx.fragment:fragment-ktx:1.3.0"
 
   const val NAVIGATION_FRAGMENT_KTX =
     "androidx.navigation:navigation-fragment-ktx:${LibVersion.NAVIGATION}"
@@ -96,7 +96,7 @@ object TestLibs {
 
 object RootVersion {
   const val KOTLIN_VERSION = "1.4.21"
-  const val GOOGLE_DAGGER_HILT_ANDROID = "2.28-alpha"
+  const val GOOGLE_DAGGER_HILT_ANDROID = "2.32-alpha"
 }
 
 object GradleLib {
