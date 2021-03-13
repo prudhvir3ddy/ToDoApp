@@ -1,4 +1,5 @@
 import com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc.AppConfig
+import com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc.RootVersion
 
 plugins {
   id 'com.android.application'
@@ -40,10 +41,16 @@ android {
 
   kotlinOptions {
     jvmTarget = "1.8"
+    useIR = true
   }
 
   buildFeatures {
     dataBinding true
+    compose true
+  }
+
+  composeOptions {
+    kotlinCompilerExtensionVersion RootVersion.COMPOSE_VERSION
   }
 }
 

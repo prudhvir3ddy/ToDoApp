@@ -1,5 +1,6 @@
 /** This file contains versions of all the dependencies used in the module  */
 package com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc
+
 import com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc.Lib.LibVersion
 
 object Lib {
@@ -70,6 +71,20 @@ object Lib {
   const val HILT_WORKER = "androidx.hilt:hilt-work:1.0.0-alpha02"
   const val FCM = "com.google.firebase:firebase-messaging:${LibVersion.FCM}"
 
+  object Compose {
+    private const val COMPOSE_VERSION = "1.0.0-beta02"
+    const val RUNTIME = "androidx.compose.runtime:runtime:$COMPOSE_VERSION"
+    const val UI = "androidx.compose.ui:ui:$COMPOSE_VERSION"
+    const val FOUNDATION = "androidx.compose.foundation:foundation:$COMPOSE_VERSION"
+    const val FOUNDATION_LAYOUT = "androidx.compose.foundation:foundation-layout:$COMPOSE_VERSION"
+    const val MATERIAL = "androidx.compose.material:material:$COMPOSE_VERSION"
+    const val RUNTIME_LIVEDATA = "androidx.compose.runtime:runtime-livedata:$COMPOSE_VERSION"
+    const val UI_TOOLING = "androidx.compose.ui:ui-tooling:$COMPOSE_VERSION"
+    const val MATERIAL_COMPOSE_THEME_ADAPTER =
+      "com.google.android.material:compose-theme-adapter:$COMPOSE_VERSION"
+    const val ACTIVITY = "androidx.activity:activity-compose:1.3.0-alpha04"
+  }
+
 }
 
 object TestLibs {
@@ -90,19 +105,20 @@ object TestLibs {
     "com.google.dagger:hilt-android-testing:${RootVersion.GOOGLE_DAGGER_HILT_ANDROID}"
   const val ANDROIDX_TRUTH = "androidx.test.ext:truth:1.0.0"
   const val GOOGLE_TRUTH = "com.google.truth:truth:0.42"
-  const val RULES =  "androidx.test:rules:1.1.0"
+  const val RULES = "androidx.test:rules:1.1.0"
 
 }
 
 object RootVersion {
-  const val KOTLIN_VERSION = "1.4.21"
+  const val COMPOSE_VERSION = "1.0.0-beta02"
+  const val KOTLIN_VERSION = "1.4.31"
   const val GOOGLE_DAGGER_HILT_ANDROID = "2.32-alpha"
 }
 
 object GradleLib {
 
   private object GradleLibVersion {
-    const val BUILD_VERSION = "4.1.1"
+    const val BUILD_VERSION = "7.0.0-alpha09"
     const val GRADLE_CRASHLYTICS = "2.4.1"
     const val GMS = "4.3.3"
   }
