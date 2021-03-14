@@ -1,27 +1,41 @@
 package com.prudhvir3ddy.todo_app_gettingthingsdone.view.login
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.core.widget.addTextChangedListener
+import android.view.ViewGroup
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
-import com.prudhvir3ddy.todo_app_gettingthingsdone.R
-import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginFragment : Fragment(R.layout.fragment_login) {
-
-  private var _binding: FragmentLoginBinding? = null
-  private val binding get() = _binding!!
+class LoginFragment : Fragment() {
 
   private val viewModel: LoginViewModel by viewModels()
 
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    _binding = FragmentLoginBinding.bind(view)
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View {
 
+    return ComposeView(requireContext()).apply {
+      setContent {
+        LoginScreen(modifier = Modifier.padding(16.dp)) {
+          if (it.isNotBlank()) {
+            viewModel.getStarted(it)
+          }
+        }
+      }
+    }
+  }
+
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     viewModel.checkLogin()
     viewModel.isLoggedIn.observe(viewLifecycleOwner) {
       if (it.getContentIfNotHandled() == true) {
@@ -29,33 +43,5 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         findNavController().navigate(action)
       }
     }
-
-    loadMainImage()
-    addTextWatcher()
-
-    binding.loginBtn.setOnClickListener {
-      val fullName = binding.fullnameTil.editText?.text.toString()
-      if (!fullName.isBlank())
-        viewModel.getStarted(fullName)
-      else
-        binding.fullnameTil.error = getString(R.string.please_enter_your_name)
-    }
-  }
-
-  private fun loadMainImage() {
-    Glide.with(this).load(R.drawable.master_plan).into(binding.masterPlanIv)
-  }
-
-  private fun addTextWatcher() {
-    binding.fullnameTil.editText?.addTextChangedListener {
-      binding.fullnameTil.error = ""
-      if (it.isNullOrBlank())
-        binding.fullnameTil.error = getString(R.string.please_enter_your_name)
-    }
-  }
-
-  override fun onDestroyView() {
-    super.onDestroyView()
-    _binding = null
   }
 }
