@@ -2,10 +2,11 @@ package com.prudhvir3ddy.todo_app_gettingthingsdone.view.splash
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material.MaterialTheme
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
-import com.prudhvir3ddy.todo_app_gettingthingsdone.R.layout
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.HostActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +21,11 @@ class SplashActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(layout.activity_splash)
+    setContent {
+      MaterialTheme {
+
+      }
+    }
 
     getFcmToken()
 
