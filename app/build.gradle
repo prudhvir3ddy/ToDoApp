@@ -1,4 +1,4 @@
-import com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc.BuildPlugins
+import com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc.AppConfig
 
 plugins {
   id 'com.android.application'
@@ -22,15 +22,15 @@ android {
     }
   }
 
-  compileSdkVersion(BuildPlugins.AndroidSdk.COMPILE)
+  compileSdkVersion AppConfig.COMPILE_SDK
 
   defaultConfig {
-    applicationId = "com.prudhvir3ddy.todo_app_gettingthingsdone"
-    minSdkVersion(BuildPlugins.AndroidSdk.MIN)
-    targetSdkVersion(BuildPlugins.AndroidSdk.TARGET)
-    versionCode = 12
-    versionName = "2.2"
-    testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+    applicationId AppConfig.APPLICATION_ID
+    minSdkVersion AppConfig.MIN_SDK
+    targetSdkVersion AppConfig.TARGET_SDK
+    versionCode AppConfig.AppVersion.VERSION_CODE
+    versionName AppConfig.AppVersion.VERSION_NAME
+    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
   compileOptions {
@@ -47,49 +47,4 @@ android {
   }
 }
 
-dependencies {
-  implementation(BuildPlugins.Lib.KT_STD_LIB)
-  implementation(BuildPlugins.Lib.KTX_CORE)
-  implementation(BuildPlugins.Lib.LIFECYCLE_VIEWMODEL_KTX)
-  implementation BuildPlugins.Lib.LIFECYCLE_LIVEDATA_KTX
-  implementation(BuildPlugins.Lib.APP_COMPAT)
-  implementation(BuildPlugins.Lib.CONSTRAINT_LAYOUT)
-  implementation(BuildPlugins.Lib.MATERIAL_DESIGN)
-
-  implementation(BuildPlugins.Lib.ACTIVITY_KTX)
-  implementation(BuildPlugins.Lib.FRAGMENT_KTX)
-
-  implementation(BuildPlugins.Lib.NAVIGATION_FRAGMENT_KTX)
-  implementation(BuildPlugins.Lib.NAVIGATION_UI_KTX)
-
-  testImplementation(BuildPlugins.TestLibs.JUNIT)
-  testImplementation(BuildPlugins.TestLibs.CORE_TEST)
-  testImplementation(BuildPlugins.TestLibs.MOCKITO)
-
-  implementation(BuildPlugins.Lib.ROOM_KTX)
-  kapt(BuildPlugins.Lib.ROOM_KAPT)
-
-  implementation(BuildPlugins.Lib.WORK_KTX)
-  androidTestImplementation(BuildPlugins.Lib.WORK_KTX)
-
-  implementation(BuildPlugins.Lib.FCM)
-  implementation(BuildPlugins.Lib.CRASHLYTICS_FIREBASE)
-
-  implementation(BuildPlugins.Lib.GLIDE)
-  kapt(BuildPlugins.Lib.GLIDE_KAPT)
-
-  implementation(BuildPlugins.Lib.VIEWPAGER)
-
-  implementation(BuildPlugins.Lib.DAGGER_HILT_ANDROID)
-  kapt(BuildPlugins.Lib.DAGGER_HILT_ANDROID_COMPILER)
-  implementation(BuildPlugins.Lib.HILT_LIFECYCLE_VIEWMODEL)
-  kapt(BuildPlugins.Lib.HILT_COMPILER)
-  implementation(BuildPlugins.Lib.HILT_WORKER)
-
-  implementation(BuildPlugins.Lib.RETROFIT)
-  implementation(BuildPlugins.Lib.RETROFIT_CONVERTER_MOSHI)
-  implementation(BuildPlugins.Lib.HTTP_LOGGING_INTERCEPTOR)
-
-  implementation(BuildPlugins.Lib.TIMBER)
-  debugImplementation(BuildPlugins.Lib.LEAK_CANARY)
-}
+apply from: './dependency.gradle'

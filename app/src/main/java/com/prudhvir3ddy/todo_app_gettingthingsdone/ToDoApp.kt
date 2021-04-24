@@ -11,7 +11,7 @@ import javax.inject.Inject
 @HiltAndroidApp
 class ToDoApp : Application(), Configuration.Provider {
 
-  @Inject @JvmField var workerFactory: HiltWorkerFactory? = null
+  @Inject lateinit var workerFactory: HiltWorkerFactory
 
   override fun onCreate() {
     super.onCreate()
@@ -23,6 +23,6 @@ class ToDoApp : Application(), Configuration.Provider {
   }
 
   override fun getWorkManagerConfiguration() =
-    Configuration.Builder().setWorkerFactory(workerFactory!!).build()
+    Configuration.Builder().setWorkerFactory(workerFactory).build()
 
 }
