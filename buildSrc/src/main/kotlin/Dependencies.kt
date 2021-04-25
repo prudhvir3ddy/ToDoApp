@@ -118,7 +118,7 @@ object RootVersion {
 object GradleLib {
 
   private object GradleLibVersion {
-    const val BUILD_VERSION = "7.0.0-alpha09"
+    const val BUILD_VERSION = "7.0.0-alpha12"
     const val GRADLE_CRASHLYTICS = "2.4.1"
     const val GMS = "4.3.3"
   }

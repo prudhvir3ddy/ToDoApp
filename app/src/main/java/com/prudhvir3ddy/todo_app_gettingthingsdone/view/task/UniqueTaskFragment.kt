@@ -1,17 +1,19 @@
 package com.prudhvir3ddy.todo_app_gettingthingsdone.view.task
 
 import android.os.Bundle
-import android.view.KeyEvent
+import android.view.LayoutInflater
 import android.view.View
-import android.view.inputmethod.EditorInfo
+import android.view.ViewGroup
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
-import com.prudhvir3ddy.todo_app_gettingthingsdone.R
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
-import com.prudhvir3ddy.todo_app_gettingthingsdone.databinding.FragmentTaskUniqueBinding
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
 import com.prudhvir3ddy.todo_app_gettingthingsdone.utils.hideKeyboard
 import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.TasksViewModel
@@ -20,13 +22,10 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.view.task.UniqueTaskFragment.
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class UniqueTaskFragment : Fragment(R.layout.fragment_task_unique) {
+class UniqueTaskFragment : Fragment() {
 
   private val args: UniqueTaskFragmentArgs by navArgs()
   private val viewModel: TasksViewModel by viewModels()
-
-  private var _binding: FragmentTaskUniqueBinding? = null
-  private val binding get() = _binding!!
 
   companion object {
     enum class TaskType {
@@ -35,23 +34,26 @@ class UniqueTaskFragment : Fragment(R.layout.fragment_task_unique) {
     }
   }
 
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-    _binding = FragmentTaskUniqueBinding.bind(view)
-    setOnEditorAction()
-
-    updateTitleOnTaskType(args.taskType)
-
-    prePopulateTodo(args.todo)
-
-    binding.saveBtn.setOnClickListener { onSaveButtonClicked() }
-
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View {
+    return ComposeView(requireContext()).apply {
+      setContent {
+        UniqueTaskScreen(
+          modifier = Modifier.padding(16.dp),
+          onSaveButtonClicked = { onSaveButtonClicked(it) },
+          args
+        )
+      }
+    }
   }
 
-  private fun onSaveButtonClicked() {
+  private fun onSaveButtonClicked(toDo: ToDo) {
     hideKeyboard(requireActivity())
-    val taskName = binding.taskNameEt.text.toString()
-    val taskDesc = binding.taskDescEt.text.toString()
+    val taskName = toDo.title
+    val taskDesc = toDo.description
     if (taskName.isNotBlank()) {
       actionAddTask(taskName, taskDesc)
     } else {
@@ -76,30 +78,4 @@ class UniqueTaskFragment : Fragment(R.layout.fragment_task_unique) {
     findNavController().navigate(action)
   }
 
-  private fun prePopulateTodo(todo: ToDo) {
-    binding.taskDescEt.setText(todo.description)
-    binding.taskNameEt.setText(todo.title)
-  }
-
-  private fun updateTitleOnTaskType(taskType: TaskType) {
-    when (taskType) {
-      ADD_TASK -> binding.taskActionTv.text = getString(string.add_task)
-      EDIT_TASK ->
-        binding.taskActionTv.text = getString(string.edit_task)
-    }
-  }
-
-  private fun setOnEditorAction() {
-    binding.taskDescEt.setOnEditorActionListener { _, actionId, event ->
-      if (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_DONE) {
-        binding.saveBtn.performClick()
-      }
-      false
-    }
-  }
-
-  override fun onDestroyView() {
-    super.onDestroyView()
-    _binding = null
-  }
 }
