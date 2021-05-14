@@ -1,6 +1,3 @@
-import com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc.AppConfig
-import com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc.RootVersion
-
 plugins {
   id 'com.android.application'
   id 'kotlin-android'
@@ -14,6 +11,7 @@ plugins {
 
 apply from: './variants.gradle'
 apply from: './signing.gradle'
+apply from: './versions.gradle'
 
 android {
 
@@ -23,14 +21,15 @@ android {
     }
   }
 
-  compileSdkVersion AppConfig.COMPILE_SDK
+  compileSdkVersion 30
+  buildToolsVersion "30.0.3"
 
   defaultConfig {
-    applicationId AppConfig.APPLICATION_ID
-    minSdkVersion AppConfig.MIN_SDK
-    targetSdkVersion AppConfig.TARGET_SDK
-    versionCode AppConfig.AppVersion.VERSION_CODE
-    versionName AppConfig.AppVersion.VERSION_NAME
+    applicationId "com.prudhvir3ddy.todo_app_gettingthingsdone"
+    minSdkVersion 21
+    targetSdkVersion 30
+    versionCode VERSION_CODE
+    versionName VERSION_NAME
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
@@ -39,9 +38,10 @@ android {
     targetCompatibility = JavaVersion.VERSION_1_8
   }
 
-  kotlinOptions {
-    jvmTarget = "1.8"
-    useIR = true
+  tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+      jvmTarget = "1.8"
+    }
   }
 
   buildFeatures {
@@ -50,7 +50,7 @@ android {
   }
 
   composeOptions {
-    kotlinCompilerExtensionVersion RootVersion.COMPOSE_VERSION
+    kotlinCompilerExtensionVersion libs.versions.compose.get()
   }
 }
 

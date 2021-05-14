@@ -1,5 +1,4 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-import com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc.GradleLib
 /**
  * The buildscript block is where you configure the repositories and
  * dependencies for Gradle itself—meaning, you should not include dependencies
@@ -21,7 +20,6 @@ buildscript {
    */
   repositories {
     google()
-    jcenter()
     mavenCentral()
 
     //Just an instance to show how maven is implemented in kt DSLs
@@ -37,12 +35,12 @@ buildscript {
 
   dependencies {
 
-    classpath GradleLib.TOOLS_GRADLE
-    classpath GradleLib.KOTLIN_GRADLE
-    classpath GradleLib.GRADLE_CRASHLYTICS
-    classpath GradleLib.GMS
-    classpath GradleLib.DAGGER_HILT
-    classpath GradleLib.NAVIGATION_SAFE_ARGS
+    classpath libs.android.tools.gradle.plugin
+    classpath libs.kotlin.gradle.plugin
+    classpath libs.google.firebase.crashlytics.gradle.plugin
+    classpath libs.google.gmsGoogleServices
+    classpath libs.dagger.hilt.gradle.plugin
+    classpath libs.androidx.navigation.safe.args.gradle.plugin
 
     // NOTE: Do not place your application dependencies here; they belong
     // in the individual module build.gradle files
@@ -61,7 +59,6 @@ buildscript {
 allprojects {
   repositories {
     google()
-    jcenter()
     mavenCentral()
 
   }
