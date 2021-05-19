@@ -119,7 +119,7 @@ fun LoginButton(
   }
 }
 
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xffffff)
 @Composable
 fun PreviewLoginScreen() {
   LoginScreen {
