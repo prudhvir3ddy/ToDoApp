@@ -1,2 +1,4 @@
 rootProject.name = 'ToDo-App-GettingThingsDone'
 include ':app'
+
+enableFeaturePreview("VERSION_CATALOGS")

@@ -1,67 +1,63 @@
-import com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc.Lib
-import com.prudhvir3ddy.todo_app_gettingthingsdone.buildsrc.TestLibs
-
 dependencies {
-  implementation Lib.KT_STD_LIB
-  implementation Lib.KTX_CORE
-  implementation Lib.LIFECYCLE_VIEWMODEL_KTX
-  implementation Lib.LIFECYCLE_LIVEDATA_KTX
-  implementation Lib.APP_COMPAT
-  implementation Lib.CONSTRAINT_LAYOUT
-  implementation Lib.MATERIAL_DESIGN
-  androidTestImplementation TestLibs.EXT_JUNIT
-  androidTestImplementation TestLibs.RUNNER
-  androidTestImplementation TestLibs.ANDROIDX_TRUTH
-  androidTestImplementation TestLibs.GOOGLE_TRUTH
-  androidTestImplementation TestLibs.RULES
+  implementation libs.kotlin.stdlib
+  implementation libs.androidx.ktx.core
+  implementation libs.androidx.lifecycle.viewmodel
+  implementation libs.androidx.lifecycle.livedata
+  implementation libs.androidx.appcompat
+  implementation libs.androidx.constraintlayout
+  implementation libs.google.android.material
+  androidTestImplementation libs.androidx.test.ext.junit
+  androidTestImplementation libs.androidx.test.runner
+  androidTestImplementation libs.androidx.test.ext.truth
+  androidTestImplementation libs.google.truth
+  androidTestImplementation libs.androidx.test.rules
 
-  implementation Lib.ACTIVITY_KTX
-  implementation Lib.FRAGMENT_KTX
+  implementation libs.androidx.activity.ktx
+  implementation libs.androidx.fragment.ktx
 
-  implementation Lib.NAVIGATION_FRAGMENT_KTX
-  implementation Lib.NAVIGATION_UI_KTX
+  testImplementation libs.junit
+  testImplementation libs.androidx.test.core
+  testImplementation libs.mockito
 
-  testImplementation TestLibs.JUNIT
-  testImplementation TestLibs.CORE_TEST
-  testImplementation TestLibs.MOCKITO
+  implementation libs.androidx.room.lib
+  kapt libs.androidx.room.compiler
 
-  implementation Lib.ROOM_KTX
-  kapt Lib.ROOM_KAPT
+  implementation libs.androidx.work.lib
+  androidTestImplementation libs.androidx.work.testing
 
-  implementation Lib.WORK_KTX
-  androidTestImplementation TestLibs.WORK_TESTING
+  implementation libs.google.firebase.messaging
+  implementation libs.google.firebase.crashlytics.lib
 
-  implementation Lib.FCM
-  implementation Lib.CRASHLYTICS_FIREBASE
+  implementation libs.glide.lib
+  kapt libs.glide.compiler
 
-  implementation Lib.GLIDE
-  kapt Lib.GLIDE_KAPT
+  implementation libs.androidx.viewpager
 
-  implementation Lib.VIEWPAGER
-
-  implementation Lib.DAGGER_HILT_ANDROID
-  kapt Lib.DAGGER_HILT_ANDROID_COMPILER
-  implementation Lib.HILT_LIFECYCLE_VIEWMODEL
-  kapt Lib.HILT_COMPILER
-  implementation Lib.HILT_WORKER
-  androidTestImplementation TestLibs.HILT_ANDROID_TESTING
+  implementation libs.dagger.hilt.android.lib
+  kapt libs.dagger.hilt.android.compiler
+//  implementation libs.androidx.hilt.lifecycleViewmodel
+  kapt libs.androidx.hilt.compiler
+  implementation libs.androidx.hilt.work
+  androidTestImplementation libs.dagger.hilt.android.testing
 
 
-  implementation Lib.RETROFIT
-  implementation Lib.RETROFIT_CONVERTER_MOSHI
-  implementation Lib.HTTP_LOGGING_INTERCEPTOR
+  implementation libs.retrofit.lib
+  implementation libs.retrofit.converter.moshi
+  implementation libs.okhttp.log
 
-  implementation Lib.TIMBER
-  debugImplementation Lib.LEAK_CANARY
+  implementation libs.timber
+  debugImplementation libs.leakcanary
 
-  implementation Lib.Compose.ACTIVITY
-  implementation Lib.Compose.FOUNDATION
-  implementation Lib.Compose.FOUNDATION_LAYOUT
-  implementation Lib.Compose.UI
-  implementation Lib.Compose.UI_TOOLING
-  implementation Lib.Compose.MATERIAL
-  implementation Lib.Compose.MATERIAL_COMPOSE_THEME_ADAPTER
-  implementation Lib.Compose.RUNTIME
-  implementation Lib.Compose.RUNTIME_LIVEDATA
+  implementation libs.compose.ui.ui
+  implementation libs.compose.ui.tooling
+  implementation libs.compose.runtime.runtime
+  implementation libs.compose.runtime.livedata
+  implementation libs.compose.foundation.foundation
+  implementation libs.compose.foundation.layout
+  implementation libs.compose.material
+  implementation libs.compose.google.material.theme.adapter
 
+  implementation libs.androidx.activity.compose
+  implementation libs.androidx.navigation.fragment
+  implementation libs.androidx.navigation.ui
 }
