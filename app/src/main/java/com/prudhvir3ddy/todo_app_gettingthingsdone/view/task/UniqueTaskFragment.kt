@@ -44,7 +44,8 @@ class UniqueTaskFragment : Fragment() {
         UniqueTaskScreen(
           modifier = Modifier.padding(16.dp),
           onSaveButtonClicked = { onSaveButtonClicked(it) },
-          args
+          args.todo,
+          args.taskType
         )
       }
     }

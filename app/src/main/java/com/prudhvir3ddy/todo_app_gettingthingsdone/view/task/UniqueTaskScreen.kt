@@ -31,7 +31,8 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.view.task.UniqueTaskFragment.
 fun UniqueTaskScreen(
   modifier: Modifier = Modifier,
   onSaveButtonClicked: (ToDo) -> Unit,
-  args: UniqueTaskFragmentArgs
+  task: ToDo,
+  taskType: TaskType = ADD_TASK
 ) {
 
   Column(
@@ -39,14 +40,14 @@ fun UniqueTaskScreen(
       .fillMaxHeight()
       .fillMaxWidth()
   ) {
-    val (titleText, setTitleText) = remember { mutableStateOf(args.todo.title) }
-    val (descriptionText, setDescriptionText) = remember { mutableStateOf(args.todo.description) }
+    val (titleText, setTitleText) = remember { mutableStateOf(task.title) }
+    val (descriptionText, setDescriptionText) = remember { mutableStateOf(task.description) }
     Row(
       horizontalArrangement = Arrangement.SpaceBetween,
       verticalAlignment = Alignment.CenterVertically,
       modifier = Modifier.fillMaxWidth()
     ) {
-      TaskModeText(taskType = args.taskType)
+      TaskModeText(taskType = taskType)
       SaveTaskButton(
         onSaveButtonClicked = {
           onSaveButtonClicked(
@@ -110,13 +111,13 @@ fun TitleTextField(
     value = text,
     onValueChange = setText,
     modifier = modifier,
-    colors = todoTextFieldColors(),
+    colors = TaskTextFieldColors(),
     label = { Text(text = stringResource(id = string.task_name)) }
   )
 }
 
 @Composable
-fun todoTextFieldColors(): TextFieldColors = TextFieldDefaults.textFieldColors(
+fun TaskTextFieldColors(): TextFieldColors = TextFieldDefaults.textFieldColors(
   focusedIndicatorColor = Color.Transparent,
   disabledIndicatorColor = Color.Transparent,
   unfocusedIndicatorColor = Color.Transparent,
@@ -133,7 +134,7 @@ fun DescriptionTextField(
     value = text,
     onValueChange = setText,
     modifier = modifier,
-    colors = todoTextFieldColors(),
+    colors = TaskTextFieldColors(),
     label = { Text(text = stringResource(id = string.task_description)) }
   )
 }
@@ -143,6 +144,6 @@ fun DescriptionTextField(
 fun PreviewUniqueTaskScreen() {
   UniqueTaskScreen(
     onSaveButtonClicked = { /*TODO*/ },
-    args = UniqueTaskFragmentArgs(EDIT_TASK, ToDo("1", "test", "testing"))
+    task = ToDo("1", "test", "testing")
   )
 }
