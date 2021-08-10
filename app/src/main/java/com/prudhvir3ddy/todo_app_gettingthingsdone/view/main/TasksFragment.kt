@@ -5,7 +5,13 @@ import android.app.NotificationManager
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -24,17 +30,32 @@ import com.prudhvir3ddy.todo_app_gettingthingsdone.view.task.UniqueTaskFragment.
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TasksFragment : Fragment(R.layout.fragment_tasks) {
+class TasksFragment : Fragment() {
 
   private val viewModel: TasksViewModel by viewModels()
 
   private var _binding: FragmentTasksBinding? = null
   private val binding get() = _binding!!
 
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    initUi(view)
-    setUpObservers()
-
+  @ExperimentalMaterialApi
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View {
+    return ComposeView(requireContext()).apply {
+      setContent {
+        val tasksList: List<ToDo> by viewModel.tasksList.observeAsState(initial = emptyList())
+        val userName: String = viewModel.getFirstName()
+        TasksScreen(userName, tasksList, onTaskStatusChanged = { task: ToDo, it: Boolean ->
+          viewModel.onTaskToggle(task, it)
+        }, onTaskAddButtonClicked = {
+          val action =
+            TasksFragmentDirections.actionTasksFragmentToUniqueTaskFragment(ADD_TASK, ToDo())
+          findNavController().navigate(action)
+        })
+      }
+    }
   }
 
   private fun setUpObservers() {
@@ -68,11 +89,9 @@ class TasksFragment : Fragment(R.layout.fragment_tasks) {
     binding.lifecycleOwner = this@TasksFragment
 
     Glide.with(requireContext()).load(R.drawable.add_task).into(binding.noWorkIv)
-    setTitle()
 
     binding.addTaskFab.setOnClickListener {
-      val action = TasksFragmentDirections.actionTasksFragmentToUniqueTaskFragment(ADD_TASK, ToDo())
-      findNavController().navigate(action)
+
     }
     setUpRecyclerView()
   }
@@ -117,14 +136,5 @@ class TasksFragment : Fragment(R.layout.fragment_tasks) {
       val notificationManager = requireContext().getSystemService(NotificationManager::class.java)
       notificationManager.createNotificationChannel(notificationChannel)
     }
-  }
-
-  private fun setTitle() {
-    binding.welcomeTv.text = String.format(getString(string.welcome), viewModel.getFirstName())
-  }
-
-  override fun onDestroyView() {
-    super.onDestroyView()
-    _binding = null
   }
 }
