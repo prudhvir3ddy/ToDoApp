@@ -4,6 +4,7 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,7 +31,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.rememberDismissState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -61,7 +61,9 @@ fun TasksScreen(
   tasks: List<ToDo>,
   modifier: Modifier = Modifier,
   onTaskStatusChanged: (ToDo, Boolean) -> Unit,
-  onTaskAddButtonClicked: () -> Unit
+  onTaskAddButtonClicked: () -> Unit,
+  onTaskSwiped: (String) -> Unit,
+  onTaskClicked: (ToDo) -> Unit
 ) {
   Scaffold(floatingActionButton = {
     FloatingActionButton(
@@ -80,50 +82,7 @@ fun TasksScreen(
       }
       if (tasks.isNotEmpty()) {
         items(tasks) { task ->
-          val dismissState = rememberDismissState(
-            confirmStateChange = {
-              it != DismissedToEnd
-            }
-          )
-          SwipeToDismiss(state = dismissState, background = {
-            val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
-            val color by animateColorAsState(
-              when (dismissState.targetValue) {
-                Default -> Color.LightGray
-                DismissedToEnd -> Color.Green
-                DismissedToStart -> Color.Red
-              }
-            )
-            val alignment = when (direction) {
-              StartToEnd -> Alignment.CenterStart
-              EndToStart -> Alignment.CenterEnd
-            }
-            val icon = when (direction) {
-              StartToEnd -> Icons.Default.Done
-              EndToStart -> Icons.Default.Delete
-            }
-            val scale by animateFloatAsState(
-              if (dismissState.targetValue == Default) 0.75f else 1f
-            )
-
-            Box(
-              Modifier
-                .fillMaxSize()
-                .background(color)
-                .padding(horizontal = 20.dp),
-              contentAlignment = alignment
-            ) {
-              Icon(
-                icon,
-                contentDescription = "Localized description",
-                modifier = Modifier.scale(scale)
-              )
-            }
-          }, dismissThresholds = { direction ->
-            FractionalThreshold(0.25f)
-          }) {
-            ToDoCard(task, onTaskStatusChanged, modifier.padding(16.dp))
-          }
+          TasksSwipeable(task, onTaskSwiped, onTaskStatusChanged, onTaskClicked)
         }
       } else {
         item {
@@ -134,13 +93,22 @@ fun TasksScreen(
   }
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun ToDoCard(
   task: ToDo,
   onTaskStatusChanged: (ToDo, Boolean) -> Unit,
-  modifier: Modifier = Modifier
+  onTaskClicked: (ToDo) -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-  Row(modifier = modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+
+  Row(
+    modifier = modifier
+      .fillMaxWidth()
+      .clickable {
+        onTaskClicked(task)
+      }, verticalAlignment = Alignment.CenterVertically
+  ) {
     Checkbox(
       checked = task.isCompleted,
       onCheckedChange = {
@@ -150,11 +118,66 @@ fun ToDoCard(
 
     Column(
       modifier = Modifier
-        .fillMaxSize(),
+        .fillMaxSize()
+        .padding(start = 16.dp),
     ) {
       Text(text = task.title, style = MaterialTheme.typography.body1)
       Text(text = task.description, style = MaterialTheme.typography.body2)
     }
+  }
+}
+
+@ExperimentalMaterialApi
+@Composable
+fun TasksSwipeable(
+  task: ToDo,
+  onTaskSwiped: (String) -> Unit,
+  onTaskStatusChanged: (ToDo, Boolean) -> Unit,
+  onTaskClicked: (ToDo) -> Unit,
+  modifier: Modifier = Modifier
+) {
+  val dismissState = rememberDismissState(
+    confirmStateChange = {
+      if (it == DismissedToEnd)
+        onTaskSwiped(task.id)
+      it != DismissedToEnd
+    }
+  )
+  SwipeToDismiss(directions = setOf(StartToEnd), state = dismissState, background = {
+    val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
+    val color by animateColorAsState(
+      when (dismissState.targetValue) {
+        Default -> Color.LightGray
+        DismissedToEnd -> Color.Red
+        DismissedToStart -> return@SwipeToDismiss
+      }
+    )
+    val alignment = when (direction) {
+      StartToEnd -> Alignment.CenterStart
+      EndToStart -> return@SwipeToDismiss
+    }
+    val icon = Icons.Default.Delete
+    val scale by animateFloatAsState(
+      if (dismissState.targetValue == Default) 0.75f else 1f
+    )
+
+    Box(
+      Modifier
+        .fillMaxSize()
+        .background(color)
+        .padding(horizontal = 20.dp),
+      contentAlignment = alignment
+    ) {
+      Icon(
+        icon,
+        contentDescription = stringResource(id = string.delete_task),
+        modifier = Modifier.scale(scale)
+      )
+    }
+  }, dismissThresholds = { direction ->
+    FractionalThreshold(0.25f)
+  }) {
+    ToDoCard(task, onTaskStatusChanged, onTaskClicked, modifier.padding(16.dp))
   }
 }
 
@@ -181,6 +204,10 @@ fun PreviewTasksScreen() {
 
     },
     onTaskAddButtonClicked = {
+
+    }, onTaskSwiped = {
+
+    }, onTaskClicked = {
 
     })
 }

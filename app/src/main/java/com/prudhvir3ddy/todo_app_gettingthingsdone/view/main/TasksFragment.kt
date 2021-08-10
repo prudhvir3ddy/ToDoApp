@@ -34,9 +34,6 @@ class TasksFragment : Fragment() {
 
   private val viewModel: TasksViewModel by viewModels()
 
-  private var _binding: FragmentTasksBinding? = null
-  private val binding get() = _binding!!
-
   @ExperimentalMaterialApi
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -53,21 +50,16 @@ class TasksFragment : Fragment() {
           val action =
             TasksFragmentDirections.actionTasksFragmentToUniqueTaskFragment(ADD_TASK, ToDo())
           findNavController().navigate(action)
+        }, onTaskSwiped = {
+          viewModel.onTaskDelete(it)
+        }, onTaskClicked = {
+          val action =
+            TasksFragmentDirections.actionTasksFragmentToUniqueTaskFragment(
+              EDIT_TASK,
+              it
+            )
+          findNavController().navigate(action)
         })
-      }
-    }
-  }
-
-  private fun setUpObservers() {
-    viewModel.editTaskEvent.observe(viewLifecycleOwner) {
-      val todo = it.getContentIfNotHandled()
-      todo?.let { safeToDo ->
-        val action =
-          TasksFragmentDirections.actionTasksFragmentToUniqueTaskFragment(
-            EDIT_TASK,
-            safeToDo
-          )
-        findNavController().navigate(action)
       }
     }
   }
@@ -81,47 +73,6 @@ class TasksFragment : Fragment() {
     )
     viewModel.setUpWorkManager()
 
-  }
-
-  private fun initUi(view: View) {
-    _binding = FragmentTasksBinding.bind(view)
-    binding.viewmodel = viewModel
-    binding.lifecycleOwner = this@TasksFragment
-
-    Glide.with(requireContext()).load(R.drawable.add_task).into(binding.noWorkIv)
-
-    binding.addTaskFab.setOnClickListener {
-
-    }
-    setUpRecyclerView()
-  }
-
-  private fun setUpRecyclerView() {
-
-    binding.viewmodel?.let {
-      binding.tasksRv.adapter =
-        ToDoListAdapter(viewModel = it)
-      binding.tasksRv.addItemDecoration(DividerItemDecoration(binding.tasksRv.context, VERTICAL))
-
-      val itemTouchCallback =
-        object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {
-          override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: ViewHolder,
-            target: ViewHolder
-          ): Boolean {
-            return false
-          }
-
-          override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
-            viewModel.onTaskDelete(viewModel.tasksList.value?.get(viewHolder.adapterPosition)?.id)
-          }
-
-        }
-      val itemTouchHelper = ItemTouchHelper(itemTouchCallback)
-      itemTouchHelper.attachToRecyclerView(binding.tasksRv)
-      binding.tasksRv.setHasFixedSize(true)
-    }
   }
 
   private fun createChannel(channelId: String, channelName: String) {

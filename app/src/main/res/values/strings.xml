@@ -20,6 +20,7 @@
   <string name="sign_in_with_google">Sign in With Google</string>
   <string name="edit_task">Edit Task</string>
   <string name="no_tasks">No Tasks</string>
+  <string name="delete_task">Delete Task</string>
   <string name="daily_notifications_channel_id">Daily Notifications</string>
   <string name="remember_why_you_started">Remember Why You Started</string>
   <string name="remember_why_you_started_desc">Get Back to Plan The Work</string>
