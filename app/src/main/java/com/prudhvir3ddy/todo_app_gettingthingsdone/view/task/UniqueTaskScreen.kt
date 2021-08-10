@@ -111,13 +111,13 @@ fun TitleTextField(
     value = text,
     onValueChange = setText,
     modifier = modifier,
-    colors = todoTextFieldColors(),
+    colors = TaskTextFieldColors(),
     label = { Text(text = stringResource(id = string.task_name)) }
   )
 }
 
 @Composable
-fun todoTextFieldColors(): TextFieldColors = TextFieldDefaults.textFieldColors(
+fun TaskTextFieldColors(): TextFieldColors = TextFieldDefaults.textFieldColors(
   focusedIndicatorColor = Color.Transparent,
   disabledIndicatorColor = Color.Transparent,
   unfocusedIndicatorColor = Color.Transparent,
@@ -134,7 +134,7 @@ fun DescriptionTextField(
     value = text,
     onValueChange = setText,
     modifier = modifier,
-    colors = todoTextFieldColors(),
+    colors = TaskTextFieldColors(),
     label = { Text(text = stringResource(id = string.task_description)) }
   )
 }
