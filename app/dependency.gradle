@@ -38,6 +38,7 @@ dependencies {
 //  implementation libs.androidx.hilt.lifecycleViewmodel
   kapt libs.androidx.hilt.compiler
   implementation libs.androidx.hilt.work
+  implementation libs.androidx.hilt.navigation.compose
   androidTestImplementation libs.dagger.hilt.android.testing
 
 
@@ -56,6 +57,7 @@ dependencies {
   implementation libs.compose.foundation.layout
   implementation libs.compose.material
   implementation libs.compose.google.material.theme.adapter
+  implementation libs.compose.navigation
 
   implementation libs.androidx.activity.compose
   implementation libs.androidx.navigation.fragment
