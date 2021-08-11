@@ -23,4 +23,6 @@ class ToDoRepository @Inject constructor(
 
   suspend fun addToDos(todoList: List<ToDo>) = toDoDatabase.todoDao().addToDos(todoList)
 
+  suspend fun getTaskById(taskId: String?) = toDoDatabase.todoDao().getTaskById(taskId)
+
 }

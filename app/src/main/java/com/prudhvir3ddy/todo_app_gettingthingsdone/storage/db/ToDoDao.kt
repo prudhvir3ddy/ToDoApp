@@ -27,4 +27,7 @@ interface ToDoDao {
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   suspend fun addToDos(todoList: List<ToDo>)
+
+  @Query("SELECT * FROM todo WHERE id=:taskId LIMIT 1")
+  suspend fun getTaskById(taskId: String?): ToDo
 }

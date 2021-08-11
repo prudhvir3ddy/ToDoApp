@@ -1,37 +1,24 @@
 package com.prudhvir3ddy.todo_app_gettingthingsdone.view.main
 
-import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.work.WorkManager
 import com.prudhvir3ddy.todo_app_gettingthingsdone.repository.ToDoRepository
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.SharedPrefs
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
-import com.prudhvir3ddy.todo_app_gettingthingsdone.utils.Event
-import com.prudhvir3ddy.todo_app_gettingthingsdone.workers.NotificationWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
 class TasksViewModel @Inject constructor(
-  @ApplicationContext private val context: Context,
   private val repository: ToDoRepository,
   private val sharedPrefs: SharedPrefs
 ) : ViewModel() {
 
   val tasksList: LiveData<List<ToDo>> = repository.getAllToDos().asLiveData()
-
-  private val _editTaskEvent = MutableLiveData<Event<ToDo>>()
-  val editTaskEvent: LiveData<Event<ToDo>> = _editTaskEvent
-
-  fun setUpWorkManager() {
-    WorkManager.getInstance(context).enqueue(NotificationWorker.getWorkManagerRequest())
-  }
 
   fun onTaskToggle(todo: ToDo, isCompleted: Boolean) {
     viewModelScope.launch {
@@ -62,8 +49,10 @@ class TasksViewModel @Inject constructor(
     }
   }
 
-  fun editToDo(todo: ToDo) {
-    _editTaskEvent.value = Event(todo)
+  fun getTaskByIdAsync(taskId: String?): ToDo {
+    return runBlocking {
+      repository.getTaskById(taskId)
+    }
   }
 
   fun onTaskSave(taskName: String, taskDesc: String) {

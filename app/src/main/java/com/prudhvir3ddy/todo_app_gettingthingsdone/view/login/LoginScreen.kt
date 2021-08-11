@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -20,18 +21,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.mipmap
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
+import com.prudhvir3ddy.todo_app_gettingthingsdone.view.Screens
 
+@ExperimentalMaterialApi
 @Composable
 fun LoginScreen(
   modifier: Modifier = Modifier,
-  onLoginButtonClicked: (String) -> Unit
+  navController: NavController,
+  viewModel: LoginViewModel = hiltViewModel()
 ) {
   Column(
     modifier = modifier
+      .padding(16.dp)
       .fillMaxWidth()
       .fillMaxHeight()
   ) {
@@ -51,7 +57,14 @@ fun LoginScreen(
     }
     val (text, setText) = remember { mutableStateOf("") }
     LoginTextField(text = text, setText = setText)
-    LoginButton(onClick = onLoginButtonClicked, text = text)
+    LoginButton(onClick = {
+      viewModel.getStarted(it)
+      navController.navigate(Screens.TASKS) {
+        popUpTo(Screens.LOGIN) {
+          inclusive = true
+        }
+      }
+    }, text = text)
   }
 }
 
@@ -122,10 +135,10 @@ fun LoginButton(
   }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xffffff)
-@Composable
-fun PreviewLoginScreen() {
-  LoginScreen {
-
-  }
-}
+//@Preview(showBackground = true, backgroundColor = 0xffffff)
+//@Composable
+//fun PreviewLoginScreen() {
+//  LoginScreen {
+//
+//  }
+//}

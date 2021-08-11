@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.prudhvir3ddy.todo_app_gettingthingsdone">
 
   <uses-permission android:name="android.permission.INTERNET" />
@@ -15,8 +14,7 @@
       android:theme="@style/AppTheme">
     <activity
         android:name=".view.HostActivity"
-        android:theme="@style/AppTheme.NoActionBar" />
-    <activity android:name=".view.splash.SplashActivity">
+        android:theme="@style/AppTheme.NoActionBar">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 
@@ -24,18 +22,6 @@
       </intent-filter>
     </activity>
 
-    <service
-        android:name=".fcm.MyFirebaseMessagingService"
-        android:exported="false">
-      <intent-filter>
-        <action android:name="com.google.firebase.MESSAGING_EVENT" />
-      </intent-filter>
-    </service>
-
-    <provider
-        android:name="androidx.work.impl.WorkManagerInitializer"
-        android:authorities="${applicationId}.workmanager-init"
-        tools:node="remove" />
   </application>
 
 </manifest>

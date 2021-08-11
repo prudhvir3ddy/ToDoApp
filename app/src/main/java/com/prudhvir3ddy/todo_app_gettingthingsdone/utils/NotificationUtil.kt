@@ -11,17 +11,17 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
 
   val NOTIFICATION_ID = 1
 
-  val contentPendingIntent =
-    NavDeepLinkBuilder(applicationContext).setComponentName(HostActivity::class.java)
-      .setGraph(R.navigation.nav_graph)
-      .setDestination(R.id.tasksFragment)
-      .createPendingIntent()
+//   TODO set pending intent
+//  val contentPendingIntent =
+//    NavDeepLinkBuilder(applicationContext).setComponentName(HostActivity::class.java)
+//      .setGraph(R.navigation.nav_graph)
+//      .setDestination(R.id.tasksFragment)
+//      .createPendingIntent()
 
   val builder = NotificationCompat.Builder(
     applicationContext, applicationContext.getString(R.string.daily_notifications_channel_id)
   ).setSmallIcon(R.drawable.ic_baseline_done_24)
     .setContentTitle(applicationContext.getString(R.string.remember_why_you_started))
-    .setContentIntent(contentPendingIntent)
     .setAutoCancel(true)
     .setContentText(messageBody)
 

@@ -20,6 +20,7 @@ import androidx.compose.material.DismissDirection.StartToEnd
 import androidx.compose.material.DismissValue.Default
 import androidx.compose.material.DismissValue.DismissedToEnd
 import androidx.compose.material.DismissValue.DismissedToStart
+import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.FractionalThreshold
@@ -34,17 +35,22 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.rememberDismissState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
+import com.prudhvir3ddy.todo_app_gettingthingsdone.view.Params
+import com.prudhvir3ddy.todo_app_gettingthingsdone.view.Screens
+import com.prudhvir3ddy.todo_app_gettingthingsdone.view.task.TaskType
 
 @Composable
 fun WelcomeText(userName: String) {
@@ -57,32 +63,41 @@ fun WelcomeText(userName: String) {
 @ExperimentalMaterialApi
 @Composable
 fun TasksScreen(
-  userName: String,
-  tasks: List<ToDo>,
   modifier: Modifier = Modifier,
-  onTaskStatusChanged: (ToDo, Boolean) -> Unit,
-  onTaskAddButtonClicked: () -> Unit,
-  onTaskSwiped: (String) -> Unit,
-  onTaskClicked: (ToDo) -> Unit
+  navController: NavController,
+  viewModel: TasksViewModel = hiltViewModel()
 ) {
+
+  val tasks: List<ToDo> by viewModel.tasksList.observeAsState(initial = emptyList())
+
+  val onTaskAddButtonClicked = {
+    navController.navigate(Screens.UNIQUE_TASK) {
+      popUpTo(Screens.TASKS)
+    }
+  }
+
   Scaffold(floatingActionButton = {
-    FloatingActionButton(
-      onClick = onTaskAddButtonClicked,
-      content = {
-        Icon(
-          imageVector = Icons.Filled.Add,
-          contentDescription = stringResource(id = string.add_task)
-        )
-      }
-    )
+    AddTaskFabButton(onTaskAddButtonClicked)
   }) {
+
+    val onTaskClicked = { task: ToDo ->
+      navController.navigate("${Screens.UNIQUE_TASK}?${Params.TASK_ID}=${task.id}&${Params.TASK_TYPE}=${TaskType.EDIT_TASK}") {
+        popUpTo(Screens.TASKS)
+      }
+    }
+
+    val onTaskToggle = { task: ToDo, toggle: Boolean ->
+      viewModel.onTaskToggle(task, toggle)
+    }
+
     LazyColumn(modifier = modifier.padding(16.dp)) {
       item {
-        WelcomeText(userName)
+        WelcomeText(viewModel.getFirstName())
       }
       if (tasks.isNotEmpty()) {
         items(tasks) { task ->
-          TasksSwipeable(task, onTaskSwiped, onTaskStatusChanged, onTaskClicked)
+          TasksSwipeable(task, viewModel, onTaskClicked, onTaskToggle)
+          Divider(color = Color.LightGray)
         }
       } else {
         item {
@@ -93,12 +108,25 @@ fun TasksScreen(
   }
 }
 
+@Composable
+fun AddTaskFabButton(onTaskAddButtonClicked: () -> Unit) {
+  FloatingActionButton(
+    onClick = { onTaskAddButtonClicked() },
+    content = {
+      Icon(
+        imageVector = Icons.Filled.Add,
+        contentDescription = stringResource(id = string.add_task)
+      )
+    }
+  )
+}
+
 @ExperimentalMaterialApi
 @Composable
 fun ToDoCard(
   task: ToDo,
-  onTaskStatusChanged: (ToDo, Boolean) -> Unit,
   onTaskClicked: (ToDo) -> Unit,
+  onTaskToggle: (ToDo, Boolean) -> Unit,
   modifier: Modifier = Modifier,
 ) {
 
@@ -107,12 +135,13 @@ fun ToDoCard(
       .fillMaxWidth()
       .clickable {
         onTaskClicked(task)
-      }, verticalAlignment = Alignment.CenterVertically
+      }
+      .padding(16.dp), verticalAlignment = Alignment.CenterVertically
   ) {
     Checkbox(
       checked = task.isCompleted,
       onCheckedChange = {
-        onTaskStatusChanged(task, it)
+        onTaskToggle(task, it)
       }
     )
 
@@ -131,15 +160,15 @@ fun ToDoCard(
 @Composable
 fun TasksSwipeable(
   task: ToDo,
-  onTaskSwiped: (String) -> Unit,
-  onTaskStatusChanged: (ToDo, Boolean) -> Unit,
+  viewModel: TasksViewModel,
   onTaskClicked: (ToDo) -> Unit,
+  onTaskToggle: (ToDo, Boolean) -> Unit,
   modifier: Modifier = Modifier
 ) {
   val dismissState = rememberDismissState(
     confirmStateChange = {
       if (it == DismissedToEnd)
-        onTaskSwiped(task.id)
+        viewModel.onTaskDelete(task.id)
       it != DismissedToEnd
     }
   )
@@ -162,7 +191,7 @@ fun TasksSwipeable(
     )
 
     Box(
-      Modifier
+      modifier
         .fillMaxSize()
         .background(color)
         .padding(horizontal = 20.dp),
@@ -177,7 +206,7 @@ fun TasksSwipeable(
   }, dismissThresholds = { direction ->
     FractionalThreshold(0.25f)
   }) {
-    ToDoCard(task, onTaskStatusChanged, onTaskClicked, modifier.padding(16.dp))
+    ToDoCard(task, onTaskClicked, onTaskToggle)
   }
 }
 
@@ -193,21 +222,21 @@ fun ShowNoTasks() {
   )
 }
 
-@ExperimentalMaterialApi
-@Preview(showBackground = true, backgroundColor = 0xffffff)
-@Composable
-fun PreviewTasksScreen() {
-  TasksScreen(
-    "",
-    tasks = emptyList(),
-    onTaskStatusChanged = { todo, b ->
-
-    },
-    onTaskAddButtonClicked = {
-
-    }, onTaskSwiped = {
-
-    }, onTaskClicked = {
-
-    })
-}
+//@ExperimentalMaterialApi
+//@Preview(showBackground = true, backgroundColor = 0xffffff)
+//@Composable
+//fun PreviewTasksScreen() {
+//  TasksScreen(
+//    "",
+//    tasks = emptyList(),
+//    onTaskStatusChanged = { todo, b ->
+//
+//    },
+//    onTaskAddButtonClicked = {
+//
+//    }, onTaskSwiped = {
+//
+//    }, onTaskClicked = {
+//
+//    })
+//}

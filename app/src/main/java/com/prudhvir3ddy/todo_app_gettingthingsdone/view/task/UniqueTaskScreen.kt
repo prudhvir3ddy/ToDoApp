@@ -19,27 +19,53 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.prudhvir3ddy.todo_app_gettingthingsdone.R.string
 import com.prudhvir3ddy.todo_app_gettingthingsdone.storage.db.ToDo
-import com.prudhvir3ddy.todo_app_gettingthingsdone.view.task.UniqueTaskFragment.Companion.TaskType
-import com.prudhvir3ddy.todo_app_gettingthingsdone.view.task.UniqueTaskFragment.Companion.TaskType.ADD_TASK
-import com.prudhvir3ddy.todo_app_gettingthingsdone.view.task.UniqueTaskFragment.Companion.TaskType.EDIT_TASK
+import com.prudhvir3ddy.todo_app_gettingthingsdone.view.Screens
+import com.prudhvir3ddy.todo_app_gettingthingsdone.view.main.TasksViewModel
+import com.prudhvir3ddy.todo_app_gettingthingsdone.view.task.TaskType.ADD_TASK
+import com.prudhvir3ddy.todo_app_gettingthingsdone.view.task.TaskType.EDIT_TASK
 
 @Composable
 fun UniqueTaskScreen(
   modifier: Modifier = Modifier,
-  onSaveButtonClicked: (ToDo) -> Unit,
-  task: ToDo,
+  navController: NavController,
+  viewModel: TasksViewModel = hiltViewModel(),
+  taskId: String?,
   taskType: TaskType = ADD_TASK
 ) {
+
+  val onSaveButtonClicked = { savedTask: ToDo ->
+    when (taskType) {
+      ADD_TASK -> viewModel.onTaskSave(savedTask.title, savedTask.description)
+      EDIT_TASK -> viewModel.onTaskUpdate(savedTask)
+    }
+
+    navController.navigate(Screens.TASKS) {
+      popUpTo(Screens.TASKS) {
+        inclusive = true
+      }
+    }
+  }
 
   Column(
     modifier = modifier
       .fillMaxHeight()
       .fillMaxWidth()
+      .padding(16.dp)
   ) {
+
+    val task = remember {
+      if (taskId != null) {
+        viewModel.getTaskByIdAsync(taskId)
+      } else {
+        ToDo()
+      }
+    }
+
     val (titleText, setTitleText) = remember { mutableStateOf(task.title) }
     val (descriptionText, setDescriptionText) = remember { mutableStateOf(task.description) }
     Row(
@@ -50,11 +76,10 @@ fun UniqueTaskScreen(
       TaskModeText(taskType = taskType)
       SaveTaskButton(
         onSaveButtonClicked = {
+          task.title = titleText
+          task.description = descriptionText
           onSaveButtonClicked(
-            ToDo(
-              title = titleText,
-              description = descriptionText
-            )
+            task
           )
         }
       )
@@ -111,13 +136,13 @@ fun TitleTextField(
     value = text,
     onValueChange = setText,
     modifier = modifier,
-    colors = TaskTextFieldColors(),
+    colors = taskTextFieldColors(),
     label = { Text(text = stringResource(id = string.task_name)) }
   )
 }
 
 @Composable
-fun TaskTextFieldColors(): TextFieldColors = TextFieldDefaults.textFieldColors(
+fun taskTextFieldColors(): TextFieldColors = TextFieldDefaults.textFieldColors(
   focusedIndicatorColor = Color.Transparent,
   disabledIndicatorColor = Color.Transparent,
   unfocusedIndicatorColor = Color.Transparent,
@@ -134,16 +159,7 @@ fun DescriptionTextField(
     value = text,
     onValueChange = setText,
     modifier = modifier,
-    colors = TaskTextFieldColors(),
+    colors = taskTextFieldColors(),
     label = { Text(text = stringResource(id = string.task_description)) }
-  )
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun PreviewUniqueTaskScreen() {
-  UniqueTaskScreen(
-    onSaveButtonClicked = { /*TODO*/ },
-    task = ToDo("1", "test", "testing")
   )
 }
