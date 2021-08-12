@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.prudhvir3ddy.todo_app_gettingthingsdone">
 
-  <uses-permission android:name="android.permission.INTERNET" />
-
   <application
       android:name=".ToDoApp"
       android:allowBackup="false"
