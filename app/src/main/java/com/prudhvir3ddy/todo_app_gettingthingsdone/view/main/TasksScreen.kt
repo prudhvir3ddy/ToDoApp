@@ -42,6 +42,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -150,8 +151,21 @@ fun ToDoCard(
         .fillMaxSize()
         .padding(start = 16.dp),
     ) {
-      Text(text = task.title, style = MaterialTheme.typography.body1)
-      Text(text = task.description, style = MaterialTheme.typography.body2)
+      val body1Style = MaterialTheme.typography.body1
+      val body2Style = MaterialTheme.typography.body2
+      if (task.isCompleted) {
+        Text(
+          text = task.title,
+          style = body1Style.copy(textDecoration = TextDecoration.LineThrough)
+        )
+        Text(
+          text = task.description,
+          style = body2Style.copy(textDecoration = TextDecoration.LineThrough)
+        )
+      } else {
+        Text(text = task.title, style = body1Style)
+        Text(text = task.description, style = body2Style)
+      }
     }
   }
 }
