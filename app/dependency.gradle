@@ -22,10 +22,6 @@ dependencies {
   implementation libs.androidx.room.lib
   kapt libs.androidx.room.compiler
 
-  implementation libs.androidx.work.lib
-  androidTestImplementation libs.androidx.work.testing
-
-  implementation libs.google.firebase.messaging
   implementation libs.google.firebase.crashlytics.lib
 
   implementation libs.glide.lib
@@ -35,9 +31,7 @@ dependencies {
 
   implementation libs.dagger.hilt.android.lib
   kapt libs.dagger.hilt.android.compiler
-//  implementation libs.androidx.hilt.lifecycleViewmodel
   kapt libs.androidx.hilt.compiler
-  implementation libs.androidx.hilt.work
   implementation libs.androidx.hilt.navigation.compose
   androidTestImplementation libs.dagger.hilt.android.testing
 
